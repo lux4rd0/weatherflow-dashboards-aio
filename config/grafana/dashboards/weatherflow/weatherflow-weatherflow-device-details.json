@@ -1,0 +1,1184 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "description": "A details dashboard for WeatherFlow's TEMPEST Weather System using collected raw JSON logs stored in Grafana Loki.",
+  "editable": true,
+  "gnetId": null,
+  "graphTooltip": 0,
+  "links": [
+    {
+      "icon": "external link",
+      "tags": [],
+      "title": "WeatherFlow Community Forums",
+      "tooltip": "",
+      "type": "link",
+      "url": "https://community.weatherflow.com/"
+    },
+    {
+      "asDropdown": true,
+      "icon": "external link",
+      "tags": [
+        "weatherflow"
+      ],
+      "title": "WeatherFlow Dashboards",
+      "type": "dashboards"
+    }
+  ],
+  "panels": [
+    {
+      "datasource": "Loki - weatherflow",
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": null,
+            "filterable": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Serial Number"
+            },
+            "properties": [
+              {
+                "id": "custom.align",
+                "value": "center"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 3,
+        "x": 0,
+        "y": 0
+      },
+      "id": 36,
+      "options": {
+        "showHeader": true
+      },
+      "pluginVersion": "7.5.0-11263pre",
+      "targets": [
+        {
+          "expr": "topk(1,sum by (serial_number) (count_over_time({app=\"weatherflow\"} | json | type=\"hub_status\" |  __error__=\"\" [$__interval])))",
+          "legendFormat": "{{serial_number}}",
+          "refId": "A"
+        }
+      ],
+      "title": "Hub",
+      "transformations": [
+        {
+          "id": "reduce",
+          "options": {}
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Max": true
+            },
+            "indexByName": {},
+            "renameByName": {
+              "Field": "Serial Number",
+              "Max": ""
+            }
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "datasource": "Loki - weatherflow",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "center",
+            "filterable": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Uptime"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "s"
+              },
+              {
+                "id": "custom.width",
+                "value": null
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Radio Status"
+            },
+            "properties": [
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "from": "",
+                    "id": 1,
+                    "text": "Active",
+                    "to": "",
+                    "type": 1,
+                    "value": "3"
+                  },
+                  {
+                    "from": "",
+                    "id": 2,
+                    "text": "Off",
+                    "to": "",
+                    "type": 1,
+                    "value": "0"
+                  },
+                  {
+                    "from": "",
+                    "id": 3,
+                    "text": "On",
+                    "to": "",
+                    "type": 1,
+                    "value": "1"
+                  }
+                ]
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "dark-red",
+                      "value": null
+                    },
+                    {
+                      "color": "#EAB839",
+                      "value": 1
+                    },
+                    {
+                      "color": "dark-green",
+                      "value": 3
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "custom.displayMode",
+                "value": "color-background"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Uptime"
+            },
+            "properties": [
+              {
+                "id": "custom.displayMode",
+                "value": "color-background"
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "dark-red",
+                      "value": null
+                    },
+                    {
+                      "color": "yellow",
+                      "value": 3600
+                    },
+                    {
+                      "color": "dark-green",
+                      "value": 7200
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "I2C Bus Count Error"
+            },
+            "properties": [
+              {
+                "id": "custom.displayMode",
+                "value": "color-background"
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "dark-green",
+                      "value": null
+                    },
+                    {
+                      "color": "dark-red",
+                      "value": 1
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "RSSI"
+            },
+            "properties": [
+              {
+                "id": "custom.displayMode",
+                "value": "color-background"
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "dark-red",
+                      "value": null
+                    },
+                    {
+                      "color": "light-red",
+                      "value": -90
+                    },
+                    {
+                      "color": "dark-orange",
+                      "value": -80
+                    },
+                    {
+                      "color": "light-orange",
+                      "value": -70
+                    },
+                    {
+                      "color": "yellow",
+                      "value": -60
+                    },
+                    {
+                      "color": "dark-green",
+                      "value": -50
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "unit",
+                "value": "dBm"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 17,
+        "x": 3,
+        "y": 0
+      },
+      "id": 27,
+      "interval": null,
+      "maxDataPoints": 1,
+      "options": {
+        "frameIndex": 1,
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "7.5.0-11263pre",
+      "targets": [
+        {
+          "expr": "avg by (radio_stats_Version) (avg_over_time({app=\"weatherflow\"} | json | type=\"hub_status\" |json | json radio_stats_Version=\"radio_stats[0]\" | unwrap radio_stats_Version |  __error__=\"\" [1m]))",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "Radio Version",
+          "range": false,
+          "refId": "H"
+        },
+        {
+          "expr": "avg by (radio_stats_Reboot_Count) (avg_over_time({app=\"weatherflow\"} | json | type=\"hub_status\" |json | json radio_stats_Reboot_Count=\"radio_stats[1]\" | unwrap radio_stats_Reboot_Count |  __error__=\"\" [1m]))",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "Reboot Count",
+          "range": false,
+          "refId": "I"
+        },
+        {
+          "expr": "avg by (radio_stats_I2C_Bus_Error_Count) (avg_over_time({app=\"weatherflow\"} | json | type=\"hub_status\" |json | json radio_stats_I2C_Bus_Error_Count=\"radio_stats[2]\" | unwrap radio_stats_I2C_Bus_Error_Count |  __error__=\"\" [1m]))",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "I2C Bus Count Error",
+          "range": false,
+          "refId": "J"
+        },
+        {
+          "expr": "avg by (radio_stats_Radio_Status) (avg_over_time({app=\"weatherflow\"} | json | type=\"hub_status\" |json | json radio_stats_Radio_Status=\"radio_stats[3]\" | unwrap radio_stats_Radio_Status |  __error__=\"\" [1m]))",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "Radio Status",
+          "range": false,
+          "refId": "K"
+        },
+        {
+          "expr": "avg by (radio_stats_Radio_Network_ID) (avg_over_time({app=\"weatherflow\"} | json | type=\"hub_status\" |json | json radio_stats_Radio_Network_ID=\"radio_stats[4]\" | unwrap radio_stats_Radio_Network_ID |  __error__=\"\" [1m]))",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "Network ID",
+          "range": false,
+          "refId": "L"
+        },
+        {
+          "expr": "avg by (firmware_revision) (avg_over_time({app=\"weatherflow\"} | json | type=\"hub_status\" |json | unwrap firmware_revision |  __error__=\"\" [1m]))",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "Firmware Version",
+          "range": false,
+          "refId": "M"
+        },
+        {
+          "expr": "avg by (uptime) (avg_over_time({app=\"weatherflow\"} | json | type=\"hub_status\" |json | unwrap uptime |  __error__=\"\" [1m]))",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "Uptime",
+          "range": false,
+          "refId": "N"
+        },
+        {
+          "expr": "avg by (rssi) (avg_over_time({app=\"weatherflow\"} | json | type=\"hub_status\" |json | unwrap rssi |  __error__=\"\" [1m]))",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "RSSI",
+          "range": false,
+          "refId": "O"
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Status - Hub",
+      "transformations": [
+        {
+          "id": "seriesToColumns",
+          "options": {}
+        },
+        {
+          "id": "reduce",
+          "options": {
+            "includeTimeField": false,
+            "mode": "reduceFields",
+            "reducers": [
+              "lastNotNull"
+            ]
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "HB-00038302": false
+            },
+            "indexByName": {
+              "Value #H": 5,
+              "Value #I": 3,
+              "Value #J": 4,
+              "Value #K": 1,
+              "Value #L": 6,
+              "Value #M": 7,
+              "Value #N": 0,
+              "Value #O": 2
+            },
+            "renameByName": {
+              "Value #H": "Radio Version",
+              "Value #I": "Reboot Count",
+              "Value #J": "I2C Bus Count Error",
+              "Value #K": "Radio Status",
+              "Value #L": "Network ID",
+              "Value #M": "Firmware Version",
+              "Value #N": "Uptime",
+              "Value #O": "RSSI"
+            }
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "datasource": "Loki - weatherflow",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "center",
+            "filterable": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "dark-red",
+                "value": 1
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Description"
+            },
+            "properties": [
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "from": "",
+                    "id": 1,
+                    "text": "Sensors OK",
+                    "to": "",
+                    "type": 1,
+                    "value": "0"
+                  },
+                  {
+                    "from": "",
+                    "id": 3,
+                    "text": "Lightning Failed",
+                    "to": "",
+                    "type": 1,
+                    "value": "1"
+                  },
+                  {
+                    "from": "",
+                    "id": 4,
+                    "text": "Lightning Noise",
+                    "to": "",
+                    "type": 1,
+                    "value": "2"
+                  },
+                  {
+                    "from": "",
+                    "id": 5,
+                    "text": "Lightning Disturber",
+                    "to": "",
+                    "type": 1,
+                    "value": "4"
+                  },
+                  {
+                    "from": "",
+                    "id": 6,
+                    "text": "Pressure Failed",
+                    "to": "",
+                    "type": 1,
+                    "value": "8"
+                  },
+                  {
+                    "from": "",
+                    "id": 7,
+                    "text": "Temperature Failed",
+                    "to": "",
+                    "type": 1,
+                    "value": "16"
+                  },
+                  {
+                    "from": "",
+                    "id": 8,
+                    "text": "RH Failed",
+                    "to": "",
+                    "type": 1,
+                    "value": "32"
+                  },
+                  {
+                    "from": "",
+                    "id": 9,
+                    "text": "Wind Failed",
+                    "to": "",
+                    "type": 1,
+                    "value": "64"
+                  },
+                  {
+                    "from": "",
+                    "id": 10,
+                    "text": "Precipitation Failed",
+                    "to": "",
+                    "type": 1,
+                    "value": "128"
+                  },
+                  {
+                    "from": "",
+                    "id": 11,
+                    "text": "Light/UV Failed",
+                    "to": "",
+                    "type": 1,
+                    "value": "256"
+                  }
+                ]
+              },
+              {
+                "id": "custom.displayMode",
+                "value": "color-background"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 4,
+        "x": 20,
+        "y": 0
+      },
+      "id": 41,
+      "options": {
+        "showHeader": true,
+        "sortBy": [
+          {
+            "desc": true,
+            "displayName": "Description"
+          }
+        ]
+      },
+      "pluginVersion": "7.5.0-11263pre",
+      "targets": [
+        {
+          "expr": "sum by (sensor_status) (count_over_time({app=\"weatherflow\"} | json | type=\"device_status\" |  __error__=\"\" [$__interval]))",
+          "legendFormat": "{{sensor_status}}",
+          "refId": "A"
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Sensor Status",
+      "transformations": [
+        {
+          "id": "reduce",
+          "options": {
+            "reducers": [
+              "sum"
+            ]
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {},
+            "indexByName": {},
+            "renameByName": {
+              "Field": "Description",
+              "Total": "Total Measurements"
+            }
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "datasource": "Loki - weatherflow",
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "center",
+            "filterable": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Uptime"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "s"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Voltage"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "volt"
+              },
+              {
+                "id": "custom.displayMode",
+                "value": "color-background"
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "dark-red",
+                      "value": null
+                    },
+                    {
+                      "color": "#EAB839",
+                      "value": 2.39
+                    },
+                    {
+                      "color": "dark-green",
+                      "value": 2.455
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Hub RSSI"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "dBm"
+              },
+              {
+                "id": "custom.displayMode",
+                "value": "color-background"
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "dark-red",
+                      "value": null
+                    },
+                    {
+                      "color": "red",
+                      "value": -90
+                    },
+                    {
+                      "color": "dark-orange",
+                      "value": -80
+                    },
+                    {
+                      "color": "light-orange",
+                      "value": -70
+                    },
+                    {
+                      "color": "yellow",
+                      "value": -60
+                    },
+                    {
+                      "color": "dark-green",
+                      "value": -50
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "RSSI"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "dBm"
+              },
+              {
+                "id": "custom.displayMode",
+                "value": "color-background"
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "dark-red",
+                      "value": null
+                    },
+                    {
+                      "color": "red",
+                      "value": -90
+                    },
+                    {
+                      "color": "dark-orange",
+                      "value": -80
+                    },
+                    {
+                      "color": "light-orange",
+                      "value": -70
+                    },
+                    {
+                      "color": "yellow",
+                      "value": -60
+                    },
+                    {
+                      "color": "dark-green",
+                      "value": -50
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Uptime"
+            },
+            "properties": [
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "dark-red",
+                      "value": null
+                    },
+                    {
+                      "color": "yellow",
+                      "value": 3600
+                    },
+                    {
+                      "color": "dark-green",
+                      "value": 7200
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "custom.displayMode",
+                "value": "color-background"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 17,
+        "x": 3,
+        "y": 3
+      },
+      "id": 37,
+      "interval": null,
+      "maxDataPoints": 1,
+      "options": {
+        "frameIndex": 1,
+        "showHeader": true,
+        "sortBy": [
+          {
+            "desc": true,
+            "displayName": "Sensor Status"
+          }
+        ]
+      },
+      "pluginVersion": "7.5.0-11263pre",
+      "targets": [
+        {
+          "expr": "avg by (firmware_revision) (avg_over_time({app=\"weatherflow\"} | json | type=\"device_status\" |json | unwrap firmware_revision |  __error__=\"\" [1m]))",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "Firmware Version",
+          "range": false,
+          "refId": "G"
+        },
+        {
+          "expr": "avg by (hub_rssi) (avg_over_time({app=\"weatherflow\"} | json | type=\"device_status\" |json | unwrap hub_rssi |  __error__=\"\" [1m]))",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "Hub RSSI",
+          "range": false,
+          "refId": "H"
+        },
+        {
+          "expr": "avg by (rssi) (avg_over_time({app=\"weatherflow\"} | json | type=\"device_status\" |json | unwrap rssi |  __error__=\"\" [1m]))",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "RSSI",
+          "range": false,
+          "refId": "I"
+        },
+        {
+          "expr": "avg by (uptime) (avg_over_time({app=\"weatherflow\"} | json | type=\"device_status\" |json | unwrap uptime |  __error__=\"\" [1m]))",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "Uptime",
+          "range": false,
+          "refId": "K"
+        },
+        {
+          "expr": "avg by (voltage) (avg_over_time({app=\"weatherflow\"} | json | type=\"device_status\" |json | unwrap voltage |  __error__=\"\" [1m]))",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "Voltage",
+          "range": false,
+          "refId": "L"
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Status - Tempest",
+      "transformations": [
+        {
+          "id": "seriesToColumns",
+          "options": {}
+        },
+        {
+          "id": "reduce",
+          "options": {
+            "includeTimeField": false,
+            "mode": "reduceFields",
+            "reducers": [
+              "lastNotNull"
+            ]
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {},
+            "indexByName": {
+              "Value #G": 4,
+              "Value #H": 1,
+              "Value #I": 2,
+              "Value #K": 0,
+              "Value #L": 3
+            },
+            "renameByName": {
+              "Value #G": "Firmware Version",
+              "Value #H": "Hub RSSI",
+              "Value #I": "RSSI",
+              "Value #K": "Uptime",
+              "Value #L": "Voltage"
+            }
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "datasource": "Loki - weatherflow",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "dark-blue",
+            "mode": "fixed"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "drawStyle": "line",
+            "fillOpacity": 15,
+            "gradientMode": "opacity",
+            "hideFrom": {
+              "graph": false,
+              "legend": false,
+              "tooltip": false
+            },
+            "lineInterpolation": "smooth",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": true
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Hub"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "light-purple",
+                  "mode": "fixed"
+                }
+              },
+              {
+                "id": "custom.fillOpacity",
+                "value": 40
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Weatheflow - Hub"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-purple",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "WeatherFlow - Hub"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-purple",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 12,
+        "x": 0,
+        "y": 6
+      },
+      "id": 31,
+      "interval": null,
+      "options": {
+        "graph": {},
+        "legend": {
+          "calcs": [],
+          "displayMode": "hidden",
+          "placement": "bottom"
+        },
+        "tooltipOptions": {
+          "mode": "multi"
+        }
+      },
+      "pluginVersion": "7.4.0",
+      "targets": [
+        {
+          "expr": "avg by (rssi) (avg_over_time({app=\"weatherflow\"} | json | type=\"hub_status\" |json | unwrap rssi |  __error__=\"\" [$__interval]))",
+          "hide": false,
+          "legendFormat": "Hub",
+          "refId": "D"
+        },
+        {
+          "expr": "avg by (hub_rssi) (avg_over_time({app=\"weatherflow\"} | json | type=\"device_status\" |json | unwrap hub_rssi |  __error__=\"\" [$__interval]))",
+          "hide": false,
+          "legendFormat": "WeatherFlow - Hub",
+          "refId": "E"
+        },
+        {
+          "expr": "avg by (rssi) (avg_over_time({app=\"weatherflow\"} | json | type=\"device_status\" |json | unwrap rssi |  __error__=\"\" [$__interval]))",
+          "hide": false,
+          "legendFormat": "WeatherFlow",
+          "refId": "F"
+        }
+      ],
+      "timeFrom": null,
+      "title": "RSSI",
+      "type": "timeseries"
+    },
+    {
+      "datasource": "-- Mixed --",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "dark-purple",
+            "mode": "fixed"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "drawStyle": "line",
+            "fillOpacity": 30,
+            "gradientMode": "opacity",
+            "hideFrom": {
+              "graph": false,
+              "legend": false,
+              "tooltip": false
+            },
+            "lineInterpolation": "smooth",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": true
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "dark-red",
+                "value": null
+              },
+              {
+                "color": "#EAB839",
+                "value": 2.39
+              },
+              {
+                "color": "dark-green",
+                "value": 2.455
+              }
+            ]
+          },
+          "unit": "volt"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 12,
+        "x": 12,
+        "y": 6
+      },
+      "id": 33,
+      "interval": null,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "hidden",
+          "placement": "bottom"
+        },
+        "tooltipOptions": {
+          "mode": "single"
+        }
+      },
+      "pluginVersion": "7.4.0",
+      "targets": [
+        {
+          "datasource": "Loki - weatherflow",
+          "expr": "avg by (voltage) (avg_over_time({app=\"weatherflow\"} | json | type=\"device_status\" |json | unwrap voltage |  __error__=\"\" [$__interval]))",
+          "hide": false,
+          "legendFormat": "Voltage",
+          "refId": "B"
+        }
+      ],
+      "timeFrom": null,
+      "title": "Battery Voltage",
+      "type": "timeseries"
+    }
+  ],
+  "refresh": "5m",
+  "schemaVersion": 27,
+  "style": "dark",
+  "tags": [
+    "weatherflow",
+    "loki"
+  ],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-7d",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "browser",
+  "title": "WeatherFlow - Device Details",
+  "uid": "lux4rd0labs_weatherflow_loki_03",
+  "version": 1
+}

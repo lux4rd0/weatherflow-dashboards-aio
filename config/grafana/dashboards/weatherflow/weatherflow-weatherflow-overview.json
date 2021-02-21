@@ -1,0 +1,3056 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "description": "An overview dashboard for WeatherFlow's TEMPEST Weather System using collected raw JSON logs stored in Grafana Loki.",
+  "editable": true,
+  "gnetId": 13857,
+  "graphTooltip": 0,
+  "iteration": 1613853457835,
+  "links": [
+    {
+      "asDropdown": true,
+      "icon": "external link",
+      "tags": [
+        "weatherflow"
+      ],
+      "title": "WeatherFlow Dashboards",
+      "type": "dashboards"
+    }
+  ],
+  "panels": [
+    {
+      "datasource": "Loki - weatherflow",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "drawStyle": "line",
+            "fillOpacity": 60,
+            "gradientMode": "none",
+            "hideFrom": {
+              "graph": false,
+              "legend": false,
+              "tooltip": false
+            },
+            "lineInterpolation": "smooth",
+            "lineWidth": 3,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": true
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "fahrenheit"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "High"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-purple",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Low"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-blue",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 18,
+        "x": 0,
+        "y": 0
+      },
+      "hideTimeOverride": true,
+      "id": 2,
+      "interval": "4h",
+      "maxDataPoints": null,
+      "options": {
+        "graph": {},
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltipOptions": {
+          "mode": "multi"
+        }
+      },
+      "pluginVersion": "7.4.0",
+      "targets": [
+        {
+          "expr": "max by (obs_Air_Temperature) (max_over_time({app=\"weatherflow\"} | json | type=\"obs_st\" |json | json obs_Air_Temperature=\"obs[0][7]\" | unwrap obs_Air_Temperature | __error__=\"\" [$__interval])) * 9/5 + 32",
+          "legendFormat": "High",
+          "refId": "A"
+        },
+        {
+          "expr": "min by (obs_Air_Temperature) (min_over_time({app=\"weatherflow\"} | json | type=\"obs_st\" |json | json obs_Air_Temperature=\"obs[0][7]\" | unwrap obs_Air_Temperature | __error__=\"\" [$__interval])) * 9/5 + 32",
+          "hide": false,
+          "legendFormat": "Low",
+          "refId": "B"
+        }
+      ],
+      "timeFrom": "1d",
+      "timeShift": null,
+      "title": "Air Temperature (Last 24 Hours)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": "Loki - weatherflow",
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {},
+          "decimals": 1,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "#1A007B",
+                "value": 0
+              },
+              {
+                "color": "#1C0381",
+                "value": 1
+              },
+              {
+                "color": "#1E0888",
+                "value": 2
+              },
+              {
+                "color": "#1F0D8E",
+                "value": 3
+              },
+              {
+                "color": "#221295",
+                "value": 4
+              },
+              {
+                "color": "#24179B",
+                "value": 5
+              },
+              {
+                "color": "#271DA2",
+                "value": 6
+              },
+              {
+                "color": "#2A23A9",
+                "value": 7
+              },
+              {
+                "color": "#2D2AAF",
+                "value": 8
+              },
+              {
+                "color": "#3131B6",
+                "value": 9
+              },
+              {
+                "color": "#393CBD",
+                "value": 10
+              },
+              {
+                "color": "#4147C3",
+                "value": 11
+              },
+              {
+                "color": "#4953CA",
+                "value": 12
+              },
+              {
+                "color": "#525ED0",
+                "value": 13
+              },
+              {
+                "color": "#5B6AD7",
+                "value": 14
+              },
+              {
+                "color": "#6577DE",
+                "value": 15
+              },
+              {
+                "color": "#6F83E4",
+                "value": 16
+              },
+              {
+                "color": "#798FEB",
+                "value": 17
+              },
+              {
+                "color": "#849CF1",
+                "value": 18
+              },
+              {
+                "color": "#8FA9F8",
+                "value": 19
+              },
+              {
+                "color": "#9BB6FF",
+                "value": 20
+              },
+              {
+                "color": "#92ADFC",
+                "value": 21
+              },
+              {
+                "color": "#8AA5FA",
+                "value": 22
+              },
+              {
+                "color": "#819DF7",
+                "value": 23
+              },
+              {
+                "color": "#7995F5",
+                "value": 24
+              },
+              {
+                "color": "#718DF3",
+                "value": 25
+              },
+              {
+                "color": "#6984F0",
+                "value": 26
+              },
+              {
+                "color": "#627CEE",
+                "value": 27
+              },
+              {
+                "color": "#5A74EB",
+                "value": 28
+              },
+              {
+                "color": "#536BE9",
+                "value": 29
+              },
+              {
+                "color": "#4B63E7",
+                "value": 30
+              },
+              {
+                "color": "#445BE4",
+                "value": 31
+              },
+              {
+                "color": "#3D52E2",
+                "value": 32
+              },
+              {
+                "color": "#364ADF",
+                "value": 33
+              },
+              {
+                "color": "#2F42DD",
+                "value": 34
+              },
+              {
+                "color": "#2939DB",
+                "value": 35
+              },
+              {
+                "color": "#2231D8",
+                "value": 36
+              },
+              {
+                "color": "#1C29D6",
+                "value": 37
+              },
+              {
+                "color": "#1621D3",
+                "value": 38
+              },
+              {
+                "color": "#0F19D1",
+                "value": 39
+              },
+              {
+                "color": "#0911CF",
+                "value": 40
+              },
+              {
+                "color": "#092FD0",
+                "value": 41
+              },
+              {
+                "color": "#094FD2",
+                "value": 42
+              },
+              {
+                "color": "#096FD4",
+                "value": 43
+              },
+              {
+                "color": "#098FD6",
+                "value": 44
+              },
+              {
+                "color": "#09B1D8",
+                "value": 45
+              },
+              {
+                "color": "#09D3DA",
+                "value": 46
+              },
+              {
+                "color": "#09DCC2",
+                "value": 47
+              },
+              {
+                "color": "#09DEA3",
+                "value": 48
+              },
+              {
+                "color": "#09E083",
+                "value": 49
+              },
+              {
+                "color": "#09E263",
+                "value": 50
+              },
+              {
+                "color": "#09E341",
+                "value": 51
+              },
+              {
+                "color": "#08E520",
+                "value": 52
+              },
+              {
+                "color": "#14E708",
+                "value": 53
+              },
+              {
+                "color": "#36E908",
+                "value": 54
+              },
+              {
+                "color": "#5AEB08",
+                "value": 55
+              },
+              {
+                "color": "#7EED08",
+                "value": 56
+              },
+              {
+                "color": "#A3EF08",
+                "value": 57
+              },
+              {
+                "color": "#C8F108",
+                "value": 58
+              },
+              {
+                "color": "#EEF308",
+                "value": 59
+              },
+              {
+                "color": "#F5D408",
+                "value": 60
+              },
+              {
+                "color": "#F4CD07",
+                "value": 61
+              },
+              {
+                "color": "#F4C507",
+                "value": 62
+              },
+              {
+                "color": "#F4BD06",
+                "value": 63
+              },
+              {
+                "color": "#F4B506",
+                "value": 64
+              },
+              {
+                "color": "#F4AD05",
+                "value": 65
+              },
+              {
+                "color": "#F4A505",
+                "value": 66
+              },
+              {
+                "color": "#F49D05",
+                "value": 67
+              },
+              {
+                "color": "#F49504",
+                "value": 68
+              },
+              {
+                "color": "#F48D04",
+                "value": 69
+              },
+              {
+                "color": "#F48403",
+                "value": 70
+              },
+              {
+                "color": "#F37C03",
+                "value": 71
+              },
+              {
+                "color": "#F37403",
+                "value": 72
+              },
+              {
+                "color": "#F36C02",
+                "value": 73
+              },
+              {
+                "color": "#F36402",
+                "value": 74
+              },
+              {
+                "color": "#F35C01",
+                "value": 75
+              },
+              {
+                "color": "#F35401",
+                "value": 76
+              },
+              {
+                "color": "#F34B01",
+                "value": 77
+              },
+              {
+                "color": "#F34300",
+                "value": 78
+              },
+              {
+                "color": "#F33B00",
+                "value": 79
+              },
+              {
+                "color": "#F23300",
+                "value": 80
+              },
+              {
+                "color": "#EC2F00",
+                "value": 81
+              },
+              {
+                "color": "#E62B00",
+                "value": 82
+              },
+              {
+                "color": "#DF2700",
+                "value": 83
+              },
+              {
+                "color": "#D92400",
+                "value": 84
+              },
+              {
+                "color": "#D22100",
+                "value": 85
+              },
+              {
+                "color": "#CC1E00",
+                "value": 86
+              },
+              {
+                "color": "#C51A00",
+                "value": 87
+              },
+              {
+                "color": "#BF1800",
+                "value": 88
+              },
+              {
+                "color": "#B81500",
+                "value": 89
+              },
+              {
+                "color": "#B21200",
+                "value": 90
+              },
+              {
+                "color": "#AC1000",
+                "value": 91
+              },
+              {
+                "color": "#A50D00",
+                "value": 92
+              },
+              {
+                "color": "#9F0B00",
+                "value": 93
+              },
+              {
+                "color": "#980900",
+                "value": 94
+              },
+              {
+                "color": "#920700",
+                "value": 95
+              },
+              {
+                "color": "#8B0500",
+                "value": 96
+              },
+              {
+                "color": "#850400",
+                "value": 97
+              },
+              {
+                "color": "#7E0200",
+                "value": 98
+              },
+              {
+                "color": "#780100",
+                "value": 99
+              },
+              {
+                "color": "#720000",
+                "value": 100
+              }
+            ]
+          },
+          "unit": "fahrenheit"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 2,
+        "x": 18,
+        "y": 0
+      },
+      "hideTimeOverride": true,
+      "id": 40,
+      "interval": null,
+      "maxDataPoints": 1,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "7.5.0-11263pre",
+      "targets": [
+        {
+          "expr": "avg by (obs_Air_Temperature) (avg_over_time({app=\"weatherflow\"} | json | type=\"obs_st\" |json | json obs_Air_Temperature=\"obs[0][7]\" | unwrap obs_Air_Temperature | __error__=\"\" [1m])) * 9/5 + 32",
+          "instant": true,
+          "range": false,
+          "refId": "A"
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Current",
+      "type": "stat"
+    },
+    {
+      "datasource": "Loki - weatherflow",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {},
+          "decimals": 1,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "#1A007B",
+                "value": 0
+              },
+              {
+                "color": "#1C0381",
+                "value": 1
+              },
+              {
+                "color": "#1E0888",
+                "value": 2
+              },
+              {
+                "color": "#1F0D8E",
+                "value": 3
+              },
+              {
+                "color": "#221295",
+                "value": 4
+              },
+              {
+                "color": "#24179B",
+                "value": 5
+              },
+              {
+                "color": "#271DA2",
+                "value": 6
+              },
+              {
+                "color": "#2A23A9",
+                "value": 7
+              },
+              {
+                "color": "#2D2AAF",
+                "value": 8
+              },
+              {
+                "color": "#3131B6",
+                "value": 9
+              },
+              {
+                "color": "#393CBD",
+                "value": 10
+              },
+              {
+                "color": "#4147C3",
+                "value": 11
+              },
+              {
+                "color": "#4953CA",
+                "value": 12
+              },
+              {
+                "color": "#525ED0",
+                "value": 13
+              },
+              {
+                "color": "#5B6AD7",
+                "value": 14
+              },
+              {
+                "color": "#6577DE",
+                "value": 15
+              },
+              {
+                "color": "#6F83E4",
+                "value": 16
+              },
+              {
+                "color": "#798FEB",
+                "value": 17
+              },
+              {
+                "color": "#849CF1",
+                "value": 18
+              },
+              {
+                "color": "#8FA9F8",
+                "value": 19
+              },
+              {
+                "color": "#9BB6FF",
+                "value": 20
+              },
+              {
+                "color": "#92ADFC",
+                "value": 21
+              },
+              {
+                "color": "#8AA5FA",
+                "value": 22
+              },
+              {
+                "color": "#819DF7",
+                "value": 23
+              },
+              {
+                "color": "#7995F5",
+                "value": 24
+              },
+              {
+                "color": "#718DF3",
+                "value": 25
+              },
+              {
+                "color": "#6984F0",
+                "value": 26
+              },
+              {
+                "color": "#627CEE",
+                "value": 27
+              },
+              {
+                "color": "#5A74EB",
+                "value": 28
+              },
+              {
+                "color": "#536BE9",
+                "value": 29
+              },
+              {
+                "color": "#4B63E7",
+                "value": 30
+              },
+              {
+                "color": "#445BE4",
+                "value": 31
+              },
+              {
+                "color": "#3D52E2",
+                "value": 32
+              },
+              {
+                "color": "#364ADF",
+                "value": 33
+              },
+              {
+                "color": "#2F42DD",
+                "value": 34
+              },
+              {
+                "color": "#2939DB",
+                "value": 35
+              },
+              {
+                "color": "#2231D8",
+                "value": 36
+              },
+              {
+                "color": "#1C29D6",
+                "value": 37
+              },
+              {
+                "color": "#1621D3",
+                "value": 38
+              },
+              {
+                "color": "#0F19D1",
+                "value": 39
+              },
+              {
+                "color": "#0911CF",
+                "value": 40
+              },
+              {
+                "color": "#092FD0",
+                "value": 41
+              },
+              {
+                "color": "#094FD2",
+                "value": 42
+              },
+              {
+                "color": "#096FD4",
+                "value": 43
+              },
+              {
+                "color": "#098FD6",
+                "value": 44
+              },
+              {
+                "color": "#09B1D8",
+                "value": 45
+              },
+              {
+                "color": "#09D3DA",
+                "value": 46
+              },
+              {
+                "color": "#09DCC2",
+                "value": 47
+              },
+              {
+                "color": "#09DEA3",
+                "value": 48
+              },
+              {
+                "color": "#09E083",
+                "value": 49
+              },
+              {
+                "color": "#09E263",
+                "value": 50
+              },
+              {
+                "color": "#09E341",
+                "value": 51
+              },
+              {
+                "color": "#08E520",
+                "value": 52
+              },
+              {
+                "color": "#14E708",
+                "value": 53
+              },
+              {
+                "color": "#36E908",
+                "value": 54
+              },
+              {
+                "color": "#5AEB08",
+                "value": 55
+              },
+              {
+                "color": "#7EED08",
+                "value": 56
+              },
+              {
+                "color": "#A3EF08",
+                "value": 57
+              },
+              {
+                "color": "#C8F108",
+                "value": 58
+              },
+              {
+                "color": "#EEF308",
+                "value": 59
+              },
+              {
+                "color": "#F5D408",
+                "value": 60
+              },
+              {
+                "color": "#F4CD07",
+                "value": 61
+              },
+              {
+                "color": "#F4C507",
+                "value": 62
+              },
+              {
+                "color": "#F4BD06",
+                "value": 63
+              },
+              {
+                "color": "#F4B506",
+                "value": 64
+              },
+              {
+                "color": "#F4AD05",
+                "value": 65
+              },
+              {
+                "color": "#F4A505",
+                "value": 66
+              },
+              {
+                "color": "#F49D05",
+                "value": 67
+              },
+              {
+                "color": "#F49504",
+                "value": 68
+              },
+              {
+                "color": "#F48D04",
+                "value": 69
+              },
+              {
+                "color": "#F48403",
+                "value": 70
+              },
+              {
+                "color": "#F37C03",
+                "value": 71
+              },
+              {
+                "color": "#F37403",
+                "value": 72
+              },
+              {
+                "color": "#F36C02",
+                "value": 73
+              },
+              {
+                "color": "#F36402",
+                "value": 74
+              },
+              {
+                "color": "#F35C01",
+                "value": 75
+              },
+              {
+                "color": "#F35401",
+                "value": 76
+              },
+              {
+                "color": "#F34B01",
+                "value": 77
+              },
+              {
+                "color": "#F34300",
+                "value": 78
+              },
+              {
+                "color": "#F33B00",
+                "value": 79
+              },
+              {
+                "color": "#F23300",
+                "value": 80
+              },
+              {
+                "color": "#EC2F00",
+                "value": 81
+              },
+              {
+                "color": "#E62B00",
+                "value": 82
+              },
+              {
+                "color": "#DF2700",
+                "value": 83
+              },
+              {
+                "color": "#D92400",
+                "value": 84
+              },
+              {
+                "color": "#D22100",
+                "value": 85
+              },
+              {
+                "color": "#CC1E00",
+                "value": 86
+              },
+              {
+                "color": "#C51A00",
+                "value": 87
+              },
+              {
+                "color": "#BF1800",
+                "value": 88
+              },
+              {
+                "color": "#B81500",
+                "value": 89
+              },
+              {
+                "color": "#B21200",
+                "value": 90
+              },
+              {
+                "color": "#AC1000",
+                "value": 91
+              },
+              {
+                "color": "#A50D00",
+                "value": 92
+              },
+              {
+                "color": "#9F0B00",
+                "value": 93
+              },
+              {
+                "color": "#980900",
+                "value": 94
+              },
+              {
+                "color": "#920700",
+                "value": 95
+              },
+              {
+                "color": "#8B0500",
+                "value": 96
+              },
+              {
+                "color": "#850400",
+                "value": 97
+              },
+              {
+                "color": "#7E0200",
+                "value": 98
+              },
+              {
+                "color": "#780100",
+                "value": 99
+              },
+              {
+                "color": "#720000",
+                "value": 100
+              }
+            ]
+          },
+          "unit": "fahrenheit"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 2,
+        "x": 20,
+        "y": 0
+      },
+      "hideTimeOverride": true,
+      "id": 21,
+      "interval": "30s",
+      "maxDataPoints": 2880,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "max"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "7.5.0-11263pre",
+      "targets": [
+        {
+          "expr": "max by (obs_Air_Temperature) (max_over_time({app=\"weatherflow\"} | json | type=\"obs_st\" |json | json obs_Air_Temperature=\"obs[0][7]\" | unwrap obs_Air_Temperature | __error__=\"\" [$__interval])) * 9/5 + 32",
+          "refId": "A"
+        }
+      ],
+      "timeFrom": "now/d",
+      "timeShift": null,
+      "title": "Today's High",
+      "type": "stat"
+    },
+    {
+      "datasource": "Loki - weatherflow",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {},
+          "decimals": 1,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "#1A007B",
+                "value": -30
+              },
+              {
+                "color": "#1C0381",
+                "value": 1
+              },
+              {
+                "color": "#1E0888",
+                "value": 2
+              },
+              {
+                "color": "#1F0D8E",
+                "value": 3
+              },
+              {
+                "color": "#221295",
+                "value": 4
+              },
+              {
+                "color": "#24179B",
+                "value": 5
+              },
+              {
+                "color": "#271DA2",
+                "value": 6
+              },
+              {
+                "color": "#2A23A9",
+                "value": 7
+              },
+              {
+                "color": "#2D2AAF",
+                "value": 8
+              },
+              {
+                "color": "#3131B6",
+                "value": 9
+              },
+              {
+                "color": "#393CBD",
+                "value": 10
+              },
+              {
+                "color": "#4147C3",
+                "value": 11
+              },
+              {
+                "color": "#4953CA",
+                "value": 12
+              },
+              {
+                "color": "#525ED0",
+                "value": 13
+              },
+              {
+                "color": "#5B6AD7",
+                "value": 14
+              },
+              {
+                "color": "#6577DE",
+                "value": 15
+              },
+              {
+                "color": "#6F83E4",
+                "value": 16
+              },
+              {
+                "color": "#798FEB",
+                "value": 17
+              },
+              {
+                "color": "#849CF1",
+                "value": 18
+              },
+              {
+                "color": "#8FA9F8",
+                "value": 19
+              },
+              {
+                "color": "#9BB6FF",
+                "value": 20
+              },
+              {
+                "color": "#92ADFC",
+                "value": 21
+              },
+              {
+                "color": "#8AA5FA",
+                "value": 22
+              },
+              {
+                "color": "#819DF7",
+                "value": 23
+              },
+              {
+                "color": "#7995F5",
+                "value": 24
+              },
+              {
+                "color": "#718DF3",
+                "value": 25
+              },
+              {
+                "color": "#6984F0",
+                "value": 26
+              },
+              {
+                "color": "#627CEE",
+                "value": 27
+              },
+              {
+                "color": "#5A74EB",
+                "value": 28
+              },
+              {
+                "color": "#536BE9",
+                "value": 29
+              },
+              {
+                "color": "#4B63E7",
+                "value": 30
+              },
+              {
+                "color": "#445BE4",
+                "value": 31
+              },
+              {
+                "color": "#3D52E2",
+                "value": 32
+              },
+              {
+                "color": "#364ADF",
+                "value": 33
+              },
+              {
+                "color": "#2F42DD",
+                "value": 34
+              },
+              {
+                "color": "#2939DB",
+                "value": 35
+              },
+              {
+                "color": "#2231D8",
+                "value": 36
+              },
+              {
+                "color": "#1C29D6",
+                "value": 37
+              },
+              {
+                "color": "#1621D3",
+                "value": 38
+              },
+              {
+                "color": "#0F19D1",
+                "value": 39
+              },
+              {
+                "color": "#0911CF",
+                "value": 40
+              },
+              {
+                "color": "#092FD0",
+                "value": 41
+              },
+              {
+                "color": "#094FD2",
+                "value": 42
+              },
+              {
+                "color": "#096FD4",
+                "value": 43
+              },
+              {
+                "color": "#098FD6",
+                "value": 44
+              },
+              {
+                "color": "#09B1D8",
+                "value": 45
+              },
+              {
+                "color": "#09D3DA",
+                "value": 46
+              },
+              {
+                "color": "#09DCC2",
+                "value": 47
+              },
+              {
+                "color": "#09DEA3",
+                "value": 48
+              },
+              {
+                "color": "#09E083",
+                "value": 49
+              },
+              {
+                "color": "#09E263",
+                "value": 50
+              },
+              {
+                "color": "#09E341",
+                "value": 51
+              },
+              {
+                "color": "#08E520",
+                "value": 52
+              },
+              {
+                "color": "#14E708",
+                "value": 53
+              },
+              {
+                "color": "#36E908",
+                "value": 54
+              },
+              {
+                "color": "#5AEB08",
+                "value": 55
+              },
+              {
+                "color": "#7EED08",
+                "value": 56
+              },
+              {
+                "color": "#A3EF08",
+                "value": 57
+              },
+              {
+                "color": "#C8F108",
+                "value": 58
+              },
+              {
+                "color": "#EEF308",
+                "value": 59
+              },
+              {
+                "color": "#F5D408",
+                "value": 60
+              },
+              {
+                "color": "#F4CD07",
+                "value": 61
+              },
+              {
+                "color": "#F4C507",
+                "value": 62
+              },
+              {
+                "color": "#F4BD06",
+                "value": 63
+              },
+              {
+                "color": "#F4B506",
+                "value": 64
+              },
+              {
+                "color": "#F4AD05",
+                "value": 65
+              },
+              {
+                "color": "#F4A505",
+                "value": 66
+              },
+              {
+                "color": "#F49D05",
+                "value": 67
+              },
+              {
+                "color": "#F49504",
+                "value": 68
+              },
+              {
+                "color": "#F48D04",
+                "value": 69
+              },
+              {
+                "color": "#F48403",
+                "value": 70
+              },
+              {
+                "color": "#F37C03",
+                "value": 71
+              },
+              {
+                "color": "#F37403",
+                "value": 72
+              },
+              {
+                "color": "#F36C02",
+                "value": 73
+              },
+              {
+                "color": "#F36402",
+                "value": 74
+              },
+              {
+                "color": "#F35C01",
+                "value": 75
+              },
+              {
+                "color": "#F35401",
+                "value": 76
+              },
+              {
+                "color": "#F34B01",
+                "value": 77
+              },
+              {
+                "color": "#F34300",
+                "value": 78
+              },
+              {
+                "color": "#F33B00",
+                "value": 79
+              },
+              {
+                "color": "#F23300",
+                "value": 80
+              },
+              {
+                "color": "#EC2F00",
+                "value": 81
+              },
+              {
+                "color": "#E62B00",
+                "value": 82
+              },
+              {
+                "color": "#DF2700",
+                "value": 83
+              },
+              {
+                "color": "#D92400",
+                "value": 84
+              },
+              {
+                "color": "#D22100",
+                "value": 85
+              },
+              {
+                "color": "#CC1E00",
+                "value": 86
+              },
+              {
+                "color": "#C51A00",
+                "value": 87
+              },
+              {
+                "color": "#BF1800",
+                "value": 88
+              },
+              {
+                "color": "#B81500",
+                "value": 89
+              },
+              {
+                "color": "#B21200",
+                "value": 90
+              },
+              {
+                "color": "#AC1000",
+                "value": 91
+              },
+              {
+                "color": "#A50D00",
+                "value": 92
+              },
+              {
+                "color": "#9F0B00",
+                "value": 93
+              },
+              {
+                "color": "#980900",
+                "value": 94
+              },
+              {
+                "color": "#920700",
+                "value": 95
+              },
+              {
+                "color": "#8B0500",
+                "value": 96
+              },
+              {
+                "color": "#850400",
+                "value": 97
+              },
+              {
+                "color": "#7E0200",
+                "value": 98
+              },
+              {
+                "color": "#780100",
+                "value": 99
+              },
+              {
+                "color": "#720000",
+                "value": 100
+              }
+            ]
+          },
+          "unit": "fahrenheit"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 2,
+        "x": 22,
+        "y": 0
+      },
+      "hideTimeOverride": true,
+      "id": 22,
+      "interval": "30s",
+      "maxDataPoints": 2880,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "min"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "7.5.0-11263pre",
+      "targets": [
+        {
+          "expr": "min by (obs_Air_Temperature) (min_over_time({app=\"weatherflow\"} | json | type=\"obs_st\" |json | json obs_Air_Temperature=\"obs[0][7]\" | unwrap obs_Air_Temperature | __error__=\"\" [$__interval])) * 9/5 + 32",
+          "refId": "A"
+        }
+      ],
+      "timeFrom": "now/d",
+      "timeShift": null,
+      "title": "Today's Low",
+      "type": "stat"
+    },
+    {
+      "collapsed": false,
+      "datasource": "Loki - weatherflow",
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 8
+      },
+      "id": 15,
+      "panels": [],
+      "title": "History",
+      "type": "row"
+    },
+    {
+      "datasource": "Loki - weatherflow",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "drawStyle": "line",
+            "fillOpacity": 30,
+            "gradientMode": "none",
+            "hideFrom": {
+              "graph": false,
+              "legend": false,
+              "tooltip": false
+            },
+            "lineInterpolation": "smooth",
+            "lineStyle": {
+              "dash": [
+                10,
+                10
+              ],
+              "fill": "dash"
+            },
+            "lineWidth": 6,
+            "pointSize": 40,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "always",
+            "spanNulls": true
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "fahrenheit"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Low"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-blue",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "High"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-purple",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 18,
+        "x": 0,
+        "y": 9
+      },
+      "hideTimeOverride": true,
+      "id": 39,
+      "interval": "1d",
+      "maxDataPoints": null,
+      "options": {
+        "graph": {},
+        "legend": {
+          "calcs": [],
+          "displayMode": "hidden",
+          "placement": "bottom"
+        },
+        "tooltipOptions": {
+          "mode": "multi"
+        }
+      },
+      "pluginVersion": "7.4.0",
+      "targets": [
+        {
+          "expr": "max by (obs_Air_Temperature) (max_over_time({app=\"weatherflow\"} | json | type=\"obs_st\" |json | json obs_Air_Temperature=\"obs[0][7]\" | unwrap obs_Air_Temperature |  __error__=\"\" [$__interval])) * 9/5 + 32",
+          "hide": false,
+          "instant": false,
+          "legendFormat": "High",
+          "range": true,
+          "refId": "C"
+        },
+        {
+          "expr": "min by (obs_Air_Temperature) (min_over_time({app=\"weatherflow\"} | json | type=\"obs_st\" |json | json obs_Air_Temperature=\"obs[0][7]\" | unwrap obs_Air_Temperature |  __error__=\"\" [$__interval])) * 9/5 + 32",
+          "hide": false,
+          "instant": false,
+          "legendFormat": "Low",
+          "range": true,
+          "refId": "D"
+        }
+      ],
+      "timeFrom": "6d/d",
+      "timeShift": null,
+      "title": "Air Temperature (Last 7 Days)",
+      "transformations": [],
+      "type": "timeseries"
+    },
+    {
+      "datasource": "Loki - weatherflow",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "center",
+            "filterable": false
+          },
+          "decimals": 2,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "rgba(0, 0, 0, 0)",
+                "value": null
+              },
+              {
+                "color": "#1A007B",
+                "value": -30
+              },
+              {
+                "color": "#1C0381",
+                "value": 1
+              },
+              {
+                "color": "#1E0888",
+                "value": 2
+              },
+              {
+                "color": "#1F0D8E",
+                "value": 3
+              },
+              {
+                "color": "#221295",
+                "value": 4
+              },
+              {
+                "color": "#24179B",
+                "value": 5
+              },
+              {
+                "color": "#271DA2",
+                "value": 6
+              },
+              {
+                "color": "#2A23A9",
+                "value": 7
+              },
+              {
+                "color": "#2D2AAF",
+                "value": 8
+              },
+              {
+                "color": "#3131B6",
+                "value": 9
+              },
+              {
+                "color": "#393CBD",
+                "value": 10
+              },
+              {
+                "color": "#4147C3",
+                "value": 11
+              },
+              {
+                "color": "#4953CA",
+                "value": 12
+              },
+              {
+                "color": "#525ED0",
+                "value": 13
+              },
+              {
+                "color": "#5B6AD7",
+                "value": 14
+              },
+              {
+                "color": "#6577DE",
+                "value": 15
+              },
+              {
+                "color": "#6F83E4",
+                "value": 16
+              },
+              {
+                "color": "#798FEB",
+                "value": 17
+              },
+              {
+                "color": "#849CF1",
+                "value": 18
+              },
+              {
+                "color": "#8FA9F8",
+                "value": 19
+              },
+              {
+                "color": "#9BB6FF",
+                "value": 20
+              },
+              {
+                "color": "#92ADFC",
+                "value": 21
+              },
+              {
+                "color": "#8AA5FA",
+                "value": 22
+              },
+              {
+                "color": "#819DF7",
+                "value": 23
+              },
+              {
+                "color": "#7995F5",
+                "value": 24
+              },
+              {
+                "color": "#718DF3",
+                "value": 25
+              },
+              {
+                "color": "#6984F0",
+                "value": 26
+              },
+              {
+                "color": "#627CEE",
+                "value": 27
+              },
+              {
+                "color": "#5A74EB",
+                "value": 28
+              },
+              {
+                "color": "#536BE9",
+                "value": 29
+              },
+              {
+                "color": "#4B63E7",
+                "value": 30
+              },
+              {
+                "color": "#445BE4",
+                "value": 31
+              },
+              {
+                "color": "#3D52E2",
+                "value": 32
+              },
+              {
+                "color": "#364ADF",
+                "value": 33
+              },
+              {
+                "color": "#2F42DD",
+                "value": 34
+              },
+              {
+                "color": "#2939DB",
+                "value": 35
+              },
+              {
+                "color": "#2231D8",
+                "value": 36
+              },
+              {
+                "color": "#1C29D6",
+                "value": 37
+              },
+              {
+                "color": "#1621D3",
+                "value": 38
+              },
+              {
+                "color": "#0F19D1",
+                "value": 39
+              },
+              {
+                "color": "#0911CF",
+                "value": 40
+              },
+              {
+                "color": "#092FD0",
+                "value": 41
+              },
+              {
+                "color": "#094FD2",
+                "value": 42
+              },
+              {
+                "color": "#096FD4",
+                "value": 43
+              },
+              {
+                "color": "#098FD6",
+                "value": 44
+              },
+              {
+                "color": "#09B1D8",
+                "value": 45
+              },
+              {
+                "color": "#09D3DA",
+                "value": 46
+              },
+              {
+                "color": "#09DCC2",
+                "value": 47
+              },
+              {
+                "color": "#09DEA3",
+                "value": 48
+              },
+              {
+                "color": "#09E083",
+                "value": 49
+              },
+              {
+                "color": "#09E263",
+                "value": 50
+              },
+              {
+                "color": "#09E341",
+                "value": 51
+              },
+              {
+                "color": "#08E520",
+                "value": 52
+              },
+              {
+                "color": "#14E708",
+                "value": 53
+              },
+              {
+                "color": "#36E908",
+                "value": 54
+              },
+              {
+                "color": "#5AEB08",
+                "value": 55
+              },
+              {
+                "color": "#7EED08",
+                "value": 56
+              },
+              {
+                "color": "#A3EF08",
+                "value": 57
+              },
+              {
+                "color": "#C8F108",
+                "value": 58
+              },
+              {
+                "color": "#EEF308",
+                "value": 59
+              },
+              {
+                "color": "#F5D408",
+                "value": 60
+              },
+              {
+                "color": "#F4CD07",
+                "value": 61
+              },
+              {
+                "color": "#F4C507",
+                "value": 62
+              },
+              {
+                "color": "#F4BD06",
+                "value": 63
+              },
+              {
+                "color": "#F4B506",
+                "value": 64
+              },
+              {
+                "color": "#F4AD05",
+                "value": 65
+              },
+              {
+                "color": "#F4A505",
+                "value": 66
+              },
+              {
+                "color": "#F49D05",
+                "value": 67
+              },
+              {
+                "color": "#F49504",
+                "value": 68
+              },
+              {
+                "color": "#F48D04",
+                "value": 69
+              },
+              {
+                "color": "#F48403",
+                "value": 70
+              },
+              {
+                "color": "#F37C03",
+                "value": 71
+              },
+              {
+                "color": "#F37403",
+                "value": 72
+              },
+              {
+                "color": "#F36C02",
+                "value": 73
+              },
+              {
+                "color": "#F36402",
+                "value": 74
+              },
+              {
+                "color": "#F35C01",
+                "value": 75
+              },
+              {
+                "color": "#F35401",
+                "value": 76
+              },
+              {
+                "color": "#F34B01",
+                "value": 77
+              },
+              {
+                "color": "#F34300",
+                "value": 78
+              },
+              {
+                "color": "#F33B00",
+                "value": 79
+              },
+              {
+                "color": "#F23300",
+                "value": 80
+              },
+              {
+                "color": "#EC2F00",
+                "value": 81
+              },
+              {
+                "color": "#E62B00",
+                "value": 82
+              },
+              {
+                "color": "#DF2700",
+                "value": 83
+              },
+              {
+                "color": "#D92400",
+                "value": 84
+              },
+              {
+                "color": "#D22100",
+                "value": 85
+              },
+              {
+                "color": "#CC1E00",
+                "value": 86
+              },
+              {
+                "color": "#C51A00",
+                "value": 87
+              },
+              {
+                "color": "#BF1800",
+                "value": 88
+              },
+              {
+                "color": "#B81500",
+                "value": 89
+              },
+              {
+                "color": "#B21200",
+                "value": 90
+              },
+              {
+                "color": "#AC1000",
+                "value": 91
+              },
+              {
+                "color": "#A50D00",
+                "value": 92
+              },
+              {
+                "color": "#9F0B00",
+                "value": 93
+              },
+              {
+                "color": "#980900",
+                "value": 94
+              },
+              {
+                "color": "#920700",
+                "value": 95
+              },
+              {
+                "color": "#8B0500",
+                "value": 96
+              },
+              {
+                "color": "#850400",
+                "value": 97
+              },
+              {
+                "color": "#7E0200",
+                "value": 98
+              },
+              {
+                "color": "#780100",
+                "value": 99
+              },
+              {
+                "color": "#720000",
+                "value": 100
+              }
+            ]
+          },
+          "unit": "fahrenheit"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "High"
+            },
+            "properties": [
+              {
+                "id": "custom.displayMode",
+                "value": "color-background"
+              },
+              {
+                "id": "color"
+              },
+              {
+                "id": "custom.width",
+                "value": 120
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Low"
+            },
+            "properties": [
+              {
+                "id": "custom.displayMode",
+                "value": "color-background"
+              },
+              {
+                "id": "color"
+              },
+              {
+                "id": "custom.width",
+                "value": 120
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Date"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "time:dddd, MMMM Do YYYY"
+              },
+              {
+                "id": "custom.align",
+                "value": "left"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 6,
+        "x": 18,
+        "y": 9
+      },
+      "hideTimeOverride": true,
+      "id": 37,
+      "interval": "1d",
+      "maxDataPoints": null,
+      "options": {
+        "frameIndex": 1,
+        "showHeader": true,
+        "sortBy": [
+          {
+            "desc": true,
+            "displayName": "Time"
+          }
+        ]
+      },
+      "pluginVersion": "7.5.0-11263pre",
+      "targets": [
+        {
+          "expr": "max by (obs_Air_Temperature) (max_over_time({app=\"weatherflow\"} | json | type=\"obs_st\" |json | json obs_Air_Temperature=\"obs[0][7]\" | unwrap obs_Air_Temperature |  __error__=\"\" [$__interval])) * 9/5 + 32",
+          "legendFormat": "High",
+          "refId": "A"
+        },
+        {
+          "expr": "min by (obs_Air_Temperature) (min_over_time({app=\"weatherflow\"} | json | type=\"obs_st\" |json | json obs_Air_Temperature=\"obs[0][7]\" | unwrap obs_Air_Temperature |  __error__=\"\" [$__interval])) * 9/5 + 32",
+          "hide": false,
+          "legendFormat": "Low",
+          "refId": "B"
+        }
+      ],
+      "timeFrom": "6d/d",
+      "timeShift": "1s",
+      "title": "Air Temperature (Last 7 Days)",
+      "transformations": [
+        {
+          "id": "seriesToColumns",
+          "options": {}
+        },
+        {
+          "id": "reduce",
+          "options": {
+            "includeTimeField": false,
+            "mode": "reduceFields",
+            "reducers": []
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {},
+            "indexByName": {
+              "High": 1,
+              "Min": 2,
+              "Time": 0
+            },
+            "renameByName": {
+              "High": "",
+              "Time": "Date"
+            }
+          }
+        },
+        {
+          "id": "filterByValue",
+          "options": {
+            "filters": [
+              {
+                "config": {
+                  "id": "isNotNull",
+                  "options": {}
+                },
+                "fieldName": "High"
+              },
+              {
+                "config": {
+                  "id": "isNotNull",
+                  "options": {}
+                },
+                "fieldName": "Low"
+              }
+            ],
+            "match": "any",
+            "type": "include"
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "collapsed": false,
+      "datasource": "Loki - weatherflow",
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 18
+      },
+      "id": 20,
+      "panels": [],
+      "title": "Measurements",
+      "type": "row"
+    },
+    {
+      "datasource": "Loki - weatherflow",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "drawStyle": "line",
+            "fillOpacity": 60,
+            "gradientMode": "none",
+            "hideFrom": {
+              "graph": false,
+              "legend": false,
+              "tooltip": false
+            },
+            "lineInterpolation": "smooth",
+            "lineWidth": 3,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": true
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "humidity"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "High"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-purple",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Low"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-blue",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 8,
+        "x": 0,
+        "y": 19
+      },
+      "id": 3,
+      "interval": "$Group",
+      "options": {
+        "graph": {},
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltipOptions": {
+          "mode": "multi"
+        }
+      },
+      "pluginVersion": "7.4.0",
+      "targets": [
+        {
+          "expr": "max by (obs_Relative_Humidity) (max_over_time({app=\"weatherflow\"} | json | type=\"obs_st\" |json | json obs_Relative_Humidity=\"obs[0][8]\" | unwrap obs_Relative_Humidity |  __error__=\"\" [$__interval]))",
+          "legendFormat": "High",
+          "refId": "A"
+        },
+        {
+          "expr": "min by (obs_Relative_Humidity) (min_over_time({app=\"weatherflow\"} | json | type=\"obs_st\" |json | json obs_Relative_Humidity=\"obs[0][8]\" | unwrap obs_Relative_Humidity |  __error__=\"\" [$__interval]))",
+          "hide": false,
+          "legendFormat": "Low",
+          "refId": "B"
+        }
+      ],
+      "timeFrom": null,
+      "title": "Humidity",
+      "transformations": [],
+      "type": "timeseries"
+    },
+    {
+      "datasource": "Loki - weatherflow",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "drawStyle": "line",
+            "fillOpacity": 60,
+            "gradientMode": "none",
+            "hideFrom": {
+              "graph": false,
+              "legend": false,
+              "tooltip": false
+            },
+            "lineInterpolation": "smooth",
+            "lineWidth": 3,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": true
+          },
+          "decimals": 3,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "pressurehg"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "High"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-purple",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Low"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-blue",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 8,
+        "x": 8,
+        "y": 19
+      },
+      "id": 8,
+      "interval": "$Group",
+      "options": {
+        "graph": {},
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltipOptions": {
+          "mode": "multi"
+        }
+      },
+      "pluginVersion": "7.4.0",
+      "targets": [
+        {
+          "expr": "max by (obs_Station_Pressure) (max_over_time({app=\"weatherflow\"} | json | type=\"obs_st\" |json | json obs_Station_Pressure=\"obs[0][6]\" | unwrap obs_Station_Pressure |  __error__=\"\" [$__interval])) * .0295301",
+          "legendFormat": "High",
+          "refId": "A"
+        },
+        {
+          "expr": "min by (obs_Station_Pressure) (min_over_time({app=\"weatherflow\"} | json | type=\"obs_st\" |json | json obs_Station_Pressure=\"obs[0][6]\" | unwrap obs_Station_Pressure |  __error__=\"\" [$__interval])) * .0295301",
+          "hide": false,
+          "legendFormat": "Low",
+          "refId": "B"
+        }
+      ],
+      "timeFrom": null,
+      "title": "Station Pressure",
+      "type": "timeseries"
+    },
+    {
+      "datasource": "Loki - weatherflow",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "drawStyle": "line",
+            "fillOpacity": 60,
+            "gradientMode": "none",
+            "hideFrom": {
+              "graph": false,
+              "legend": false,
+              "tooltip": false
+            },
+            "lineInterpolation": "smooth",
+            "lineWidth": 3,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": true
+          },
+          "decimals": 1,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "velocitymph"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "High"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-purple",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Low"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-blue",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 8,
+        "x": 16,
+        "y": 19
+      },
+      "id": 4,
+      "interval": "$Group",
+      "options": {
+        "graph": {},
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltipOptions": {
+          "mode": "multi"
+        }
+      },
+      "pluginVersion": "7.4.0",
+      "targets": [
+        {
+          "expr": "max by (obs_Wind_Gust) (max_over_time({app=\"weatherflow\"} | json | type=\"obs_st\" |json | json obs_Wind_Gust=\"obs[0][3]\" | unwrap obs_Wind_Gust |  __error__=\"\" [$__interval]))",
+          "legendFormat": "High",
+          "refId": "A"
+        },
+        {
+          "expr": "min by (obs_Wind_Gust) (min_over_time({app=\"weatherflow\"} | json | type=\"obs_st\" |json | json obs_Wind_Gust=\"obs[0][3]\" | unwrap obs_Wind_Gust |  __error__=\"\" [$__interval]))",
+          "hide": false,
+          "legendFormat": "Low",
+          "refId": "B"
+        }
+      ],
+      "timeFrom": null,
+      "title": "Wind Gusts",
+      "type": "timeseries"
+    },
+    {
+      "datasource": "Loki - weatherflow",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "drawStyle": "line",
+            "fillOpacity": 60,
+            "gradientMode": "none",
+            "hideFrom": {
+              "graph": false,
+              "legend": false,
+              "tooltip": false
+            },
+            "lineInterpolation": "smooth",
+            "lineWidth": 3,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": true
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "lux"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "High"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-purple",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Low"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-blue",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 8,
+        "x": 0,
+        "y": 26
+      },
+      "id": 5,
+      "interval": "$Group",
+      "options": {
+        "graph": {},
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltipOptions": {
+          "mode": "multi"
+        }
+      },
+      "pluginVersion": "7.4.0",
+      "targets": [
+        {
+          "expr": "max by (obs_Illuminance) (max_over_time({app=\"weatherflow\"} | json | type=\"obs_st\" |json | json obs_Illuminance=\"obs[0][9]\" | unwrap obs_Illuminance |  __error__=\"\" [$__interval]))",
+          "legendFormat": "High",
+          "refId": "A"
+        },
+        {
+          "expr": "min by (obs_Illuminance) (min_over_time({app=\"weatherflow\"} | json | type=\"obs_st\" |json | json obs_Illuminance=\"obs[0][9]\" | unwrap obs_Illuminance |  __error__=\"\" [$__interval]))",
+          "hide": false,
+          "legendFormat": "Low",
+          "refId": "B"
+        }
+      ],
+      "timeFrom": null,
+      "title": "Illuminance",
+      "type": "timeseries"
+    },
+    {
+      "datasource": "Loki - weatherflow",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "drawStyle": "line",
+            "fillOpacity": 60,
+            "gradientMode": "none",
+            "hideFrom": {
+              "graph": false,
+              "legend": false,
+              "tooltip": false
+            },
+            "lineInterpolation": "smooth",
+            "lineWidth": 3,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": true
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "kwatth"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "High"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-purple",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Low"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-blue",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 8,
+        "x": 8,
+        "y": 26
+      },
+      "id": 6,
+      "interval": "$Group",
+      "options": {
+        "graph": {},
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltipOptions": {
+          "mode": "multi"
+        }
+      },
+      "pluginVersion": "7.4.0",
+      "targets": [
+        {
+          "expr": "max by (obs_Solar_Radiation) (avg_over_time({app=\"weatherflow\"} | json | type=\"obs_st\" |json | json obs_Solar_Radiation=\"obs[0][11]\" | unwrap obs_Solar_Radiation |  __error__=\"\" [$__interval]))",
+          "legendFormat": "High",
+          "refId": "A"
+        },
+        {
+          "expr": "min by (obs_Solar_Radiation) (min_over_time({app=\"weatherflow\"} | json | type=\"obs_st\" |json | json obs_Solar_Radiation=\"obs[0][11]\" | unwrap obs_Solar_Radiation |  __error__=\"\" [$__interval]))",
+          "hide": false,
+          "legendFormat": "Low",
+          "refId": "B"
+        }
+      ],
+      "timeFrom": null,
+      "title": "Solar Radiation",
+      "type": "timeseries"
+    },
+    {
+      "datasource": "Loki - weatherflow",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "drawStyle": "line",
+            "fillOpacity": 60,
+            "gradientMode": "none",
+            "hideFrom": {
+              "graph": false,
+              "legend": false,
+              "tooltip": false
+            },
+            "lineInterpolation": "smooth",
+            "lineWidth": 3,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": true
+          },
+          "decimals": 1,
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "High"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-purple",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Low"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-blue",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 8,
+        "x": 16,
+        "y": 26
+      },
+      "id": 7,
+      "interval": "$Group",
+      "options": {
+        "graph": {},
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltipOptions": {
+          "mode": "multi"
+        }
+      },
+      "pluginVersion": "7.4.0",
+      "targets": [
+        {
+          "expr": "max by (obs_UV) (max_over_time({app=\"weatherflow\"} | json | type=\"obs_st\" |json | json obs_UV=\"obs[0][10]\" | unwrap obs_UV |  __error__=\"\" [$__interval]))",
+          "legendFormat": "High",
+          "refId": "A"
+        },
+        {
+          "expr": "min by (obs_UV) (min_over_time({app=\"weatherflow\"} | json | type=\"obs_st\" |json | json obs_UV=\"obs[0][10]\" | unwrap obs_UV |  __error__=\"\" [$__interval]))",
+          "hide": false,
+          "legendFormat": "Low",
+          "refId": "B"
+        }
+      ],
+      "title": "UV",
+      "type": "timeseries"
+    }
+  ],
+  "refresh": false,
+  "schemaVersion": 27,
+  "style": "dark",
+  "tags": [
+    "weatherflow",
+    "loki"
+  ],
+  "templating": {
+    "list": [
+      {
+        "allValue": null,
+        "current": {
+          "selected": false,
+          "text": "12h",
+          "value": "12h"
+        },
+        "description": null,
+        "error": null,
+        "hide": 0,
+        "includeAll": false,
+        "label": "Group By",
+        "multi": false,
+        "name": "Group",
+        "options": [
+          {
+            "selected": false,
+            "text": "7d",
+            "value": "7d"
+          },
+          {
+            "selected": false,
+            "text": "2d",
+            "value": "2d"
+          },
+          {
+            "selected": false,
+            "text": "1d",
+            "value": "1d"
+          },
+          {
+            "selected": true,
+            "text": "12h",
+            "value": "12h"
+          },
+          {
+            "selected": false,
+            "text": "6h",
+            "value": "6h"
+          },
+          {
+            "selected": false,
+            "text": "4h",
+            "value": "4h"
+          },
+          {
+            "selected": false,
+            "text": "2h",
+            "value": "2h"
+          },
+          {
+            "selected": false,
+            "text": "1h",
+            "value": "1h"
+          },
+          {
+            "selected": false,
+            "text": "30m",
+            "value": "30m"
+          },
+          {
+            "selected": false,
+            "text": "15m",
+            "value": "15m"
+          },
+          {
+            "selected": false,
+            "text": "10m",
+            "value": "10m"
+          },
+          {
+            "selected": false,
+            "text": "5m",
+            "value": "5m"
+          },
+          {
+            "selected": false,
+            "text": "2m",
+            "value": "2m"
+          },
+          {
+            "selected": false,
+            "text": "1m",
+            "value": "1m"
+          },
+          {
+            "selected": false,
+            "text": "30s",
+            "value": "30s"
+          }
+        ],
+        "query": "7d,2d,1d,12h,6h,4h,2h,1h,30m,15m,10m,5m,2m,1m,30s",
+        "queryValue": "",
+        "skipUrlSync": false,
+        "type": "custom"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-7d",
+    "to": "now"
+  },
+  "timepicker": {
+    "refresh_intervals": [
+      "5s",
+      "10s",
+      "30s",
+      "1m",
+      "5m",
+      "15m",
+      "30m",
+      "1h",
+      "2h",
+      "1d"
+    ]
+  },
+  "timezone": "browser",
+  "title": "WeatherFlow - Overview",
+  "uid": "lux4rd0labs_weatherflow_loki_01",
+  "version": 1
+}
