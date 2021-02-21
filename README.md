@@ -2,7 +2,7 @@
 
 ## About The Project
 
-<center><img src="./images/grafana_weatherflow.png"></center>
+<center><img src="./images/weatherflow-dashboards-aio-title.png"></center>
 
 **Grafana WeatherFlow** is an example project put together to help you get up and running quickly with a UDP collector to visualize your raw [WeatherFlow Tempest](https://weatherflow.com/tempest-weather-system/) log stream with Grafana dashboards. 
 
