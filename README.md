@@ -1,12 +1,8 @@
-
-
-
-
 ## About The Project
 
 <center><img src="./images/weatherflow-dashboards-aio-title.png"></center>
 
-**Grafana WeatherFlow** is an example project put together to help you get up and running quickly with a UDP collector to visualize your raw [WeatherFlow Tempest](https://weatherflow.com/tempest-weather-system/) log stream with Grafana dashboards. 
+**WeatherFlow Dashboards AIO** is an example project put together to help you get up and running quickly with a UDP collector to visualize your raw [WeatherFlow Tempest](https://weatherflow.com/tempest-weather-system/) log stream with Grafana dashboards. 
 
 <center><img src="./images/weatherflow-weatherflow-overview.jpg"></center>
 
@@ -118,9 +114,9 @@ This docker-compose stack is designed to be as easy as possible to deploy and go
 
     GF_AUTH_ANONYMOUS_ORG_ROLE: Viewer
 
-## Downloading Grafana WeatherFlow Dashboards Individually
+## Downloading WeatherFlow Grafana Dashboards Individually
 
-The dashboards included in this Grafana WeatherFlow stack can also be downloaded separately if so desired:
+The dashboards included in this WeatherFlow Dashboards AIO stack can also be downloaded separately if so desired:
 
 - [WeatherFlow - Overview](https://grafana.com/grafana/dashboards/13938)
 - [WeatherFlow - Today So Far](https://grafana.com/grafana/dashboards/13939)
