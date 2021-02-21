@@ -1,5 +1,6 @@
 
 
+
 ## About The Project
 
 <center><img src="./images/weatherflow-dashboards-aio-title.png"></center>
@@ -94,20 +95,20 @@ The last hour over time for Temperature, Relative Humidity, Station Pressure, Ac
 
 **WeatherFlow - Device Details**
 
-<center><img src="./images/weatherflow-weatherflow-device-details.jpg"></center>
+<center><img src="./images/weatherflow-weatherflow-device_details.jpg"></center>
 
 Provides the current status for both the Tempest and WeatherFlow hub such as Uptime, Radio Status, RSSI, Reboot Count, I2C Bus Count Error, Radio Version, Network ID, Firmware Version, and Voltage.
 
-<center><img src="./images/weatherflow-weatherflow-device-details_status.jpg"></center>
+<center><img src="./images/weatherflow-weatherflow-device_details-device_status.jpg"></center>
 
 Another panel provides an overview of Sensor Status measurements - either "Sensors OK" or if there were any failures.
 
-<center><img src="./images/weatherflow-weatherflow-device-details_sensor-status.jpg"></center>
+<center><img src="./images/weatherflow-weatherflow-device_details-sensor_status.jpg"></center>
 
 There's also RSSI and Battery Voltage over time defaulted to the the last 7 days.
 
-<center><img src="./images/weatherflow-weatherflow-device-details_over-time.jpg"></center>
-
+<center><img src="./images/weatherflow-weatherflow-device_details-battery.jpg"></center>
+<center><img src="./images/weatherflow-weatherflow-device_details-rssi.jpg"></center>
 
 
 ## Default Security
