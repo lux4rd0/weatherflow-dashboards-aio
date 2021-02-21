@@ -1,6 +1,7 @@
 
 
 
+
 ## About The Project
 
 <center><img src="./images/weatherflow-dashboards-aio-title.png"></center>
@@ -121,9 +122,9 @@ This docker-compose stack is designed to be as easy as possible to deploy and go
 
 The dashboards included in this Grafana WeatherFlow stack can also be downloaded separately if so desired:
 
-- WeatherFlow - Overview
-- WeatherFlow - Today So Far
-- WeatherFlow - Device Details
+- [WeatherFlow - Overview](https://grafana.com/grafana/dashboards/13938)
+- [WeatherFlow - Today So Far](https://grafana.com/grafana/dashboards/13939)
+- [WeatherFlow - Device Details](https://grafana.com/grafana/dashboards/13940)
 
 ## Roadmap
 
