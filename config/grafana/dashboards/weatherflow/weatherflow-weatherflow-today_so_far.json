@@ -16,7 +16,6 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 6,
   "links": [
     {
       "asDropdown": true,
@@ -54,6 +53,7 @@
           "custom": {
             "axisLabel": "",
             "axisPlacement": "auto",
+            "barAlignment": 0,
             "drawStyle": "line",
             "fillOpacity": 30,
             "gradientMode": "opacity",
@@ -107,7 +107,7 @@
       "targets": [
         {
           "alias": "Temperature",
-          "expr": "avg by (obs_Air_Temperature) (avg_over_time({app=\"weatherflow\"} | json | type=\"obs_st\" |json | json obs_Air_Temperature=\"obs[0][7]\" | unwrap obs_Air_Temperature |  __error__=\"\" [$__interval])) * 9/5 + 32",
+          "expr": "avg(avg_over_time({app=\"weatherflow\"} |= \"obs_st\" | json obs_Air_Temperature=\"obs[0][7]\" | unwrap obs_Air_Temperature | __error__=\"\" [$__interval])) * 9/5 + 32",
           "groupBy": [
             {
               "params": [
@@ -166,6 +166,7 @@
           "custom": {
             "axisLabel": "",
             "axisPlacement": "auto",
+            "barAlignment": 0,
             "drawStyle": "line",
             "fillOpacity": 30,
             "gradientMode": "opacity",
@@ -219,7 +220,7 @@
       "targets": [
         {
           "alias": "Humidity",
-          "expr": "avg by (obs_Relative_Humidity) (avg_over_time({app=\"weatherflow\"} | json | type=\"obs_st\" |json | json obs_Relative_Humidity=\"obs[0][8]\" | unwrap obs_Relative_Humidity |  __error__=\"\" [$__interval]))",
+          "expr": "avg(avg_over_time({app=\"weatherflow\"} |= \"obs_st\" | json obs_Relative_Humidity=\"obs[0][8]\" | unwrap obs_Relative_Humidity | __error__=\"\" [$__interval]))",
           "groupBy": [
             {
               "params": [
@@ -272,6 +273,7 @@
           "custom": {
             "axisLabel": "",
             "axisPlacement": "auto",
+            "barAlignment": 0,
             "drawStyle": "line",
             "fillOpacity": 30,
             "gradientMode": "opacity",
@@ -326,7 +328,7 @@
       "targets": [
         {
           "alias": "Pressure",
-          "expr": "avg by (obs_Station_Pressure) (avg_over_time({app=\"weatherflow\"} | json | type=\"obs_st\" |json | json obs_Station_Pressure=\"obs[0][6]\" | unwrap obs_Station_Pressure |  __error__=\"\"[$__interval])) * .0295301",
+          "expr": "avg(avg_over_time({app=\"weatherflow\"} |= \"obs_st\" | json obs_Station_Pressure=\"obs[0][6]\" | unwrap obs_Station_Pressure | __error__=\"\" [$__interval])) * .0295301",
           "groupBy": [
             {
               "params": [
@@ -385,6 +387,7 @@
           "custom": {
             "axisLabel": "",
             "axisPlacement": "auto",
+            "barAlignment": 0,
             "drawStyle": "line",
             "fillOpacity": 30,
             "gradientMode": "opacity",
@@ -491,6 +494,7 @@
           "custom": {
             "axisLabel": "",
             "axisPlacement": "auto",
+            "barAlignment": 0,
             "drawStyle": "line",
             "fillOpacity": 30,
             "gradientMode": "opacity",
@@ -544,7 +548,7 @@
       "targets": [
         {
           "alias": "Solar Radiation",
-          "expr": "avg by (obs_Solar_Radiation) (avg_over_time({app=\"weatherflow\"} | json | type=\"obs_st\" |json | json obs_Solar_Radiation=\"obs[0][11]\" | unwrap obs_Solar_Radiation |  __error__=\"\" [$__interval]))",
+          "expr": "avg(avg_over_time({app=\"weatherflow\"} |= \"obs_st\" | json obs_Solar_Radiation=\"obs[0][11]\" | unwrap obs_Solar_Radiation | __error__=\"\" [$__interval]))",
           "groupBy": [
             {
               "params": [
@@ -597,6 +601,7 @@
           "custom": {
             "axisLabel": "",
             "axisPlacement": "auto",
+            "barAlignment": 0,
             "drawStyle": "line",
             "fillOpacity": 30,
             "gradientMode": "opacity",
@@ -650,7 +655,7 @@
       "targets": [
         {
           "alias": "Illuminance",
-          "expr": "avg by (obs_Illuminance) (avg_over_time({app=\"weatherflow\"} | json | type=\"obs_st\" |json | json obs_Illuminance=\"obs[0][9]\" | unwrap obs_Illuminance |  __error__=\"\" [$__interval]))",
+          "expr": "avg(avg_over_time({app=\"weatherflow\"} |= \"obs_st\" | json obs_Illuminance=\"obs[0][9]\" | unwrap obs_Illuminance | __error__=\"\" [$__interval]))",
           "groupBy": [
             {
               "params": [
@@ -704,6 +709,7 @@
             "axisLabel": "",
             "axisPlacement": "auto",
             "axisSoftMin": 0,
+            "barAlignment": 0,
             "drawStyle": "line",
             "fillOpacity": 30,
             "gradientMode": "opacity",
@@ -757,7 +763,7 @@
       "targets": [
         {
           "alias": "UV",
-          "expr": "avg by (obs_UV) (avg_over_time({app=\"weatherflow\"} | json | type=\"obs_st\" |json | json obs_UV=\"obs[0][10]\" | unwrap obs_UV |  __error__=\"\" [$__interval]))",
+          "expr": "avg(avg_over_time({app=\"weatherflow\"} |= \"obs_st\" | json obs_UV=\"obs[0][10]\" | unwrap obs_UV | __error__=\"\" [$__interval]))",
           "groupBy": [
             {
               "params": [
@@ -810,6 +816,7 @@
           "custom": {
             "axisLabel": "",
             "axisPlacement": "auto",
+            "barAlignment": 0,
             "drawStyle": "line",
             "fillOpacity": 30,
             "gradientMode": "opacity",
@@ -1074,10 +1081,10 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.5.0-11263pre",
+      "pluginVersion": "7.4.2",
       "targets": [
         {
-          "expr": "avg by (ob_Wind_Direction) (avg_over_time({app=\"weatherflow\"} | json | type=\"rapid_wind\" |json | json ob_Wind_Direction=\"ob[2]\" | unwrap ob_Wind_Direction |  __error__=\"\" [$__interval]))",
+          "expr": "avg(avg_over_time({app=\"weatherflow\"} |= \"rapid_wind\" | json ob_Wind_Direction=\"ob[2]\" | unwrap ob_Wind_Direction | __error__=\"\" [$__interval]))",
           "groupBy": [
             {
               "params": [
@@ -1132,6 +1139,7 @@
           "custom": {
             "axisLabel": "",
             "axisPlacement": "auto",
+            "barAlignment": 0,
             "drawStyle": "line",
             "fillOpacity": 30,
             "gradientMode": "opacity",
@@ -1187,7 +1195,7 @@
       "targets": [
         {
           "alias": "Rapid Wind",
-          "expr": "avg by (ob_Wind_Speed) (avg_over_time({app=\"weatherflow\"} | json | type=\"rapid_wind\" |json | json ob_Wind_Speed=\"ob[1]\" | unwrap ob_Wind_Speed |  __error__=\"\" [$__interval]))",
+          "expr": "avg(avg_over_time({app=\"weatherflow\"} |= \"rapid_wind\" | json ob_Wind_Speed=\"ob[1]\" | unwrap ob_Wind_Speed | __error__=\"\" [$__interval]))",
           "groupBy": [
             {
               "params": [
@@ -1236,6 +1244,7 @@
           "custom": {
             "axisLabel": "",
             "axisPlacement": "auto",
+            "barAlignment": 0,
             "drawStyle": "line",
             "fillOpacity": 30,
             "gradientMode": "none",
@@ -1379,7 +1388,7 @@
       "targets": [
         {
           "alias": "Wind Average",
-          "expr": "avg by (obs_Wind_Lull) (avg_over_time({app=\"weatherflow\"} | json | type=\"obs_st\" |json | json obs_Wind_Lull=\"obs[0][1]\" | unwrap obs_Wind_Lull |  __error__=\"\" [$__interval]))",
+          "expr": "avg(avg_over_time({app=\"weatherflow\"} |= \"obs_st\" | json obs_Wind_Lull=\"obs[0][1]\" | unwrap obs_Wind_Lull | __error__=\"\" [$__interval]))",
           "groupBy": [
             {
               "params": [
@@ -1412,7 +1421,7 @@
         },
         {
           "alias": "Wind Gust",
-          "expr": "avg by (obs_Wind_Avg) (avg_over_time({app=\"weatherflow\"} | json | type=\"obs_st\" |json | json obs_Wind_Avg=\"obs[0][2]\" | unwrap obs_Wind_Avg |  __error__=\"\" [$__interval]))",
+          "expr": "avg(avg_over_time({app=\"weatherflow\"} |= \"obs_st\" | json obs_Wind_Avg=\"obs[0][2]\" | unwrap obs_Wind_Avg | __error__=\"\" [$__interval]))",
           "groupBy": [
             {
               "params": [
@@ -1446,7 +1455,7 @@
         },
         {
           "alias": "Wind Lull",
-          "expr": "avg by (obs_Wind_Gust) (avg_over_time({app=\"weatherflow\"} | json | type=\"obs_st\" |json | json obs_Wind_Gust=\"obs[0][3]\" | unwrap obs_Wind_Gust |  __error__=\"\" [$__interval]))",
+          "expr": "avg(avg_over_time({app=\"weatherflow\"} |= \"obs_st\" | json obs_Wind_Gust=\"obs[0][3]\" | unwrap obs_Wind_Gust | __error__=\"\" [$__interval]))",
           "groupBy": [
             {
               "params": [
@@ -1502,5 +1511,5 @@
   "timezone": "",
   "title": "WeatherFlow - Today So Far",
   "uid": "lux4rd0labs_weatherflow_loki_02",
-  "version": 1
+  "version": 2
 }
