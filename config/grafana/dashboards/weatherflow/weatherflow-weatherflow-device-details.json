@@ -84,7 +84,7 @@
       "options": {
         "showHeader": true
       },
-      "pluginVersion": "7.5.0-11263pre",
+      "pluginVersion": "7.4.2",
       "targets": [
         {
           "expr": "topk(1,sum by (serial_number) (count_over_time({app=\"weatherflow\"} | json | type=\"hub_status\" |  __error__=\"\" [$__interval])))",
@@ -342,10 +342,10 @@
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "7.5.0-11263pre",
+      "pluginVersion": "7.4.2",
       "targets": [
         {
-          "expr": "avg by (radio_stats_Version) (avg_over_time({app=\"weatherflow\"} | json | type=\"hub_status\" |json | json radio_stats_Version=\"radio_stats[0]\" | unwrap radio_stats_Version |  __error__=\"\" [1m]))",
+          "expr": "avg(avg_over_time({app=\"weatherflow\"} |= \"hub_status\" | json radio_stats_Version=\"radio_stats[0]\" | unwrap radio_stats_Version | __error__=\"\" [1m]))",
           "hide": false,
           "instant": true,
           "legendFormat": "Radio Version",
@@ -353,7 +353,7 @@
           "refId": "H"
         },
         {
-          "expr": "avg by (radio_stats_Reboot_Count) (avg_over_time({app=\"weatherflow\"} | json | type=\"hub_status\" |json | json radio_stats_Reboot_Count=\"radio_stats[1]\" | unwrap radio_stats_Reboot_Count |  __error__=\"\" [1m]))",
+          "expr": "avg(avg_over_time({app=\"weatherflow\"} |= \"hub_status\" | json radio_stats_Reboot_Count=\"radio_stats[1]\" | unwrap radio_stats_Reboot_Count | __error__=\"\" [1m]))",
           "hide": false,
           "instant": true,
           "legendFormat": "Reboot Count",
@@ -361,7 +361,7 @@
           "refId": "I"
         },
         {
-          "expr": "avg by (radio_stats_I2C_Bus_Error_Count) (avg_over_time({app=\"weatherflow\"} | json | type=\"hub_status\" |json | json radio_stats_I2C_Bus_Error_Count=\"radio_stats[2]\" | unwrap radio_stats_I2C_Bus_Error_Count |  __error__=\"\" [1m]))",
+          "expr": "avg(avg_over_time({app=\"weatherflow\"} |= \"hub_status\" | json radio_stats_I2C_Bus_Error_Count=\"radio_stats[2]\" | unwrap radio_stats_I2C_Bus_Error_Count | __error__=\"\" [1m]))",
           "hide": false,
           "instant": true,
           "legendFormat": "I2C Bus Count Error",
@@ -369,7 +369,7 @@
           "refId": "J"
         },
         {
-          "expr": "avg by (radio_stats_Radio_Status) (avg_over_time({app=\"weatherflow\"} | json | type=\"hub_status\" |json | json radio_stats_Radio_Status=\"radio_stats[3]\" | unwrap radio_stats_Radio_Status |  __error__=\"\" [1m]))",
+          "expr": "avg(avg_over_time({app=\"weatherflow\"} |= \"hub_status\" | json radio_stats_Radio_Status=\"radio_stats[3]\" | unwrap radio_stats_Radio_Status | __error__=\"\" [1m]))",
           "hide": false,
           "instant": true,
           "legendFormat": "Radio Status",
@@ -377,7 +377,7 @@
           "refId": "K"
         },
         {
-          "expr": "avg by (radio_stats_Radio_Network_ID) (avg_over_time({app=\"weatherflow\"} | json | type=\"hub_status\" |json | json radio_stats_Radio_Network_ID=\"radio_stats[4]\" | unwrap radio_stats_Radio_Network_ID |  __error__=\"\" [1m]))",
+          "expr": "avg(avg_over_time({app=\"weatherflow\"} |= \"hub_status\" | json radio_stats_Radio_Network_ID=\"radio_stats[4]\" | unwrap radio_stats_Radio_Network_ID | __error__=\"\" [1m]))",
           "hide": false,
           "instant": true,
           "legendFormat": "Network ID",
@@ -385,7 +385,7 @@
           "refId": "L"
         },
         {
-          "expr": "avg by (firmware_revision) (avg_over_time({app=\"weatherflow\"} | json | type=\"hub_status\" |json | unwrap firmware_revision |  __error__=\"\" [1m]))",
+          "expr": "avg(avg_over_time({app=\"weatherflow\"} |= \"hub_status\" | json | unwrap firmware_revision | __error__=\"\" [1m]))",
           "hide": false,
           "instant": true,
           "legendFormat": "Firmware Version",
@@ -393,7 +393,7 @@
           "refId": "M"
         },
         {
-          "expr": "avg by (uptime) (avg_over_time({app=\"weatherflow\"} | json | type=\"hub_status\" |json | unwrap uptime |  __error__=\"\" [1m]))",
+          "expr": "avg(avg_over_time({app=\"weatherflow\"} |= \"hub_status\" | json | unwrap uptime | __error__=\"\" [1m]))",
           "hide": false,
           "instant": true,
           "legendFormat": "Uptime",
@@ -401,7 +401,7 @@
           "refId": "N"
         },
         {
-          "expr": "avg by (rssi) (avg_over_time({app=\"weatherflow\"} | json | type=\"hub_status\" |json | unwrap rssi |  __error__=\"\" [1m]))",
+          "expr": "avg(avg_over_time({app=\"weatherflow\"} |= \"hub_status\" | json | unwrap rssi | __error__=\"\" [1m]))",
           "hide": false,
           "instant": true,
           "legendFormat": "RSSI",
@@ -600,7 +600,7 @@
           }
         ]
       },
-      "pluginVersion": "7.5.0-11263pre",
+      "pluginVersion": "7.4.2",
       "targets": [
         {
           "expr": "sum by (sensor_status) (count_over_time({app=\"weatherflow\"} | json | type=\"device_status\" |  __error__=\"\" [$__interval]))",
@@ -859,10 +859,10 @@
           }
         ]
       },
-      "pluginVersion": "7.5.0-11263pre",
+      "pluginVersion": "7.4.2",
       "targets": [
         {
-          "expr": "avg by (firmware_revision) (avg_over_time({app=\"weatherflow\"} | json | type=\"device_status\" |json | unwrap firmware_revision |  __error__=\"\" [1m]))",
+          "expr": "avg(avg_over_time({app=\"weatherflow\"} |= \"device_status\" | json | unwrap firmware_revision | __error__=\"\" [1m]))",
           "hide": false,
           "instant": true,
           "legendFormat": "Firmware Version",
@@ -870,7 +870,7 @@
           "refId": "G"
         },
         {
-          "expr": "avg by (hub_rssi) (avg_over_time({app=\"weatherflow\"} | json | type=\"device_status\" |json | unwrap hub_rssi |  __error__=\"\" [1m]))",
+          "expr": "avg(avg_over_time({app=\"weatherflow\"} |= \"device_status\" | json | unwrap hub_rssi | __error__=\"\" [1m]))",
           "hide": false,
           "instant": true,
           "legendFormat": "Hub RSSI",
@@ -878,7 +878,7 @@
           "refId": "H"
         },
         {
-          "expr": "avg by (rssi) (avg_over_time({app=\"weatherflow\"} | json | type=\"device_status\" |json | unwrap rssi |  __error__=\"\" [1m]))",
+          "expr": "avg(avg_over_time({app=\"weatherflow\"} |= \"device_status\" | json | unwrap rssi | __error__=\"\" [1m]))",
           "hide": false,
           "instant": true,
           "legendFormat": "RSSI",
@@ -886,7 +886,7 @@
           "refId": "I"
         },
         {
-          "expr": "avg by (uptime) (avg_over_time({app=\"weatherflow\"} | json | type=\"device_status\" |json | unwrap uptime |  __error__=\"\" [1m]))",
+          "expr": "avg(avg_over_time({app=\"weatherflow\"} |= \"device_status\" | json | unwrap uptime | __error__=\"\" [1m]))",
           "hide": false,
           "instant": true,
           "legendFormat": "Uptime",
@@ -894,7 +894,7 @@
           "refId": "K"
         },
         {
-          "expr": "avg by (voltage) (avg_over_time({app=\"weatherflow\"} | json | type=\"device_status\" |json | unwrap voltage |  __error__=\"\" [1m]))",
+          "expr": "avg(avg_over_time({app=\"weatherflow\"} |= \"device_status\" | json | unwrap voltage | __error__=\"\" [1m]))",
           "hide": false,
           "instant": true,
           "legendFormat": "Voltage",
@@ -954,6 +954,7 @@
           "custom": {
             "axisLabel": "",
             "axisPlacement": "auto",
+            "barAlignment": 0,
             "drawStyle": "line",
             "fillOpacity": 15,
             "gradientMode": "opacity",
@@ -1057,19 +1058,19 @@
       "pluginVersion": "7.4.0",
       "targets": [
         {
-          "expr": "avg by (rssi) (avg_over_time({app=\"weatherflow\"} | json | type=\"hub_status\" |json | unwrap rssi |  __error__=\"\" [$__interval]))",
+          "expr": "avg(avg_over_time({app=\"weatherflow\"} |= \"hub_status\" | json | unwrap rssi | __error__=\"\" [$__interval]))",
           "hide": false,
           "legendFormat": "Hub",
           "refId": "D"
         },
         {
-          "expr": "avg by (hub_rssi) (avg_over_time({app=\"weatherflow\"} | json | type=\"device_status\" |json | unwrap hub_rssi |  __error__=\"\" [$__interval]))",
+          "expr": "avg(avg_over_time({app=\"weatherflow\"} |= \"device_status\" | json | unwrap hub_rssi | __error__=\"\" [$__interval]))",
           "hide": false,
           "legendFormat": "WeatherFlow - Hub",
           "refId": "E"
         },
         {
-          "expr": "avg by (rssi) (avg_over_time({app=\"weatherflow\"} | json | type=\"device_status\" |json | unwrap rssi |  __error__=\"\" [$__interval]))",
+          "expr": "avg(avg_over_time({app=\"weatherflow\"} |= \"device_status\" | json | unwrap rssi | __error__=\"\" [$__interval]))",
           "hide": false,
           "legendFormat": "WeatherFlow",
           "refId": "F"
@@ -1090,6 +1091,7 @@
           "custom": {
             "axisLabel": "",
             "axisPlacement": "auto",
+            "barAlignment": 0,
             "drawStyle": "line",
             "fillOpacity": 30,
             "gradientMode": "opacity",
@@ -1151,7 +1153,7 @@
       "targets": [
         {
           "datasource": "Loki - weatherflow",
-          "expr": "avg by (voltage) (avg_over_time({app=\"weatherflow\"} | json | type=\"device_status\" |json | unwrap voltage |  __error__=\"\" [$__interval]))",
+          "expr": "avg(avg_over_time({app=\"weatherflow\"} |= \"device_status\" | json | unwrap voltage | __error__=\"\" [$__interval]))",
           "hide": false,
           "legendFormat": "Voltage",
           "refId": "B"
@@ -1180,5 +1182,5 @@
   "timezone": "browser",
   "title": "WeatherFlow - Device Details",
   "uid": "lux4rd0labs_weatherflow_loki_03",
-  "version": 1
+  "version": 2
 }
