@@ -16,7 +16,7 @@
   "editable": true,
   "gnetId": 13857,
   "graphTooltip": 0,
-  "iteration": 1613853457835,
+  "iteration": 1614006722153,
   "links": [
     {
       "asDropdown": true,
@@ -39,6 +39,7 @@
           "custom": {
             "axisLabel": "",
             "axisPlacement": "auto",
+            "barAlignment": 0,
             "drawStyle": "line",
             "fillOpacity": 60,
             "gradientMode": "none",
@@ -125,12 +126,12 @@
       "pluginVersion": "7.4.0",
       "targets": [
         {
-          "expr": "max by (obs_Air_Temperature) (max_over_time({app=\"weatherflow\"} | json | type=\"obs_st\" |json | json obs_Air_Temperature=\"obs[0][7]\" | unwrap obs_Air_Temperature | __error__=\"\" [$__interval])) * 9/5 + 32",
+          "expr": "max(max_over_time({app=\"weatherflow\"} |= \"obs_st\" | json obs_Air_Temperature=\"obs[0][7]\" | unwrap obs_Air_Temperature | __error__=\"\" [$__interval])) * 9/5 + 32",
           "legendFormat": "High",
           "refId": "A"
         },
         {
-          "expr": "min by (obs_Air_Temperature) (min_over_time({app=\"weatherflow\"} | json | type=\"obs_st\" |json | json obs_Air_Temperature=\"obs[0][7]\" | unwrap obs_Air_Temperature | __error__=\"\" [$__interval])) * 9/5 + 32",
+          "expr": "min(min_over_time({app=\"weatherflow\"} |= \"obs_st\" | json obs_Air_Temperature=\"obs[0][7]\" | unwrap obs_Air_Temperature | __error__=\"\" [$__interval])) * 9/5 + 32",
           "hide": false,
           "legendFormat": "Low",
           "refId": "B"
@@ -594,10 +595,10 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.5.0-11263pre",
+      "pluginVersion": "7.4.2",
       "targets": [
         {
-          "expr": "avg by (obs_Air_Temperature) (avg_over_time({app=\"weatherflow\"} | json | type=\"obs_st\" |json | json obs_Air_Temperature=\"obs[0][7]\" | unwrap obs_Air_Temperature | __error__=\"\" [1m])) * 9/5 + 32",
+          "expr": "avg(avg_over_time({app=\"weatherflow\"} |= \"obs_st\" | json obs_Air_Temperature=\"obs[0][7]\" | unwrap obs_Air_Temperature | __error__=\"\" [1m])) * 9/5 + 32",
           "instant": true,
           "range": false,
           "refId": "A"
@@ -1060,10 +1061,10 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.5.0-11263pre",
+      "pluginVersion": "7.4.2",
       "targets": [
         {
-          "expr": "max by (obs_Air_Temperature) (max_over_time({app=\"weatherflow\"} | json | type=\"obs_st\" |json | json obs_Air_Temperature=\"obs[0][7]\" | unwrap obs_Air_Temperature | __error__=\"\" [$__interval])) * 9/5 + 32",
+          "expr": "max(max_over_time({app=\"weatherflow\"} |= \"obs_st\" | json obs_Air_Temperature=\"obs[0][7]\" | unwrap obs_Air_Temperature | __error__=\"\" [$__interval])) * 9/5 + 32",
           "refId": "A"
         }
       ],
@@ -1524,10 +1525,10 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.5.0-11263pre",
+      "pluginVersion": "7.4.2",
       "targets": [
         {
-          "expr": "min by (obs_Air_Temperature) (min_over_time({app=\"weatherflow\"} | json | type=\"obs_st\" |json | json obs_Air_Temperature=\"obs[0][7]\" | unwrap obs_Air_Temperature | __error__=\"\" [$__interval])) * 9/5 + 32",
+          "expr": "min(min_over_time({app=\"weatherflow\"} |= \"obs_st\" | json obs_Air_Temperature=\"obs[0][7]\" | unwrap obs_Air_Temperature | __error__=\"\" [$__interval])) * 9/5 + 32",
           "refId": "A"
         }
       ],
@@ -1560,6 +1561,7 @@
           "custom": {
             "axisLabel": "",
             "axisPlacement": "auto",
+            "barAlignment": 0,
             "drawStyle": "line",
             "fillOpacity": 30,
             "gradientMode": "none",
@@ -1653,7 +1655,7 @@
       "pluginVersion": "7.4.0",
       "targets": [
         {
-          "expr": "max by (obs_Air_Temperature) (max_over_time({app=\"weatherflow\"} | json | type=\"obs_st\" |json | json obs_Air_Temperature=\"obs[0][7]\" | unwrap obs_Air_Temperature |  __error__=\"\" [$__interval])) * 9/5 + 32",
+          "expr": "max(max_over_time({app=\"weatherflow\"} |= \"obs_st\" | json obs_Air_Temperature=\"obs[0][7]\" | unwrap obs_Air_Temperature | __error__=\"\" [$__interval])) * 9/5 + 32",
           "hide": false,
           "instant": false,
           "legendFormat": "High",
@@ -1661,7 +1663,7 @@
           "refId": "C"
         },
         {
-          "expr": "min by (obs_Air_Temperature) (min_over_time({app=\"weatherflow\"} | json | type=\"obs_st\" |json | json obs_Air_Temperature=\"obs[0][7]\" | unwrap obs_Air_Temperature |  __error__=\"\" [$__interval])) * 9/5 + 32",
+          "expr": "min(min_over_time({app=\"weatherflow\"} |= \"obs_st\" | json obs_Air_Temperature=\"obs[0][7]\" | unwrap obs_Air_Temperature | __error__=\"\" [$__interval])) * 9/5 + 32",
           "hide": false,
           "instant": false,
           "legendFormat": "Low",
@@ -2180,15 +2182,15 @@
           }
         ]
       },
-      "pluginVersion": "7.5.0-11263pre",
+      "pluginVersion": "7.4.2",
       "targets": [
         {
-          "expr": "max by (obs_Air_Temperature) (max_over_time({app=\"weatherflow\"} | json | type=\"obs_st\" |json | json obs_Air_Temperature=\"obs[0][7]\" | unwrap obs_Air_Temperature |  __error__=\"\" [$__interval])) * 9/5 + 32",
+          "expr": "max(max_over_time({app=\"weatherflow\"} |= \"obs_st\" | json obs_Air_Temperature=\"obs[0][7]\" | unwrap obs_Air_Temperature | __error__=\"\" [$__interval])) * 9/5 + 32",
           "legendFormat": "High",
           "refId": "A"
         },
         {
-          "expr": "min by (obs_Air_Temperature) (min_over_time({app=\"weatherflow\"} | json | type=\"obs_st\" |json | json obs_Air_Temperature=\"obs[0][7]\" | unwrap obs_Air_Temperature |  __error__=\"\" [$__interval])) * 9/5 + 32",
+          "expr": "min(min_over_time({app=\"weatherflow\"} |= \"obs_st\" | json obs_Air_Temperature=\"obs[0][7]\" | unwrap obs_Air_Temperature | __error__=\"\" [$__interval])) * 9/5 + 32",
           "hide": false,
           "legendFormat": "Low",
           "refId": "B"
@@ -2275,6 +2277,7 @@
           "custom": {
             "axisLabel": "",
             "axisPlacement": "auto",
+            "barAlignment": 0,
             "drawStyle": "line",
             "fillOpacity": 60,
             "gradientMode": "none",
@@ -2359,12 +2362,12 @@
       "pluginVersion": "7.4.0",
       "targets": [
         {
-          "expr": "max by (obs_Relative_Humidity) (max_over_time({app=\"weatherflow\"} | json | type=\"obs_st\" |json | json obs_Relative_Humidity=\"obs[0][8]\" | unwrap obs_Relative_Humidity |  __error__=\"\" [$__interval]))",
+          "expr": "max(max_over_time({app=\"weatherflow\"} |= \"obs_st\" | json obs_Relative_Humidity=\"obs[0][8]\" | unwrap obs_Relative_Humidity | __error__=\"\" [$__interval]))",
           "legendFormat": "High",
           "refId": "A"
         },
         {
-          "expr": "min by (obs_Relative_Humidity) (min_over_time({app=\"weatherflow\"} | json | type=\"obs_st\" |json | json obs_Relative_Humidity=\"obs[0][8]\" | unwrap obs_Relative_Humidity |  __error__=\"\" [$__interval]))",
+          "expr": "min(min_over_time({app=\"weatherflow\"} |= \"obs_st\" | json obs_Relative_Humidity=\"obs[0][8]\" | unwrap obs_Relative_Humidity | __error__=\"\" [$__interval]))",
           "hide": false,
           "legendFormat": "Low",
           "refId": "B"
@@ -2385,6 +2388,7 @@
           "custom": {
             "axisLabel": "",
             "axisPlacement": "auto",
+            "barAlignment": 0,
             "drawStyle": "line",
             "fillOpacity": 60,
             "gradientMode": "none",
@@ -2470,12 +2474,12 @@
       "pluginVersion": "7.4.0",
       "targets": [
         {
-          "expr": "max by (obs_Station_Pressure) (max_over_time({app=\"weatherflow\"} | json | type=\"obs_st\" |json | json obs_Station_Pressure=\"obs[0][6]\" | unwrap obs_Station_Pressure |  __error__=\"\" [$__interval])) * .0295301",
+          "expr": "max(max_over_time({app=\"weatherflow\"} |= \"obs_st\" | json obs_Station_Pressure=\"obs[0][6]\" | unwrap obs_Station_Pressure | __error__=\"\" [$__interval])) * .0295301",
           "legendFormat": "High",
           "refId": "A"
         },
         {
-          "expr": "min by (obs_Station_Pressure) (min_over_time({app=\"weatherflow\"} | json | type=\"obs_st\" |json | json obs_Station_Pressure=\"obs[0][6]\" | unwrap obs_Station_Pressure |  __error__=\"\" [$__interval])) * .0295301",
+          "expr": "min(min_over_time({app=\"weatherflow\"} |= \"obs_st\" | json obs_Station_Pressure=\"obs[0][6]\" | unwrap obs_Station_Pressure | __error__=\"\" [$__interval])) * .0295301",
           "hide": false,
           "legendFormat": "Low",
           "refId": "B"
@@ -2495,6 +2499,7 @@
           "custom": {
             "axisLabel": "",
             "axisPlacement": "auto",
+            "barAlignment": 0,
             "drawStyle": "line",
             "fillOpacity": 60,
             "gradientMode": "none",
@@ -2580,12 +2585,12 @@
       "pluginVersion": "7.4.0",
       "targets": [
         {
-          "expr": "max by (obs_Wind_Gust) (max_over_time({app=\"weatherflow\"} | json | type=\"obs_st\" |json | json obs_Wind_Gust=\"obs[0][3]\" | unwrap obs_Wind_Gust |  __error__=\"\" [$__interval]))",
+          "expr": "max(max_over_time({app=\"weatherflow\"} |= \"obs_st\" | json obs_Wind_Gust=\"obs[0][3]\" | unwrap obs_Wind_Gust | __error__=\"\" [$__interval]))",
           "legendFormat": "High",
           "refId": "A"
         },
         {
-          "expr": "min by (obs_Wind_Gust) (min_over_time({app=\"weatherflow\"} | json | type=\"obs_st\" |json | json obs_Wind_Gust=\"obs[0][3]\" | unwrap obs_Wind_Gust |  __error__=\"\" [$__interval]))",
+          "expr": "min(min_over_time({app=\"weatherflow\"} |= \"obs_st\" | json obs_Wind_Gust=\"obs[0][3]\" | unwrap obs_Wind_Gust | __error__=\"\" [$__interval]))",
           "hide": false,
           "legendFormat": "Low",
           "refId": "B"
@@ -2605,6 +2610,7 @@
           "custom": {
             "axisLabel": "",
             "axisPlacement": "auto",
+            "barAlignment": 0,
             "drawStyle": "line",
             "fillOpacity": 60,
             "gradientMode": "none",
@@ -2689,12 +2695,12 @@
       "pluginVersion": "7.4.0",
       "targets": [
         {
-          "expr": "max by (obs_Illuminance) (max_over_time({app=\"weatherflow\"} | json | type=\"obs_st\" |json | json obs_Illuminance=\"obs[0][9]\" | unwrap obs_Illuminance |  __error__=\"\" [$__interval]))",
+          "expr": "max(max_over_time({app=\"weatherflow\"} |= \"obs_st\" | json obs_Illuminance=\"obs[0][9]\" | unwrap obs_Illuminance | __error__=\"\" [$__interval]))",
           "legendFormat": "High",
           "refId": "A"
         },
         {
-          "expr": "min by (obs_Illuminance) (min_over_time({app=\"weatherflow\"} | json | type=\"obs_st\" |json | json obs_Illuminance=\"obs[0][9]\" | unwrap obs_Illuminance |  __error__=\"\" [$__interval]))",
+          "expr": "min(min_over_time({app=\"weatherflow\"} |= \"obs_st\" | json obs_Illuminance=\"obs[0][9]\" | unwrap obs_Illuminance | __error__=\"\" [$__interval]))",
           "hide": false,
           "legendFormat": "Low",
           "refId": "B"
@@ -2714,6 +2720,7 @@
           "custom": {
             "axisLabel": "",
             "axisPlacement": "auto",
+            "barAlignment": 0,
             "drawStyle": "line",
             "fillOpacity": 60,
             "gradientMode": "none",
@@ -2798,12 +2805,12 @@
       "pluginVersion": "7.4.0",
       "targets": [
         {
-          "expr": "max by (obs_Solar_Radiation) (avg_over_time({app=\"weatherflow\"} | json | type=\"obs_st\" |json | json obs_Solar_Radiation=\"obs[0][11]\" | unwrap obs_Solar_Radiation |  __error__=\"\" [$__interval]))",
+          "expr": "max(max_over_time({app=\"weatherflow\"} |= \"obs_st\" | json obs_Solar_Radiation=\"obs[0][11]\" | unwrap obs_Solar_Radiation | __error__=\"\" [$__interval]))",
           "legendFormat": "High",
           "refId": "A"
         },
         {
-          "expr": "min by (obs_Solar_Radiation) (min_over_time({app=\"weatherflow\"} | json | type=\"obs_st\" |json | json obs_Solar_Radiation=\"obs[0][11]\" | unwrap obs_Solar_Radiation |  __error__=\"\" [$__interval]))",
+          "expr": "min(min_over_time({app=\"weatherflow\"} |= \"obs_st\" | json obs_Solar_Radiation=\"obs[0][11]\" | unwrap obs_Solar_Radiation | __error__=\"\" [$__interval]))",
           "hide": false,
           "legendFormat": "Low",
           "refId": "B"
@@ -2823,6 +2830,7 @@
           "custom": {
             "axisLabel": "",
             "axisPlacement": "auto",
+            "barAlignment": 0,
             "drawStyle": "line",
             "fillOpacity": 60,
             "gradientMode": "none",
@@ -2909,12 +2917,12 @@
       "pluginVersion": "7.4.0",
       "targets": [
         {
-          "expr": "max by (obs_UV) (max_over_time({app=\"weatherflow\"} | json | type=\"obs_st\" |json | json obs_UV=\"obs[0][10]\" | unwrap obs_UV |  __error__=\"\" [$__interval]))",
+          "expr": "max(max_over_time({app=\"weatherflow\"} |= \"obs_st\" | json obs_UV=\"obs[0][10]\" | unwrap obs_UV | __error__=\"\" [$__interval]))",
           "legendFormat": "High",
           "refId": "A"
         },
         {
-          "expr": "min by (obs_UV) (min_over_time({app=\"weatherflow\"} | json | type=\"obs_st\" |json | json obs_UV=\"obs[0][10]\" | unwrap obs_UV |  __error__=\"\" [$__interval]))",
+          "expr": "min(min_over_time({app=\"weatherflow\"} |= \"obs_st\" | json obs_UV=\"obs[0][10]\" | unwrap obs_UV | __error__=\"\" [$__interval]))",
           "hide": false,
           "legendFormat": "Low",
           "refId": "B"
@@ -3052,5 +3060,5 @@
   "timezone": "browser",
   "title": "WeatherFlow - Overview",
   "uid": "lux4rd0labs_weatherflow_loki_01",
-  "version": 1
+  "version": 2
 }
