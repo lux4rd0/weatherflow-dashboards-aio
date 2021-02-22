@@ -27,9 +27,9 @@ The project is built around a pre-configured Docker stack containing the followi
 
 To get started, download one of [the releases](https://github.com/lux4rd0/grafana-weatherflow/releases) from this repository and extract it into an empty directory. For example:
 
-    wget https://github.com/lux4rd0/weatherflow-dashboards-aio/archive/v1.00.zip
-    unzip v1.00.zip
-    cd grafana-weatherflow-v1.00.zip
+    wget https://github.com/lux4rd0/weatherflow-dashboards-aio/archive/v1.01.zip
+    unzip v1.01.zip
+    cd grafana-weatherflow-v1.01.zip
 
 ## Data Retention and Storage Locations
 
