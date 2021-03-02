@@ -27,9 +27,9 @@ The project is built around a pre-configured Docker stack containing the followi
 
 To get started, download one of [the releases](https://github.com/lux4rd0/grafana-weatherflow/releases) from this repository and extract it into an empty directory. For example:
 
-    wget https://github.com/lux4rd0/weatherflow-dashboards-aio/archive/v1.01.zip
-    unzip v1.01.zip
-    cd grafana-weatherflow-v1.01.zip
+    wget https://github.com/lux4rd0/weatherflow-dashboards-aio/archive/v1.02.zip
+    unzip v1.02.zip
+    cd grafana-weatherflow-v1.02.zip
 
 ## Data Retention and Storage Locations
 
@@ -74,7 +74,7 @@ From the above directory, run the docker-compose command:
 
 This will start to download the Grafana and Loki application containers (**Grafana** and **Grafana Loki**) and it builds the **WeatherFlow Listener** container. The "`-d`" command places the containers into "detached" mode *(run containers in the background)*. The configuration also sets each of the containers to auto-start.
 
-*Note, this project is built and tested on Linux CentOS 7.* 
+*Note, this project has been tested on 64-bit CentOS 7 (centos-release-7-9.2009.1.el7.centos.x86_64) and 32-bit Raspberry Pi 4 (Raspberry Pi OS/January 11th 2021)* 
 
 ## Grafana Dashboards
 
