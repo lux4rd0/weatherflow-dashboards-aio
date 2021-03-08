@@ -8,7 +8,7 @@
 
 This project uses [Grafana Promtail](https://grafana.com/docs/loki/latest/clients/promtail/) and a slightly updated [UDP Python collector](https://github.com/p-doyle/Simple-WeatherFlow-Python-Listener) from [P Doyle](https://github.com/p-doyle/) to forward raw JSON logs to a [Grafana Loki](https://grafana.com/oss/loki/) log aggregation backend.  Several pre-configured [Grafana dashboards](https://grafana.com/oss/grafana/) are provided which utilizes Loki's easy to use *metrics from logs* to visualize WeatherFlow data over time.
 
-WeatherFlow Tempest -> WeatherFlow Hub -> UDP Collector (port 50022) -> Grafana Promtail -> Grafana Loki <- Grafana Dashboards
+WeatherFlow Tempest -> WeatherFlow Hub -> UDP Collector (port 50222) -> Grafana Promtail -> Grafana Loki <- Grafana Dashboards
 
 ## Getting Started
 
