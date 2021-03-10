@@ -12,7 +12,7 @@
       }
     ]
   },
-  "description": "An overview dashboard for WeatherFlow's TEMPEST Weather System using collected raw JSON logs stored in Grafana Loki.",
+  "description": "An overview dashboard for WeatherFlow's Weather Systems using collected raw JSON logs stored in Grafana Loki.",
   "editable": true,
   "gnetId": 13857,
   "graphTooltip": 0,
