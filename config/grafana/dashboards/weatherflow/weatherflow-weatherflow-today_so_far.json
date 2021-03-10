@@ -16,32 +16,20 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
+  "id": 6,
   "links": [
     {
       "asDropdown": true,
       "icon": "external link",
       "tags": [
-        "weatherflow"
+        "weatherflow",
+        "loki"
       ],
       "title": "WeatherFlow Dashboards",
       "type": "dashboards"
     }
   ],
   "panels": [
-    {
-      "collapsed": false,
-      "datasource": "Loki - weatherflow",
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 0
-      },
-      "id": 10,
-      "panels": [],
-      "title": "Observations",
-      "type": "row"
-    },
     {
       "datasource": "Loki - weatherflow",
       "fieldConfig": {
@@ -89,7 +77,7 @@
         "h": 7,
         "w": 6,
         "x": 0,
-        "y": 1
+        "y": 0
       },
       "id": 2,
       "options": {
@@ -127,6 +115,52 @@
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "temperature"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              },
+              {
+                "params": [
+                  "* 9/5 + 32"
+                ],
+                "type": "math"
+              }
+            ]
+          ],
+          "tags": []
+        },
+        {
+          "alias": "Temperature",
+          "expr": "avg(avg_over_time({app=\"weatherflow\"} |= \"obs_air\" | json obs_Air_Temperature=\"obs[0][2]\" | unwrap obs_Air_Temperature | __error__=\"\" [$__interval])) * 9/5 + 32",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "legendFormat": "Temperature",
+          "measurement": "wf/obs_st",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "B",
           "resultFormat": "time_series",
           "select": [
             [
@@ -202,7 +236,7 @@
         "h": 7,
         "w": 6,
         "x": 6,
-        "y": 1
+        "y": 0
       },
       "id": 3,
       "options": {
@@ -240,6 +274,46 @@
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "relative_humidity"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        },
+        {
+          "alias": "Humidity",
+          "expr": "avg(avg_over_time({app=\"weatherflow\"} |= \"air_st\" | json obs_Relative_Humidity=\"obs[0][3]\" | unwrap obs_Relative_Humidity | __error__=\"\" [$__interval]))",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "legendFormat": "Relative Humidity",
+          "measurement": "wf/obs_st",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "B",
           "resultFormat": "time_series",
           "select": [
             [
@@ -310,7 +384,7 @@
         "h": 7,
         "w": 6,
         "x": 12,
-        "y": 1
+        "y": 0
       },
       "id": 4,
       "options": {
@@ -348,6 +422,52 @@
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "station_pressure"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              },
+              {
+                "params": [
+                  "* .0295301"
+                ],
+                "type": "math"
+              }
+            ]
+          ],
+          "tags": []
+        },
+        {
+          "alias": "Pressure",
+          "expr": "avg(avg_over_time({app=\"weatherflow\"} |= \"obs_air\" | json obs_Station_Pressure=\"obs[0][1]\" | unwrap obs_Station_Pressure | __error__=\"\" [$__interval])) * .0295301",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "legendFormat": "Station Pressure",
+          "measurement": "wf/obs_st",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "B",
           "resultFormat": "time_series",
           "select": [
             [
@@ -423,7 +543,7 @@
         "h": 7,
         "w": 6,
         "x": 18,
-        "y": 1
+        "y": 0
       },
       "id": 25,
       "options": {
@@ -461,6 +581,46 @@
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "rain_accumulated"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        },
+        {
+          "alias": "Accumulated",
+          "expr": "avg by (obs_Precip_Accumilated) (avg_over_time({app=\"weatherflow\"} | json | type=\"obs_sky\" |json | json obs_Precip_Accumilated=\"obs[0][3]\" | unwrap obs_Precip_Accumilated  |  __error__=\"\" [$__interval]))",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "legendFormat": "Accumulated Rain",
+          "measurement": "wf/obs_st",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "B",
           "resultFormat": "time_series",
           "select": [
             [
@@ -530,7 +690,7 @@
         "h": 7,
         "w": 6,
         "x": 0,
-        "y": 8
+        "y": 7
       },
       "id": 22,
       "options": {
@@ -568,6 +728,46 @@
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "solar_radiation"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        },
+        {
+          "alias": "Solar Radiation",
+          "expr": "avg(avg_over_time({app=\"weatherflow\"} |= \"obs_sky\" | json obs_Solar_Radiation=\"obs[0][10]\" | unwrap obs_Solar_Radiation | __error__=\"\" [$__interval]))",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "legendFormat": "Solar Radiation",
+          "measurement": "wf/obs_st",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "B",
           "resultFormat": "time_series",
           "select": [
             [
@@ -637,7 +837,7 @@
         "h": 7,
         "w": 6,
         "x": 6,
-        "y": 8
+        "y": 7
       },
       "id": 21,
       "options": {
@@ -675,6 +875,46 @@
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "illuminance"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        },
+        {
+          "alias": "Illuminance",
+          "expr": "avg(avg_over_time({app=\"weatherflow\"} |= \"obs_sky\" | json obs_Illuminance=\"obs[0][1]\" | unwrap obs_Illuminance | __error__=\"\" [$__interval]))",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "legendFormat": "Illuminance",
+          "measurement": "wf/obs_st",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "B",
           "resultFormat": "time_series",
           "select": [
             [
@@ -745,7 +985,7 @@
         "h": 7,
         "w": 6,
         "x": 12,
-        "y": 8
+        "y": 7
       },
       "id": 23,
       "options": {
@@ -783,6 +1023,46 @@
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "uv"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        },
+        {
+          "alias": "UV",
+          "expr": "avg(avg_over_time({app=\"weatherflow\"} |= \"obs_sky\" | json obs_UV=\"obs[0][2]\" | unwrap obs_UV | __error__=\"\" [$__interval]))",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "legendFormat": "UV",
+          "measurement": "wf/obs_st",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "B",
           "resultFormat": "time_series",
           "select": [
             [
@@ -868,7 +1148,7 @@
         "h": 7,
         "w": 6,
         "x": 18,
-        "y": 8
+        "y": 7
       },
       "id": 24,
       "options": {
@@ -946,6 +1226,86 @@
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "lightning_strike_avg_distance"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        },
+        {
+          "alias": "Average Distance",
+          "expr": "avg by (obs_Lightning_Strike_Avg_Distance) (avg_over_time({app=\"weatherflow\"} | json | type=\"obs_air\" |json | json obs_Lightning_Strike_Avg_Distance=\"obs[0][5]\" | unwrap obs_Lightning_Strike_Avg_Distance |  __error__=\"\" [$__interval]))",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "legendFormat": "Average Distance",
+          "measurement": "wf/obs_st",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "C",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "lightning_strike_avg_distance"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        },
+        {
+          "alias": "Count",
+          "expr": "avg by (obs_Lightning_Strike_Count) (avg_over_time({app=\"weatherflow\"} | json | type=\"obs_air\" |json | json obs_Lightning_Strike_Count=\"obs[0][4]\" | unwrap obs_Lightning_Strike_Count |  __error__=\"\" [$__interval]))",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "legendFormat": "Count",
+          "measurement": "wf/obs_st",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "D",
           "resultFormat": "time_series",
           "select": [
             [
@@ -1059,7 +1419,7 @@
         "h": 7,
         "w": 6,
         "x": 0,
-        "y": 15
+        "y": 14
       },
       "hideTimeOverride": true,
       "id": 20,
@@ -1081,7 +1441,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.4.2",
+      "pluginVersion": "7.4.3",
       "targets": [
         {
           "expr": "avg(avg_over_time({app=\"weatherflow\"} |= \"rapid_wind\" | json ob_Wind_Direction=\"ob[2]\" | unwrap ob_Wind_Direction | __error__=\"\" [$__interval]))",
@@ -1176,10 +1536,11 @@
         "h": 7,
         "w": 9,
         "x": 6,
-        "y": 15
+        "y": 14
       },
       "hideTimeOverride": true,
       "id": 14,
+      "interval": null,
       "options": {
         "graph": {},
         "legend": {
@@ -1228,7 +1589,7 @@
         }
       ],
       "timeFrom": "60s",
-      "timeShift": "5s",
+      "timeShift": null,
       "title": "Wind Speed (Rapid / 60 Seconds)",
       "type": "timeseries"
     },
@@ -1369,7 +1730,7 @@
         "h": 7,
         "w": 9,
         "x": 15,
-        "y": 15
+        "y": 14
       },
       "id": 5,
       "interval": "5m",
@@ -1486,6 +1847,108 @@
             ]
           ],
           "tags": []
+        },
+        {
+          "alias": "Wind Average",
+          "expr": "avg(avg_over_time({app=\"weatherflow\"} |= \"obs_air\" | json obs_Wind_Lull=\"obs[0][4]\" | unwrap obs_Wind_Lull | __error__=\"\" [$__interval]))",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            }
+          ],
+          "hide": false,
+          "legendFormat": "Lull",
+          "measurement": "wf/obs_st",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "D",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "wind_avg"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        },
+        {
+          "alias": "Wind Gust",
+          "expr": "avg(avg_over_time({app=\"weatherflow\"} |= \"obs_air\" | json obs_Wind_Avg=\"obs[0][5]\" | unwrap obs_Wind_Avg | __error__=\"\" [$__interval]))",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            }
+          ],
+          "hide": false,
+          "legendFormat": "Average",
+          "measurement": "wf/obs_st",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "E",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "wind_gust"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        },
+        {
+          "alias": "Wind Lull",
+          "expr": "avg(avg_over_time({app=\"weatherflow\"} |= \"obs_air\" | json obs_Wind_Gust=\"obs[0][6]\" | unwrap obs_Wind_Gust | __error__=\"\" [$__interval]))",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            }
+          ],
+          "hide": false,
+          "legendFormat": "Gust",
+          "measurement": "wf/obs_st",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "F",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "wind_lull"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
         }
       ],
       "timeFrom": null,
@@ -1511,5 +1974,5 @@
   "timezone": "",
   "title": "WeatherFlow - Today So Far",
   "uid": "lux4rd0labs_weatherflow_loki_02",
-  "version": 2
+  "version": 3
 }
