@@ -293,7 +293,7 @@
         },
         {
           "alias": "Humidity",
-          "expr": "avg(avg_over_time({app=\"weatherflow\"} |= \"air_st\" | json obs_Relative_Humidity=\"obs[0][3]\" | unwrap obs_Relative_Humidity | __error__=\"\" [$__interval]))",
+          "expr": "avg(avg_over_time({app=\"weatherflow\"} |= \"obs_air\" | json obs_Relative_Humidity=\"obs[0][3]\" | unwrap obs_Relative_Humidity | __error__=\"\" [$__interval]))",
           "groupBy": [
             {
               "params": [
