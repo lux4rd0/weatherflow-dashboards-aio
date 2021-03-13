@@ -23,6 +23,10 @@ The project is built around a pre-configured Docker stack containing the followi
 - [Docker](https://docs.docker.com/install)
 - [Docker Compose](https://docs.docker.com/compose/install)
 
+## Notice
+
+Like all projects - this is always in a state of flux based on trying out new things and seeing what works and what doesn't work. It started as a fun exercise to visualize "what's possible" and I'm experimenting with different collectors and backends. That being said, please expect breaking changes along the way.
+
 ## Using
 
 To get started, download one of [the releases](https://github.com/lux4rd0/grafana-weatherflow/releases) from this repository and extract it into an empty directory. For example:
