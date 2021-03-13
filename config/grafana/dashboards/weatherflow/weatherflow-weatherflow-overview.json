@@ -2432,13 +2432,13 @@
           "refId": "B"
         },
         {
-          "expr": "max(max_over_time({app=\"weatherflow\"} |= \"air_st\" | json obs_Relative_Humidity=\"obs[0][3]\" | unwrap obs_Relative_Humidity | __error__=\"\" [$__interval]))",
+          "expr": "max(max_over_time({app=\"weatherflow\"} |= \"obs_air\" | json obs_Relative_Humidity=\"obs[0][3]\" | unwrap obs_Relative_Humidity | __error__=\"\" [$__interval]))",
           "hide": false,
           "legendFormat": "High",
           "refId": "C"
         },
         {
-          "expr": "min(min_over_time({app=\"weatherflow\"} |= \"air_st\" | json obs_Relative_Humidity=\"obs[0][3]\" | unwrap obs_Relative_Humidity | __error__=\"\" [$__interval]))",
+          "expr": "min(min_over_time({app=\"weatherflow\"} |= \"obs_air\" | json obs_Relative_Humidity=\"obs[0][3]\" | unwrap obs_Relative_Humidity | __error__=\"\" [$__interval]))",
           "hide": false,
           "legendFormat": "Low",
           "refId": "D"
