@@ -2,13 +2,15 @@
 
 <center><img src="./images/weatherflow-dashboards-aio-title.png"></center>
 
-**WeatherFlow Dashboards AIO** is an example project put together to help you get up and running quickly with a UDP collector to visualize your raw [WeatherFlow Tempest](https://weatherflow.com/tempest-weather-system/) log stream with Grafana dashboards. 
+**WeatherFlow Dashboards AIO** is an example project put together to help you get up and running quickly with a local-udp, remote-socket, and remote-rest collector to visualize your [WeatherFlow Tempest](https://weatherflow.com/tempest-weather-system/) log streams with Grafana dashboards. 
 
 <center><img src="https://github.com/lux4rd0/weatherflow-collector/blob/main/images/weatherflow-forecast-influxdb.jpg"></center>
 
-This project uses [Grafana Promtail](https://grafana.com/docs/loki/latest/clients/promtail/) and a slightly updated [UDP Python collector](https://github.com/p-doyle/Simple-WeatherFlow-Python-Listener) from [P Doyle](https://github.com/p-doyle/) to collect JSON logs and publish them to a [Grafana Loki](https://grafana.com/oss/loki/) log aggregation backend or an InfluxDB TSDB.  Several pre-configured [Grafana dashboards](https://grafana.com/oss/grafana/) are provided, which utilizes Loki's easy to use *metrics from logs* to visualize WeatherFlow data over time.
+This project uses [Grafana Promtail](https://grafana.com/docs/loki/latest/clients/promtail/) and a slightly updated [UDP Python collector](https://github.com/p-doyle/Simple-WeatherFlow-Python-Listener) from [P Doyle](https://github.com/p-doyle/) to collect JSON logs and publish them to either a [Grafana Loki](https://grafana.com/oss/loki/) log aggregation backend or an InfluxDB TSDB.  Several pre-configured [Grafana dashboards](https://grafana.com/oss/grafana/) are provided to visualize WeatherFlow data over time.
 
-WeatherFlow Tempest -> WeatherFlow Hub -> UDP Collector (port 50222) -> Grafana Promtail -> Grafana Loki <- Grafana Dashboards
+WeatherFlow Tempest -> WeatherFlow Hub -> UDP Collector (port 50222) -> Grafana Promtail -> Loki/InfluxDB <- Grafana Dashboards
+
+remote-socket/remote-rest <- weatherflow-collector -> Loki/InfluxDB
 
 ## Getting Started
 
