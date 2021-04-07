@@ -33,9 +33,9 @@ Like all projects - this is always in a flux state based on trying out new thing
 
 To get started, download one of [the releases](https://github.com/lux4rd0/grafana-weatherflow/releases) from this repository and extract it into an empty directory. For example:
 
-    wget https://github.com/lux4rd0/weatherflow-dashboards-aio/archive/v2.0.1.zip
-    unzip v2.0.1.zip
-    cd weatherflow-dashboards-aio-2.0.1
+    wget https://github.com/lux4rd0/weatherflow-dashboards-aio/archive/v2.1.0.zip
+    unzip v2.1.0.zip
+    cd weatherflow-dashboards-aio-2.1.0
 
 ## Data Retention and Storage Locations
 
