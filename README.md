@@ -15,8 +15,8 @@ WeatherFlow Tempest -> WeatherFlow Hub -> UDP Collector (port 50222) -> Grafana 
 The project is built around a pre-configured Docker stack containing the following containers:
 
  - [Grafana](https://grafana.com/oss/grafana/)
- - [Grafana Loki](https://grafana.com/oss/loki/)
- - [WeatherFlow UDP Listener](https://github.com/p-doyle/Simple-WeatherFlow-Python-Listener)
+ - [InfluxDB 1.8](https://docs.influxdata.com/influxdb/v1.8/)
+ - [WeatherFlow Collector](https://github.com/lux4rd0/weatherflow-collector)
 
 ## Prerequisites
 
@@ -31,52 +31,21 @@ Like all projects - this is always in a state of flux based on trying out new th
 
 To get started, download one of [the releases](https://github.com/lux4rd0/grafana-weatherflow/releases) from this repository and extract it into an empty directory. For example:
 
-    wget https://github.com/lux4rd0/weatherflow-dashboards-aio/archive/v1.05.zip
-    unzip v1.05.zip
-    cd grafana-weatherflow-v1.05.zip
+    wget https://github.com/lux4rd0/weatherflow-dashboards-aio/archive/v2.0.0.zip
+    unzip v2.0.0.zip
+    cd weatherflow-dashboards-aio.v2.0.0.zip
 
 ## Data Retention and Storage Locations
 
-The raw logs collected from the WeatherFlow UDP collector get sent over to Grafana's Loki log aggregation system. The storage for that data is persisted into a local filesystem mount outside of the Loki container. Because of the user permissions inside the container needing to match the local file system - there are some updates needed to map the UID (user ID) and GID (group ID) for both.
 
-There are three scripts you can use to start, stop, and remove docker containers that help with this mapping:
-
-`up.sh` `stop.sh`,  and `down.sh`
-
-It looks at the user running the commands and sets a variable for the UID and GID that docker-compose then uses to start the Loki container.
-
-    export UID_GID="$(id -u):$(id -g)" 
-
-You can either update the `docker-compose.yml` file with these settings, change the up.sh and down.sh scripts, or change the file permissions to reflect the Loki container requirements.
-
-UID `10001` and GID `10001`
-
-This uses the /data/loki folder to store the Loki data files. Update the `docker-compose.yml` file if you want to place it someplace else on your file system.
-
-## Startup
-
-If using the `up.sh` `stop.sh`,  and `down.sh` scripts:
-
-### Start
-
-    bash ./up.sh
-
-### Stop
-
-    bash ./stop.sh
-
-### Remove
-
-    bash ./down.sh
 
 ### Manually
 
 From the above directory, run the docker-compose command:
 
-    export UID_GID="$(id -u):$(id -g)" 
     docker-compose -f docker-compose.yml up -d
 
-This will start to download the Grafana and Loki application containers (**Grafana** and **Grafana Loki**) and it builds the **WeatherFlow Listener** container. The "`-d`" command places the containers into "detached" mode *(run containers in the background)*. The configuration also sets each of the containers to auto-start.
+This will start to download the Grafana, InfluxDB, and weatherflow-collector application containers The "`-d`" command places the containers into "detached" mode *(run containers in the background)*. The configuration also sets each of the containers to auto-start.
 
 *Note, this project has been tested on 64-bit CentOS 7 (centos-release-7-9.2009.1.el7.centos.x86_64) and 32-bit Raspberry Pi 4 (Raspberry Pi OS/January 11th 2021)* 
 
@@ -84,7 +53,7 @@ This will start to download the Grafana and Loki application containers (**Grafa
 
 Once all of the docker containers are started up, point your Web browser to the Grafana page, typically http://hostname:3000/ - with hostname being the name of the server you ran the `docker-compose up -d` command on. The "**WeatherFlow - Overview**" dashboard is defaulted without having to log into Grafana.
 
-There are two other dashboards that can be viewed by selecting the "WeatherFlow Dashboards" drop down from the top righthand side of the dashboards:
+There are other dashboards that can be viewed by selecting the "WeatherFlow Dashboards" drop down from the top righthand side of the dashboards:
 
 <center><img src="./images/weatherflow-dashboards.jpg"></center>
 
@@ -110,7 +79,6 @@ There's also RSSI and Battery Voltage over time defaulted to the the last 7 days
 
 <center><img src="./images/weatherflow-weatherflow-device_details-battery.jpg"></center>
 <center><img src="./images/weatherflow-weatherflow-device_details-rssi.jpg"></center>
-
 
 ## Default Security
 
