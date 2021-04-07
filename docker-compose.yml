@@ -1,19 +1,17 @@
 networks:
-  wxflowaio: {}
+  wxfdashboardsaio: {}
 services:
-  grafana:
-    container_name: grafana
-    depends_on:
-    - loki
+  wxfdashboardsaio_grafana:
+    container_name: wxfdashboardsaio_grafana
     environment:
       GF_AUTH_ANONYMOUS_ENABLED: "true"
-      GF_AUTH_ANONYMOUS_ORG_ROLE: Admin
-      GF_AUTH_BASIC_ENABLED: "false"
+      GF_AUTH_ANONYMOUS_ORG_ROLE: Viewer
+      GF_AUTH_BASIC_ENABLED: "true"
       GF_AUTH_DISABLE_LOGIN_FORM: "false"
-      GF_DASHBOARDS_DEFAULT_HOME_DASHBOARD_PATH: /var/lib/grafana/dashboards/weatherflow/weatherflow-weatherflow-overview.json
-    image: grafana/grafana:latest
+      GF_DASHBOARDS_DEFAULT_HOME_DASHBOARD_PATH: /var/lib/grafana/dashboards/weatherflow/weatherflow-overview_local-udp-influxdb.json
+    image: grafana/grafana:7.5.2
     networks:
-      wxflowaio: null
+      wxfdashboardsaio: null
     ports:
     - protocol: tcp
       published: 3000
@@ -23,34 +21,45 @@ services:
     - ./config/grafana/provisioning/datasources:/etc/grafana/provisioning/datasources:ro
     - ./config/grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards:ro
     - ./config/grafana/dashboards:/var/lib/grafana/dashboards:ro
-  loki:
-    command: -config.file=/etc/loki/loki-config.yml
-    container_name: loki
-    image: grafana/loki:master-2dbdbee
+  wxfdashboardsaio_influxdb:
+    container_name: wxfdashboardsaio_influxdb
+    environment:
+      INFLUXDB_ADMIN_PASSWORD: Gk372Qm70E0xGVIcUpSyRiwqfAyhuwkS
+      INFLUXDB_ADMIN_USER: admin
+      INFLUXDB_DATA_ENGINE: tsm1
+      INFLUXDB_DB: weatherflow
+      INFLUXDB_MONITOR_STORE_DATABASE: _internal
+      INFLUXDB_MONITOR_STORE_ENABLED: "true"
+      INFLUXDB_REPORTING_DISABLED: "true"
+      INFLUXDB_USER: weatherflow
+      INFLUXDB_USER_PASSWORD: x8egQTrf4bGl8Cs3XGyF1yE0b06pfgJe
+    image: influxdb:1.8
     networks:
-      wxflowaio: null
+      wxfdashboardsaio: null
     ports:
     - protocol: tcp
-      published: 3100
-      target: 3100
+      published: 8086
+      target: 8086
     restart: always
-    user: "${UID_GID}"
     volumes:
-    - ./config/loki-config.yml:/etc/loki/loki-config.yml:ro
-    - ./data/loki:/tmp/loki:rw
-  weatherflow-listener:
-    build:
-      context: ./weatherflow-listener
-    container_name: weatherflow-listener
-    depends_on:
-    - loki
+    - ./data/influxdb:/var/lib/influxdb:rw
+  wxfdashboardsaio_local-udp:
+    container_name: wxfdashboardsaio_local-udp
     environment:
-      WF_LOKI_URL: http://loki:3100
+      WEATHERFLOW_COLLECTOR_BACKEND_TYPE: influxdb
+      WEATHERFLOW_COLLECTOR_COLLECTOR_TYPE: local-udp
+      WEATHERFLOW_COLLECTOR_DEBUG: "false"
+      WEATHERFLOW_COLLECTOR_INFLUXDB_PASSWORD: x8egQTrf4bGl8Cs3XGyF1yE0b06pfgJe
+      WEATHERFLOW_COLLECTOR_INFLUXDB_URL: http://wxfdashboardsaio_influxdb:8086/write?db=weatherflow
+      WEATHERFLOW_COLLECTOR_INFLUXDB_USERNAME: weatherflow
+    image: lux4rd0/weatherflow-collector:2.0.4
     networks:
-      wxflowaio: null
+      wxfdashboardsaio: null
     ports:
     - protocol: udp
       published: 50222
       target: 50222
     restart: always
+    depends_on:
+      - "wxfdashboardsaio_influxdb"
 version: '3.8'
