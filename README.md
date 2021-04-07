@@ -33,7 +33,7 @@ To get started, download one of [the releases](https://github.com/lux4rd0/grafan
 
     wget https://github.com/lux4rd0/weatherflow-dashboards-aio/archive/v2.0.0.zip
     unzip v2.0.0.zip
-    cd weatherflow-dashboards-aio.v2.0.0.zip
+    cd weatherflow-dashboards-aio-2.0.0
 
 ## Data Retention and Storage Locations
 
