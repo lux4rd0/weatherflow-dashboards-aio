@@ -52,13 +52,30 @@ services:
       WEATHERFLOW_COLLECTOR_INFLUXDB_PASSWORD: x8egQTrf4bGl8Cs3XGyF1yE0b06pfgJe
       WEATHERFLOW_COLLECTOR_INFLUXDB_URL: http://wxfdashboardsaio_influxdb:8086/write?db=weatherflow
       WEATHERFLOW_COLLECTOR_INFLUXDB_USERNAME: weatherflow
-    image: lux4rd0/weatherflow-collector:2.0.4
+    image: lux4rd0/weatherflow-collector:2.1.0
     networks:
       wxfdashboardsaio: null
     ports:
     - protocol: udp
       published: 50222
       target: 50222
+    restart: always
+    depends_on:
+      - "wxfdashboardsaio_influxdb"
+  wxfdashboardsaio_remote-forecast:
+    container_name: wxfdashboardsaio_remote-forecast
+    environment:
+      WEATHERFLOW_COLLECTOR_BACKEND_TYPE: influxdb
+      WEATHERFLOW_COLLECTOR_COLLECTOR_TYPE: remote-forecast
+      WEATHERFLOW_COLLECTOR_DEBUG: "false"
+      WEATHERFLOW_COLLECTOR_INFLUXDB_PASSWORD: x8egQTrf4bGl8Cs3XGyF1yE0b06pfgJe
+      WEATHERFLOW_COLLECTOR_INFLUXDB_URL: http://wxfdashboardsaio_influxdb:8086/write?db=weatherflow
+      WEATHERFLOW_COLLECTOR_INFLUXDB_USERNAME: weatherflow
+      WEATHERFLOW_COLLECTOR_REMOTE_COLLECTOR_STATION_ID: <<STATION_ID>>
+      WEATHERFLOW_COLLECTOR_REMOTE_COLLECTOR_TOKEN: <<TOKEN>>
+    image: lux4rd0/weatherflow-collector:2.1.0
+    networks:
+      wxfdashboardsaio: null
     restart: always
     depends_on:
       - "wxfdashboardsaio_influxdb"
@@ -71,10 +88,9 @@ services:
       WEATHERFLOW_COLLECTOR_INFLUXDB_PASSWORD: x8egQTrf4bGl8Cs3XGyF1yE0b06pfgJe
       WEATHERFLOW_COLLECTOR_INFLUXDB_URL: http://wxfdashboardsaio_influxdb:8086/write?db=weatherflow
       WEATHERFLOW_COLLECTOR_INFLUXDB_USERNAME: weatherflow
-      WEATHERFLOW_COLLECTOR_REMOTE_COLLECTOR_DEVICE_ID: <<DEVICE_ID>>
       WEATHERFLOW_COLLECTOR_REMOTE_COLLECTOR_STATION_ID: <<STATION_ID>>
       WEATHERFLOW_COLLECTOR_REMOTE_COLLECTOR_TOKEN: <<TOKEN>>
-    image: lux4rd0/weatherflow-collector:2.0.4
+    image: lux4rd0/weatherflow-collector:2.1.0
     networks:
       wxfdashboardsaio: null
     restart: always
@@ -92,7 +108,7 @@ services:
       WEATHERFLOW_COLLECTOR_REMOTE_COLLECTOR_DEVICE_ID: <<DEVICE_ID>>
       WEATHERFLOW_COLLECTOR_REMOTE_COLLECTOR_STATION_ID: <<STATION_ID>>
       WEATHERFLOW_COLLECTOR_REMOTE_COLLECTOR_TOKEN: <<TOKEN>>
-    image: lux4rd0/weatherflow-collector:2.0.4
+    image: lux4rd0/weatherflow-collector:2.1.0
     networks:
       wxfdashboardsaio: null
     restart: always
