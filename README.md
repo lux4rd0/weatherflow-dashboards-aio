@@ -4,9 +4,9 @@
 
 **WeatherFlow Dashboards AIO** is an example project put together to help you get up and running quickly with a UDP collector to visualize your raw [WeatherFlow Tempest](https://weatherflow.com/tempest-weather-system/) log stream with Grafana dashboards. 
 
-<center><img src="./images/weatherflow-weatherflow-overview.jpg"></center>
+<center><img src="https://github.com/lux4rd0/weatherflow-collector/blob/main/images/weatherflow-forecast-influxdb.jpg"></center>
 
-This project uses [Grafana Promtail](https://grafana.com/docs/loki/latest/clients/promtail/) and a slightly updated [UDP Python collector](https://github.com/p-doyle/Simple-WeatherFlow-Python-Listener) from [P Doyle](https://github.com/p-doyle/) to forward raw JSON logs to a [Grafana Loki](https://grafana.com/oss/loki/) log aggregation backend.  Several pre-configured [Grafana dashboards](https://grafana.com/oss/grafana/) are provided which utilizes Loki's easy to use *metrics from logs* to visualize WeatherFlow data over time.
+This project uses [Grafana Promtail](https://grafana.com/docs/loki/latest/clients/promtail/) and a slightly updated [UDP Python collector](https://github.com/p-doyle/Simple-WeatherFlow-Python-Listener) from [P Doyle](https://github.com/p-doyle/) to collect JSON logs and publish them to a [Grafana Loki](https://grafana.com/oss/loki/) log aggregation backend or an InfluxDB TSDB.  Several pre-configured [Grafana dashboards](https://grafana.com/oss/grafana/) are provided, which utilizes Loki's easy to use *metrics from logs* to visualize WeatherFlow data over time.
 
 WeatherFlow Tempest -> WeatherFlow Hub -> UDP Collector (port 50222) -> Grafana Promtail -> Grafana Loki <- Grafana Dashboards
 
@@ -25,35 +25,41 @@ The project is built around a pre-configured Docker stack containing the followi
 
 ## Notice
 
-Like all projects - this is always in a state of flux based on trying out new things and seeing what works and what doesn't work. It started as a fun exercise to visualize "what's possible" and I'm experimenting with different collectors and backends. That being said, please expect breaking changes along the way.
+Like all projects - this is always in a flux state based on trying out new things and seeing what works and what doesn't work. It started as a fun exercise to visualize "what's possible" and I'm experimenting with different collectors and backends. Please expect breaking changes along the way.
 
 ## Using
 
 To get started, download one of [the releases](https://github.com/lux4rd0/grafana-weatherflow/releases) from this repository and extract it into an empty directory. For example:
 
-    wget https://github.com/lux4rd0/weatherflow-dashboards-aio/archive/v2.0.0.zip
-    unzip v2.0.0.zip
-    cd weatherflow-dashboards-aio-2.0.0
+    wget https://github.com/lux4rd0/weatherflow-dashboards-aio/archive/v2.0.1.zip
+    unzip v2.0.1.zip
+    cd weatherflow-dashboards-aio-2.0.1
 
 ## Data Retention and Storage Locations
 
+Data is stored in InfluxDB in a mounted directory under /data/influxdb. By default, there is no retention policy set.
 
-
-### Manually
+### Startup
 
 From the above directory, run the docker-compose command:
 
     docker-compose -f docker-compose.yml up -d
 
-This will start to download the Grafana, InfluxDB, and weatherflow-collector application containers The "`-d`" command places the containers into "detached" mode *(run containers in the background)*. The configuration also sets each of the containers to auto-start.
+This command will start to download the Grafana, InfluxDB, and weatherflow-collector application containers. The" `-d'" command places the containers into "detached" mode *(run containers in the background)*. The configuration also sets each of the containers to auto-start.
 
 *Note, this project has been tested on 64-bit CentOS 7 (centos-release-7-9.2009.1.el7.centos.x86_64) and 32-bit Raspberry Pi 4 (Raspberry Pi OS/January 11th 2021)* 
 
+The docker-compose.yml is only configured to startup the local-udp listener. Use the docker-compose-full.yml file to startup the additional remote-socket and remote-rest collectors. You will need to configure the environmental variables to include your DEVICE_ID, STATION_ID, and COLLECTOR_TOKEN. More details on configuring that collector are on the weatherflow-collector repository:
+
+https://github.com/lux4rd0/weatherflow-collector#using
+
+
+
 ## Grafana Dashboards
 
-Once all of the docker containers are started up, point your Web browser to the Grafana page, typically http://hostname:3000/ - with hostname being the name of the server you ran the `docker-compose up -d` command on. The "**WeatherFlow - Overview**" dashboard is defaulted without having to log into Grafana.
+Once all of the docker containers have started, point your Web browser to the Grafana page, typically http://hostname:3000/ - with hostname being the name of the server you ran the `docker-compose up -d' command on. The "**WeatherFlow - Overview**" dashboard is defaulted without having to log into Grafana.
 
-There are other dashboards that can be viewed by selecting the "WeatherFlow Dashboards" drop down from the top righthand side of the dashboards:
+Other dashboards may be viewed by selecting the "WeatherFlow Dashboards" drop-down from the top righthand side of the dashboards:
 
 <center><img src="./images/weatherflow-dashboards.jpg"></center>
 
@@ -61,7 +67,7 @@ There are other dashboards that can be viewed by selecting the "WeatherFlow Dash
 
 <center><img src="./images/weatherflow-weatherflow-today_so_far.jpg"></center>
 
-The last hour over time for Temperature, Relative Humidity, Station Pressure, Accumulated Rain, Solar Radiation, Illuminance, UV, Lightening Strike, and Wind Speed. Rapid Wind Direction and Wind Speed over the last 60 seconds is also updated every 5 seconds (by default). 
+The last hour over time for Temperature, Relative Humidity, Station Pressure, Accumulated Rain, Solar Radiation, Illuminance, UV, Lightening Strike, and Wind Speed. Rapid Wind Direction and Wind Speed over the last 60 seconds are also updated every 5 seconds (by default). 
 
 **WeatherFlow - Device Details**
 
@@ -75,14 +81,14 @@ Another panel provides an overview of Sensor Status measurements - either "Senso
 
 <center><img src="./images/weatherflow-weatherflow-device_details-sensor_status.jpg"></center>
 
-There's also RSSI and Battery Voltage over time defaulted to the the last 7 days.
+There's also RSSI and Battery Voltage over time defaulted to the last seven days.
 
 <center><img src="./images/weatherflow-weatherflow-device_details-battery.jpg"></center>
 <center><img src="./images/weatherflow-weatherflow-device_details-rssi.jpg"></center>
 
 ## Default Security
 
-This docker-compose stack is designed to be as easy as possible to deploy and go. Anonymous logins have been enabled and the default user has a **Viewer** role. This can be changed to either an **Admin** or **Editor** role by changing the Grafana environmental variable in the `docker-compose.yml` file to:*
+This docker-compose stack is designed to be as easy as possible to deploy and go. Anonymous logins have been enabled, and the default user has a **Viewer** role. This setting can be changed to either an **Admin** or **Editor** role by changing the Grafana environmental variable in the `docker-compose.yml` file to:*
 
     GF_AUTH_ANONYMOUS_ORG_ROLE: Viewer
 
@@ -100,11 +106,11 @@ See the open issues for a list of proposed features (and known issues).
 
 ## Contributing
 
-Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contributions you make are greatly appreciated.
+Contributions make the open source community such a fantastic place to learn, inspire, and create. Any contributions you make are greatly appreciated.
 
 - Fork the Project
 - Create your Feature Branch (git checkout -b feature/AmazingFeature)
-- Commit your Changes (git commit -m 'Add some AmazingFeature')
+- Commit your changes (git commit -m 'Add some AmazingFeature')
 - Push to the Branch (git push origin feature/AmazingFeature)
 - Open a Pull Request
 
