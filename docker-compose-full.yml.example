@@ -9,7 +9,7 @@ services:
       GF_AUTH_BASIC_ENABLED: "true"
       GF_AUTH_DISABLE_LOGIN_FORM: "false"
       GF_DASHBOARDS_DEFAULT_HOME_DASHBOARD_PATH: /var/lib/grafana/dashboards/weatherflow/weatherflow-forecast-influxdb.json
-    image: grafana/grafana:7.5.2
+    image: grafana/grafana:7.5.3
     networks:
       wxfdashboardsaio: null
     ports:
@@ -52,7 +52,7 @@ services:
       WEATHERFLOW_COLLECTOR_INFLUXDB_PASSWORD: x8egQTrf4bGl8Cs3XGyF1yE0b06pfgJe
       WEATHERFLOW_COLLECTOR_INFLUXDB_URL: http://wxfdashboardsaio_influxdb:8086/write?db=weatherflow
       WEATHERFLOW_COLLECTOR_INFLUXDB_USERNAME: weatherflow
-    image: lux4rd0/weatherflow-collector:2.1.0
+    image: lux4rd0/weatherflow-collector:2.1.2
     networks:
       wxfdashboardsaio: null
     ports:
@@ -73,7 +73,7 @@ services:
       WEATHERFLOW_COLLECTOR_INFLUXDB_USERNAME: weatherflow
       WEATHERFLOW_COLLECTOR_REMOTE_COLLECTOR_STATION_ID: <<STATION_ID>>
       WEATHERFLOW_COLLECTOR_REMOTE_COLLECTOR_TOKEN: <<TOKEN>>
-    image: lux4rd0/weatherflow-collector:2.1.0
+    image: lux4rd0/weatherflow-collector:2.1.2
     networks:
       wxfdashboardsaio: null
     restart: always
@@ -90,7 +90,7 @@ services:
       WEATHERFLOW_COLLECTOR_INFLUXDB_USERNAME: weatherflow
       WEATHERFLOW_COLLECTOR_REMOTE_COLLECTOR_STATION_ID: <<STATION_ID>>
       WEATHERFLOW_COLLECTOR_REMOTE_COLLECTOR_TOKEN: <<TOKEN>>
-    image: lux4rd0/weatherflow-collector:2.1.0
+    image: lux4rd0/weatherflow-collector:2.1.2
     networks:
       wxfdashboardsaio: null
     restart: always
@@ -108,7 +108,7 @@ services:
       WEATHERFLOW_COLLECTOR_REMOTE_COLLECTOR_DEVICE_ID: <<DEVICE_ID>>
       WEATHERFLOW_COLLECTOR_REMOTE_COLLECTOR_STATION_ID: <<STATION_ID>>
       WEATHERFLOW_COLLECTOR_REMOTE_COLLECTOR_TOKEN: <<TOKEN>>
-    image: lux4rd0/weatherflow-collector:2.1.0
+    image: lux4rd0/weatherflow-collector:2.1.2
     networks:
       wxfdashboardsaio: null
     restart: always
