@@ -12,12 +12,12 @@
       }
     ]
   },
-  "description": "An overview dashboard for WeatherFlow's TEMPEST Weather System using collected raw JSON logs stored in Grafana Loki.",
+  "description": "",
   "editable": true,
   "gnetId": 13857,
   "graphTooltip": 0,
-  "id": 8,
-  "iteration": 1617770536998,
+  "id": 12,
+  "iteration": 1617896436117,
   "links": [
     {
       "asDropdown": true,
@@ -31,6 +31,27 @@
     }
   ],
   "panels": [
+    {
+      "datasource": null,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 45,
+      "panels": [],
+      "repeat": "hub_sn",
+      "scopedVars": {
+        "hub_sn": {
+          "selected": false,
+          "text": "HB-00038302",
+          "value": "HB-00038302"
+        }
+      },
+      "title": "$hub_sn",
+      "type": "row"
+    },
     {
       "datasource": "InfluxDB - weatherflow",
       "fieldConfig": {
@@ -108,7 +129,7 @@
         "h": 8,
         "w": 18,
         "x": 0,
-        "y": 0
+        "y": 1
       },
       "hideTimeOverride": true,
       "id": 2,
@@ -126,6 +147,13 @@
         }
       },
       "pluginVersion": "7.4.0",
+      "scopedVars": {
+        "hub_sn": {
+          "selected": false,
+          "text": "HB-00038302",
+          "value": "HB-00038302"
+        }
+      },
       "targets": [
         {
           "alias": "High",
@@ -158,9 +186,9 @@
           ],
           "tags": [
             {
-              "key": "serial_number",
+              "key": "hub_sn",
               "operator": "=~",
-              "value": "/^$serial_number$/"
+              "value": "/^$hub_sn$/"
             },
             {
               "condition": "AND",
@@ -203,9 +231,9 @@
           ],
           "tags": [
             {
-              "key": "serial_number",
+              "key": "hub_sn",
               "operator": "=~",
-              "value": "/^$serial_number$/"
+              "value": "/^$hub_sn$/"
             },
             {
               "condition": "AND",
@@ -653,7 +681,7 @@
         "h": 8,
         "w": 2,
         "x": 18,
-        "y": 0
+        "y": 1
       },
       "hideTimeOverride": true,
       "id": 40,
@@ -675,6 +703,13 @@
         "textMode": "auto"
       },
       "pluginVersion": "7.5.2",
+      "scopedVars": {
+        "hub_sn": {
+          "selected": false,
+          "text": "HB-00038302",
+          "value": "HB-00038302"
+        }
+      },
       "targets": [
         {
           "alias": "Current",
@@ -713,9 +748,9 @@
           ],
           "tags": [
             {
-              "key": "serial_number",
+              "key": "hub_sn",
               "operator": "=~",
-              "value": "/^$serial_number$/"
+              "value": "/^$hub_sn$/"
             },
             {
               "condition": "AND",
@@ -1168,7 +1203,7 @@
         "h": 8,
         "w": 2,
         "x": 20,
-        "y": 0
+        "y": 1
       },
       "hideTimeOverride": true,
       "id": 21,
@@ -1190,6 +1225,13 @@
         "textMode": "auto"
       },
       "pluginVersion": "7.5.2",
+      "scopedVars": {
+        "hub_sn": {
+          "selected": false,
+          "text": "HB-00038302",
+          "value": "HB-00038302"
+        }
+      },
       "targets": [
         {
           "alias": "High",
@@ -1228,9 +1270,9 @@
           ],
           "tags": [
             {
-              "key": "serial_number",
+              "key": "hub_sn",
               "operator": "=~",
-              "value": "/^$serial_number$/"
+              "value": "/^$hub_sn$/"
             },
             {
               "condition": "AND",
@@ -1677,7 +1719,7 @@
         "h": 8,
         "w": 2,
         "x": 22,
-        "y": 0
+        "y": 1
       },
       "hideTimeOverride": true,
       "id": 22,
@@ -1699,6 +1741,13 @@
         "textMode": "auto"
       },
       "pluginVersion": "7.5.2",
+      "scopedVars": {
+        "hub_sn": {
+          "selected": false,
+          "text": "HB-00038302",
+          "value": "HB-00038302"
+        }
+      },
       "targets": [
         {
           "alias": "Low",
@@ -1737,9 +1786,9 @@
           ],
           "tags": [
             {
-              "key": "serial_number",
+              "key": "hub_sn",
               "operator": "=~",
-              "value": "/^$serial_number$/"
+              "value": "/^$hub_sn$/"
             },
             {
               "condition": "AND",
@@ -1755,20 +1804,6 @@
       "timeShift": null,
       "title": "Today's Low",
       "type": "stat"
-    },
-    {
-      "collapsed": false,
-      "datasource": "InfluxDB - weatherflow",
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 8
-      },
-      "id": 15,
-      "panels": [],
-      "title": "History",
-      "type": "row"
     },
     {
       "datasource": "InfluxDB - weatherflow",
@@ -1873,6 +1908,13 @@
         }
       },
       "pluginVersion": "7.4.0",
+      "scopedVars": {
+        "hub_sn": {
+          "selected": false,
+          "text": "HB-00038302",
+          "value": "HB-00038302"
+        }
+      },
       "targets": [
         {
           "alias": "High",
@@ -1911,9 +1953,9 @@
           ],
           "tags": [
             {
-              "key": "serial_number",
+              "key": "hub_sn",
               "operator": "=~",
-              "value": "/^$serial_number$/"
+              "value": "/^$hub_sn$/"
             },
             {
               "condition": "AND",
@@ -1962,9 +2004,9 @@
           ],
           "tags": [
             {
-              "key": "serial_number",
+              "key": "hub_sn",
               "operator": "=~",
-              "value": "/^$serial_number$/"
+              "value": "/^$hub_sn$/"
             },
             {
               "condition": "AND",
@@ -2486,6 +2528,13 @@
         ]
       },
       "pluginVersion": "7.5.2",
+      "scopedVars": {
+        "hub_sn": {
+          "selected": false,
+          "text": "HB-00038302",
+          "value": "HB-00038302"
+        }
+      },
       "targets": [
         {
           "alias": "High",
@@ -2524,9 +2573,9 @@
           ],
           "tags": [
             {
-              "key": "serial_number",
+              "key": "hub_sn",
               "operator": "=~",
-              "value": "/^$serial_number$/"
+              "value": "/^$hub_sn$/"
             },
             {
               "condition": "AND",
@@ -2575,9 +2624,9 @@
           ],
           "tags": [
             {
-              "key": "serial_number",
+              "key": "hub_sn",
               "operator": "=~",
-              "value": "/^$serial_number$/"
+              "value": "/^$hub_sn$/"
             },
             {
               "condition": "AND",
@@ -2615,20 +2664,6 @@
         }
       ],
       "type": "table"
-    },
-    {
-      "collapsed": false,
-      "datasource": "InfluxDB - weatherflow",
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 19
-      },
-      "id": 20,
-      "panels": [],
-      "title": "Measurements",
-      "type": "row"
     },
     {
       "datasource": "InfluxDB - weatherflow",
@@ -2707,7 +2742,7 @@
         "h": 7,
         "w": 8,
         "x": 0,
-        "y": 20
+        "y": 19
       },
       "id": 3,
       "interval": "$Group",
@@ -2723,6 +2758,13 @@
         }
       },
       "pluginVersion": "7.4.0",
+      "scopedVars": {
+        "hub_sn": {
+          "selected": false,
+          "text": "HB-00038302",
+          "value": "HB-00038302"
+        }
+      },
       "targets": [
         {
           "alias": "High",
@@ -2755,9 +2797,9 @@
           ],
           "tags": [
             {
-              "key": "serial_number",
+              "key": "hub_sn",
               "operator": "=~",
-              "value": "/^$serial_number$/"
+              "value": "/^$hub_sn$/"
             },
             {
               "condition": "AND",
@@ -2799,9 +2841,9 @@
           ],
           "tags": [
             {
-              "key": "serial_number",
+              "key": "hub_sn",
               "operator": "=~",
-              "value": "/^$serial_number$/"
+              "value": "/^$hub_sn$/"
             },
             {
               "condition": "AND",
@@ -2895,7 +2937,7 @@
         "h": 7,
         "w": 8,
         "x": 8,
-        "y": 20
+        "y": 19
       },
       "id": 8,
       "interval": "$Group",
@@ -2911,6 +2953,13 @@
         }
       },
       "pluginVersion": "7.4.0",
+      "scopedVars": {
+        "hub_sn": {
+          "selected": false,
+          "text": "HB-00038302",
+          "value": "HB-00038302"
+        }
+      },
       "targets": [
         {
           "alias": "High",
@@ -2949,9 +2998,9 @@
           ],
           "tags": [
             {
-              "key": "serial_number",
+              "key": "hub_sn",
               "operator": "=~",
-              "value": "/^$serial_number$/"
+              "value": "/^$hub_sn$/"
             },
             {
               "condition": "AND",
@@ -3000,9 +3049,9 @@
           ],
           "tags": [
             {
-              "key": "serial_number",
+              "key": "hub_sn",
               "operator": "=~",
-              "value": "/^$serial_number$/"
+              "value": "/^$hub_sn$/"
             },
             {
               "condition": "AND",
@@ -3110,7 +3159,7 @@
         "h": 7,
         "w": 8,
         "x": 16,
-        "y": 20
+        "y": 19
       },
       "id": 4,
       "interval": "$Group",
@@ -3126,6 +3175,13 @@
         }
       },
       "pluginVersion": "7.4.0",
+      "scopedVars": {
+        "hub_sn": {
+          "selected": false,
+          "text": "HB-00038302",
+          "value": "HB-00038302"
+        }
+      },
       "targets": [
         {
           "alias": "Gust",
@@ -3164,9 +3220,9 @@
           ],
           "tags": [
             {
-              "key": "serial_number",
+              "key": "hub_sn",
               "operator": "=~",
-              "value": "/^$serial_number$/"
+              "value": "/^$hub_sn$/"
             },
             {
               "condition": "AND",
@@ -3214,9 +3270,9 @@
           ],
           "tags": [
             {
-              "key": "serial_number",
+              "key": "hub_sn",
               "operator": "=~",
-              "value": "/^$serial_number$/"
+              "value": "/^$hub_sn$/"
             },
             {
               "condition": "AND",
@@ -3264,9 +3320,9 @@
           ],
           "tags": [
             {
-              "key": "serial_number",
+              "key": "hub_sn",
               "operator": "=~",
-              "value": "/^$serial_number$/"
+              "value": "/^$hub_sn$/"
             },
             {
               "condition": "AND",
@@ -3365,7 +3421,7 @@
         "h": 7,
         "w": 24,
         "x": 0,
-        "y": 27
+        "y": 26
       },
       "id": 43,
       "interval": "$Group",
@@ -3381,6 +3437,13 @@
         }
       },
       "pluginVersion": "7.4.0",
+      "scopedVars": {
+        "hub_sn": {
+          "selected": false,
+          "text": "HB-00038302",
+          "value": "HB-00038302"
+        }
+      },
       "targets": [
         {
           "alias": "Solar Radiation",
@@ -3413,9 +3476,9 @@
           ],
           "tags": [
             {
-              "key": "serial_number",
+              "key": "hub_sn",
               "operator": "=~",
-              "value": "/^$serial_number$/"
+              "value": "/^$hub_sn$/"
             },
             {
               "condition": "AND",
@@ -3457,9 +3520,9 @@
           ],
           "tags": [
             {
-              "key": "serial_number",
+              "key": "hub_sn",
               "operator": "=~",
-              "value": "/^$serial_number$/"
+              "value": "/^$hub_sn$/"
             },
             {
               "condition": "AND",
@@ -3501,9 +3564,9 @@
           ],
           "tags": [
             {
-              "key": "serial_number",
+              "key": "hub_sn",
               "operator": "=~",
-              "value": "/^$serial_number$/"
+              "value": "/^$hub_sn$/"
             },
             {
               "condition": "AND",
@@ -3528,6 +3591,38 @@
   ],
   "templating": {
     "list": [
+      {
+        "allValue": null,
+        "current": {
+          "selected": true,
+          "text": [
+            "All"
+          ],
+          "value": [
+            "$__all"
+          ]
+        },
+        "datasource": "InfluxDB - weatherflow",
+        "definition": "SHOW TAG VALUES WITH KEY = \"hub_sn\" WHERE \"collector_type\" =~ /^$collector_type$/",
+        "description": null,
+        "error": null,
+        "hide": 0,
+        "includeAll": true,
+        "label": "Hub",
+        "multi": true,
+        "name": "hub_sn",
+        "options": [],
+        "query": "SHOW TAG VALUES WITH KEY = \"hub_sn\" WHERE \"collector_type\" =~ /^$collector_type$/",
+        "refresh": 1,
+        "regex": "/.*HB*/",
+        "skipUrlSync": false,
+        "sort": 5,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
       {
         "allValue": null,
         "current": {
@@ -3628,67 +3723,26 @@
         "allValue": null,
         "current": {
           "selected": false,
-          "text": "HB-00038302",
-          "value": "HB-00038302"
+          "text": "local-udp",
+          "value": "local-udp"
         },
-        "datasource": "InfluxDB - weatherflow",
-        "definition": "SHOW TAG VALUES WITH KEY = \"hub_sn\"  WHERE \"collector_type\" =~ /^$collector_type$/",
         "description": null,
         "error": null,
         "hide": 2,
         "includeAll": false,
-        "label": "Hub ID",
-        "multi": false,
-        "name": "hub_sn_lookup",
-        "options": [],
-        "query": "SHOW TAG VALUES WITH KEY = \"hub_sn\"  WHERE \"collector_type\" =~ /^$collector_type$/",
-        "refresh": 1,
-        "regex": "",
-        "skipUrlSync": false,
-        "sort": 6,
-        "tagValuesQuery": "",
-        "tags": [],
-        "tagsQuery": "",
-        "type": "query",
-        "useTags": false
-      },
-      {
-        "allValue": null,
-        "current": {
-          "selected": false,
-          "text": "ST-00028209",
-          "value": "ST-00028209"
-        },
-        "datasource": "InfluxDB - weatherflow",
-        "definition": "SHOW TAG VALUES WITH KEY = \"serial_number\"  WHERE \"hub_sn\" =~ /^$station_id$/ and \"collector_type\" =~ /^$collector_type$/",
-        "description": null,
-        "error": null,
-        "hide": 2,
-        "includeAll": false,
-        "label": "",
-        "multi": false,
-        "name": "serial_number",
-        "options": [],
-        "query": "SHOW TAG VALUES WITH KEY = \"serial_number\"  WHERE \"hub_sn\" =~ /^$station_id$/ and \"collector_type\" =~ /^$collector_type$/",
-        "refresh": 1,
-        "regex": "",
-        "skipUrlSync": false,
-        "sort": 0,
-        "tagValuesQuery": "",
-        "tags": [],
-        "tagsQuery": "",
-        "type": "query",
-        "useTags": false
-      },
-      {
-        "description": null,
-        "error": null,
-        "hide": 2,
         "label": null,
+        "multi": false,
         "name": "collector_type",
+        "options": [
+          {
+            "selected": true,
+            "text": "local-udp",
+            "value": "local-udp"
+          }
+        ],
         "query": "local-udp",
         "skipUrlSync": false,
-        "type": "constant"
+        "type": "custom"
       },
       {
         "allValue": null,
@@ -3697,46 +3751,21 @@
           "text": "America/Chicago",
           "value": "America/Chicago"
         },
+        "datasource": "InfluxDB - weatherflow",
+        "definition": "SHOW TAG VALUES WITH KEY = \"timezone\"",
         "description": null,
         "error": null,
-        "hide": 2,
+        "hide": 0,
         "includeAll": false,
-        "label": null,
+        "label": "Time Zone",
         "multi": false,
         "name": "tz",
-        "options": [
-          {
-            "selected": true,
-            "text": "America/Chicago",
-            "value": "America/Chicago"
-          }
-        ],
-        "query": "America/Chicago",
-        "skipUrlSync": false,
-        "type": "custom"
-      },
-      {
-        "allValue": null,
-        "current": {
-          "selected": false,
-          "text": "HB-00038302",
-          "value": "HB-00038302"
-        },
-        "datasource": "InfluxDB - weatherflow",
-        "definition": "SHOW TAG VALUES WITH KEY = \"hub_sn\"  WHERE \"collector_type\" =~ /^$collector_type$/",
-        "description": null,
-        "error": null,
-        "hide": 2,
-        "includeAll": false,
-        "label": null,
-        "multi": false,
-        "name": "station_id",
         "options": [],
-        "query": "SHOW TAG VALUES WITH KEY = \"hub_sn\"  WHERE \"collector_type\" =~ /^$collector_type$/",
+        "query": "SHOW TAG VALUES WITH KEY = \"timezone\"",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
-        "sort": 0,
+        "sort": 5,
         "tagValuesQuery": "",
         "tags": [],
         "tagsQuery": "",
@@ -3766,5 +3795,5 @@
   "timezone": "browser",
   "title": "WeatherFlow - Overview (local-udp)",
   "uid": "lux4rd0labs_weatherflow_14",
-  "version": 4
+  "version": 7
 }
