@@ -52,7 +52,7 @@ services:
       WEATHERFLOW_COLLECTOR_INFLUXDB_PASSWORD: x8egQTrf4bGl8Cs3XGyF1yE0b06pfgJe
       WEATHERFLOW_COLLECTOR_INFLUXDB_URL: http://wxfdashboardsaio_influxdb:8086/write?db=weatherflow
       WEATHERFLOW_COLLECTOR_INFLUXDB_USERNAME: weatherflow
-    image: lux4rd0/weatherflow-collector:2.1.1
+    image: lux4rd0/weatherflow-collector:2.1.2
     networks:
       wxfdashboardsaio: null
     ports:
