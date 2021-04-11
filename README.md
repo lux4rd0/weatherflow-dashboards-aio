@@ -36,7 +36,8 @@ To get started, download one of [the releases](https://github.com/lux4rd0/grafan
     wget https://github.com/lux4rd0/weatherflow-dashboards-aio/archive/v2.1.3.zip
     unzip v2.1.3.zip
     mv weatherflow-dashboards-aio-2.1.3 weatherflow-dashboards-aio
-    cd weatherflow-dashboards-aio-2.1.3
+    cd weatherflow-dashboards-aio
+    bash ./create_docker-compose.sh <weatherflow_token>
 
 ## Data Retention and Storage Locations
 
