@@ -95,7 +95,7 @@ services:
       GF_AUTH_ANONYMOUS_ORG_ROLE: Viewer
       GF_AUTH_BASIC_ENABLED: \"true\"
       GF_AUTH_DISABLE_LOGIN_FORM: \"false\"
-      GF_DASHBOARDS_DEFAULT_HOME_DASHBOARD_PATH: /var/lib/grafana/dashboards/weatherflow-collector/weatherflow_collector-overview-influxdb.json
+      GF_DASHBOARDS_DEFAULT_HOME_DASHBOARD_PATH: /var/lib/grafana/dashboards/weatherflow_collector/weatherflow_collector-overview-influxdb.json
     image: grafana/grafana:7.5.3
     networks:
       wxfdashboardsaio: null
@@ -128,7 +128,7 @@ services:
     - ./data/influxdb:/var/lib/influxdb:rw
 
   weatherflow-collector-${station_name[$station_number]}-local-udp:
-    container_name: weatherflow-collector-${station_name[$station_number]}-local-udp-influxdb01
+    container_name: weatherflow-collector-${station_name[$station_number]}-local-udp
     environment:
       WEATHERFLOW_COLLECTOR_BACKEND_TYPE: influxdb
       WEATHERFLOW_COLLECTOR_COLLECTOR_TYPE: local-udp
