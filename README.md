@@ -33,9 +33,9 @@ Like all projects - this is always in a flux state based on trying out new thing
 
 To get started, download one of [the releases](https://github.com/lux4rd0/grafana-weatherflow/releases) from this repository and extract it into an empty directory. For example:
 
-    wget https://github.com/lux4rd0/weatherflow-dashboards-aio/archive/v2.1.5.zip
-    unzip v2.1.5.zip
-    mv weatherflow-dashboards-aio-2.1.5 weatherflow-dashboards-aio
+    wget https://github.com/lux4rd0/weatherflow-dashboards-aio/archive/v2.1.6.zip
+    unzip v2.1.6.zip
+    mv weatherflow-dashboards-aio-2.1.6 weatherflow-dashboards-aio
     cd weatherflow-dashboards-aio
     bash ./create_docker-compose.sh <weatherflow_token>
     docker-compose up -d
