@@ -4,6 +4,10 @@
 ## WeatherFlow Collector AIO - docker-compose.yml generator
 ##
 
+##
+## Use bash ./generate_docker-compose.sh <<token>> to create a docker-compose.yml file.
+##
+
 token=$1
 
 if [ -z "$token" ]
