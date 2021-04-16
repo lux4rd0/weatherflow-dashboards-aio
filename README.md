@@ -6,11 +6,11 @@
 
 <center><img src="https://github.com/lux4rd0/weatherflow-collector/blob/main/images/weatherflow-forecast-influxdb.jpg"></center>
 
-This project uses [Grafana Promtail](https://grafana.com/docs/loki/latest/clients/promtail/) and a slightly updated [UDP Python collector](https://github.com/p-doyle/Simple-WeatherFlow-Python-Listener) from [P Doyle](https://github.com/p-doyle/) to collect JSON logs and publish them to either a [Grafana Loki](https://grafana.com/oss/loki/) log aggregation backend or an InfluxDB TSDB.  Several pre-configured [Grafana dashboards](https://grafana.com/oss/grafana/) are provided to visualize WeatherFlow data over time.
+This project uses my custom [weatherflow-collector](https://github.com/lux4rd0/weatherflow-collector) and a slightly updated [UDP Python collector](https://github.com/p-doyle/Simple-WeatherFlow-Python-Listener) from [P Doyle](https://github.com/p-doyle/) to collect and transform JSON logs to metrics and publish them to an InfluxDB TSDB.  Several pre-configured [Grafana dashboards](https://grafana.com/oss/grafana/) are provided to visualize WeatherFlow data over time. I also include additional visualizations using WeatherFlow's Cloud APIs to populate forecasts and derived weather metrics.
 
-WeatherFlow Tempest -> WeatherFlow Hub -> UDP Collector (port 50222) -> Grafana Promtail -> Loki/InfluxDB <- Grafana Dashboards
+WeatherFlow Tempest -> WeatherFlow Hub -> UDP Collector (port 50222) InfluxDB <- Grafana Dashboards
 
-remote-socket/remote-rest <- weatherflow-collector -> Loki/InfluxDB
+remote-socket/remote-rest <- weatherflow-collector -> InfluxDB
 
 ## Getting Started
 
@@ -27,7 +27,7 @@ The project is built around a pre-configured Docker stack containing the followi
 
 ## Notice
 
-Like all projects - this is always in a flux state based on trying out new things and seeing what works and what doesn't work. It started as a fun exercise to visualize "what's possible" and I'm experimenting with different collectors and backends. Please expect breaking changes along the way.
+Like all projects - this is always in a flux state based on trying out new things and seeing what works and what doesn't work. It started as a fun exercise to visualize "what's possible," and I'm experimenting with different collectors and backends. Please expect breaking changes along the way.
 
 ## Using
 
