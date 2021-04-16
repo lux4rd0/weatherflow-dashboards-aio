@@ -64,6 +64,10 @@ Running `docker-compose up -d' will spin up several containers for each of the t
 
 This script will spin up a docker container to import all of the observed metrics in the WeatherFlow cloud. Having an import function may be helpful if you're starting with this WeatherFlow Collector or if you've reset your InfluxDB database. It essentially loads in over your local UDP data. If you have more than one device, a separate import file will be generated for each.
 
+## Obtaining Your Tempest Authentication Token
+
+You can obtain your authentication token by signing in to the Tempest Web App at tempestwx.com, then go to Settings -> Data Authorizations -> Create Token.
+
 ## Data Retention and Storage Locations
 
 Data is stored in InfluxDB in a mounted directory under /data/influxdb. By default, there is no retention policy set.
