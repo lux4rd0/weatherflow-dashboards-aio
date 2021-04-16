@@ -57,7 +57,7 @@ The following files will be generated for you:
 
 #### docker-compose.yml
 
-Running `docker-compose up -d' will spin up several containers for each of the types of data available to you. (Listed below) If you have more than one hub on your account - please edit the docker-compose.yml file to only have your hub local to your network. If you have more than one device, those will also be added and can remain.
+Running `docker-compose up -d` will spin up several containers for each of the types of data available to you. (Listed below) If you have more than one hub on your account - please edit the docker-compose.yml file to only have your hub local to your network. If you have more than one device, those will also be added and can remain.
 
 #### Optional:
 #### remote-import-<<station_name>>.sh
