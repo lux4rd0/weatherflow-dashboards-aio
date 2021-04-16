@@ -8,7 +8,23 @@
 ## Use bash ./generate_docker-compose.sh <<token>> to create a docker-compose.yml file.
 ##
 
-token=$1
+import_days=$WEATHERFLOW_COLLECTOR_IMPORT_DAYS
+token=$WEATHERFLOW_COLLECTOR_TOKEN
+
+echo "
+
+import_days=${import_days}
+token=${token}
+
+"
+
+if [ -z "${import_days}" ]
+  then
+    echo "WEATHERFLOW_COLLECTOR_IMPORT_DAYS variable not set. Defaulting to 365 days"
+
+import_days="365"
+
+fi
 
 if [ -z "$token" ]
 
@@ -34,7 +50,6 @@ response_url_stations=$(curl -si -w "\n%{size_header},%{size_download}" "${url_s
 response_url_forecasts=$(curl -si -w "\n%{size_header},%{size_download}" "${url_forecasts}")
 
 response_url_observations=$(curl -si -w "\n%{size_header},%{size_download}" "${url_observations}")
-
 
 
 # Extract the response header size
@@ -69,10 +84,6 @@ number_of_stations_minus_one=$((number_of_stations-1))
 for station_number in $(seq 0 $number_of_stations_minus_one) ; do
 
 #echo "Station Number Loop: $station_number"
-
-
-
-
 
 
 timezone[$station_number]=$(echo "${body_station}" | jq -r .stations[$station_number].timezone)
@@ -166,9 +177,35 @@ services:
 
 for station_number in $(seq 0 $number_of_stations_minus_one) ; do
 
-echo "Station Name: ${station_name[$station_number]}"
-echo "Station ID: ${station_id[$station_number]}"
-echo "Device ID: ${device_id[$station_number]}"
+
+##
+## Check import scripts
+##
+
+FILE[$station_number]="${PWD}/remote-import-${station_name_dc[$station_number]}.sh"
+if test -f "${FILE[$station_number]}"; then
+
+existing_file_timestamp[$station_number]=$(date -r "${FILE[$station_number]}" "+%Y%m%d-%H%M%S")
+
+echo "Existing ${FILE[$station_number]} file found. Backup up file to ${FILE[$station_number]}.${existing_file_timestamp[$station_number]}"
+
+mv "${FILE[$station_number]}" "${FILE[$station_number]}"."${existing_file_timestamp[$station_number]}"
+
+fi
+
+echo "
+
+device_id: ${device_id[$station_number]}
+timezone: ${timezone[$station_number]}
+latitude: ${latitude[$station_number]}
+longitude: ${longitude[$station_number]}
+elevation: ${elevation[$station_number]}
+station_name: ${station_name[$station_number]}
+station_id: ${station_id[$station_number]}
+public_name: ${public_name[$station_number]}
+hub_sn: ${hub_sn[$station_number]}
+
+"
 
 echo "
 
@@ -287,6 +324,37 @@ echo "
       - \"wxfdashboardsaio_influxdb\"
 
 " >> docker-compose.yml
+
+echo "
+
+docker run --rm \
+  --name=weatherflow-collector-${station_name_dc[$station_number]}-remote-import \\
+  -e WEATHERFLOW_COLLECTOR_BACKEND_TYPE=influxdb \\
+  -e WEATHERFLOW_COLLECTOR_COLLECTOR_TYPE=remote-import \\
+  -e WEATHERFLOW_COLLECTOR_DEBUG=false \\
+  -e WEATHERFLOW_COLLECTOR_DEVICE_ID=${device_id[$station_number]} \\
+  -e WEATHERFLOW_COLLECTOR_ELEVATION=${elevation[$station_number]} \\
+  -e WEATHERFLOW_COLLECTOR_HOST_HOSTNAME=$(hostname) \\
+  -e WEATHERFLOW_COLLECTOR_HUB_SN=${hub_sn[$station_number]} \\
+  -e WEATHERFLOW_COLLECTOR_INFLUXDB_PASSWORD=${influxdb_password} \\
+  -e WEATHERFLOW_COLLECTOR_INFLUXDB_URL=${influxdb_url} \\
+  -e WEATHERFLOW_COLLECTOR_INFLUXDB_USERNAME=${influxdb_username} \\
+  -e WEATHERFLOW_COLLECTOR_LATITUDE=${latitude[$station_number]} \\
+  -e WEATHERFLOW_COLLECTOR_LONGITUDE=${longitude[$station_number]} \\
+  -e WEATHERFLOW_COLLECTOR_PUBLIC_NAME=\"${public_name[$station_number]}\" \\
+  -e WEATHERFLOW_COLLECTOR_STATION_ID=${station_id[$station_number]} \\
+  -e WEATHERFLOW_COLLECTOR_STATION_NAME=\"${station_name[$station_number]}\" \\
+  -e WEATHERFLOW_COLLECTOR_TIMEZONE=\"${timezone[$station_number]}\" \\
+  -e WEATHERFLOW_COLLECTOR_TOKEN=${token} \\
+  -e WEATHERFLOW_COLLECTOR_IMPORT_DAYS=${import_days} \\
+  -e TZ=\"${timezone[$station_number]}\" \\
+  lux4rd0/weatherflow-collector:latest
+
+" > "${FILE[$station_number]}"
+
+echo "${FILE[$station_number]} file created"
+
+
 
 done
 
