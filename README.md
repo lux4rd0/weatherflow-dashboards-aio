@@ -66,7 +66,7 @@ This script will spin up a docker container to import all of the observed metric
 
 ## Obtaining Your Tempest Authentication Token
 
-You can obtain your authentication token by signing in to the Tempest Web App at tempestwx.com, then go to Settings -> Data Authorizations -> Create Token.
+You can obtain your authentication token by signing in to the Tempest Web App at [tempestwx.com](tempestwx.com), then go to Settings -> Data Authorizations -> Create Token.
 
 ## Data Retention and Storage Locations
 
