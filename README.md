@@ -33,12 +33,36 @@ Like all projects - this is always in a flux state based on trying out new thing
 
 To get started, download one of [the releases](https://github.com/lux4rd0/grafana-weatherflow/releases) from this repository and extract it into an empty directory. For example:
 
-    wget https://github.com/lux4rd0/weatherflow-dashboards-aio/archive/v2.3.0.zip
-    unzip v2.3.0.zip
-    mv weatherflow-dashboards-aio-2.3.0 weatherflow-dashboards-aio
+    wget https://github.com/lux4rd0/weatherflow-dashboards-aio/archive/v2.4.0.zip
+    unzip v2.4.0.zip
+    mv weatherflow-dashboards-aio-2.4.0 weatherflow-dashboards-aio
     cd weatherflow-dashboards-aio
-    bash ./generate_docker-compose.sh <weatherflow_token>
-    docker-compose up -d
+
+Correct environmental variables need to be set for the containers to function. The following script can be used:
+
+    generate_docker-compose.sh
+
+To use it, you will need to provide your WeatherFlow token as environmental variables.
+
+    WEATHERFLOW_COLLECTOR_IMPORT_DAYS #optional
+    WEATHERFLOW_COLLECTOR_TOKEN
+
+An example would be:
+
+    WEATHERFLOW_COLLECTOR_IMPORT_DAYS="365" \
+    WEATHERFLOW_COLLECTOR_TOKEN="a22afsa7-0dcc-4918-9f9a-923dfd339f41c" \
+    bash ./generate_docker-compose.sh
+
+The following files will be generated for you:
+
+#### docker-compose.yml
+
+Running `docker-compose up -d' will spin up several containers for each of the types of data available to you. (Listed below) If you have more than one hub on your account - please edit the docker-compose.yml file to only have your hub local to your network. If you have more than one device, those will also be added and can remain.
+
+#### Optional:
+#### remote-import-<<station_name>>.sh
+
+This script will spin up a docker container to import all of the observed metrics in the WeatherFlow cloud. Having an import function may be helpful if you're starting with this WeatherFlow Collector or if you've reset your InfluxDB database. It essentially loads in over your local UDP data. If you have more than one device, a separate import file will be generated for each.
 
 ## Data Retention and Storage Locations
 
@@ -46,19 +70,15 @@ Data is stored in InfluxDB in a mounted directory under /data/influxdb. By defau
 
 ### Startup
 
-From the above directory, run the docker-compose command:
+From the above directory, run the docker-compose command after you've generated the docker-compose.yml file:
 
-    docker-compose -f docker-compose.yml up -d
+    docker-compose up -d
 
 This command will start to download the Grafana, InfluxDB, and weatherflow-collector application containers. The" `-d'" command places the containers into "detached" mode *(run containers in the background)*. The configuration also sets each of the containers to auto-start.
 
-*Note, this project has been tested on 64-bit CentOS 7 (centos-release-7-9.2009.1.el7.centos.x86_64) and 32-bit Raspberry Pi 4 (Raspberry Pi OS/January 11th 2021)* 
-
-The docker-compose.yml is only configured to startup the local-udp listener. Use the docker-compose-full.yml file to startup the additional remote-socket and remote-rest collectors. You will need to configure the environmental variables to include your DEVICE_ID, STATION_ID, and COLLECTOR_TOKEN. More details on configuring that collector are on the weatherflow-collector repository:
+*Note, this project has been tested on 64-bit CentOS 7 (centos-release-7-9.2009.1.el7.centos.x86_64) and 32-bit Raspberry Pi 4 (Raspberry Pi OS/January 11th 2021)*
 
 https://github.com/lux4rd0/weatherflow-collector#using
-
-
 
 ## Grafana Dashboards
 
