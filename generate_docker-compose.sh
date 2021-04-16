@@ -141,7 +141,7 @@ services:
       GF_DASHBOARDS_DEFAULT_HOME_DASHBOARD_PATH: /var/lib/grafana/dashboards/weatherflow_collector/weatherflow_collector-overview-influxdb.json
     image: grafana/grafana:7.5.4
     networks:
-      wxfdashboardsaio: null
+      wxfdashboardsaio:
     ports:
     - protocol: tcp
       published: 3000
@@ -165,7 +165,11 @@ services:
       INFLUXDB_USER_PASSWORD: x8egQTrf4bGl8Cs3XGyF1yE0b06pfgJe
     image: influxdb:1.8
     networks:
-      wxfdashboardsaio: null
+      wxfdashboardsaio:
+    ports:
+    - protocol: tcp
+      published: 8086
+      target: 8086
     restart: always
     volumes:
     - ./data/influxdb:/var/lib/influxdb:rw
@@ -235,7 +239,7 @@ echo "
       target: 50222
     restart: always
     networks:
-      wxfdashboardsaio: null
+      wxfdashboardsaio:
     restart: always
     depends_on:
       - \"wxfdashboardsaio_influxdb\"
@@ -264,7 +268,7 @@ echo "
       WEATHERFLOW_COLLECTOR_TOKEN: ${token}
     image: lux4rd0/weatherflow-collector:latest
     networks:
-      wxfdashboardsaio: null
+      wxfdashboardsaio:
     restart: always
     depends_on:
       - \"wxfdashboardsaio_influxdb\"
@@ -291,7 +295,7 @@ echo "
       WEATHERFLOW_COLLECTOR_TOKEN: ${token}
     image: lux4rd0/weatherflow-collector:latest
     networks:
-      wxfdashboardsaio: null
+      wxfdashboardsaio:
     restart: always
     depends_on:
       - \"wxfdashboardsaio_influxdb\"
@@ -318,7 +322,7 @@ echo "
       WEATHERFLOW_COLLECTOR_TOKEN: ${token}
     image: lux4rd0/weatherflow-collector:latest
     networks:
-      wxfdashboardsaio: null
+      wxfdashboardsaio:
     restart: always
     depends_on:
       - \"wxfdashboardsaio_influxdb\"
@@ -336,9 +340,9 @@ docker run --rm \
   -e WEATHERFLOW_COLLECTOR_ELEVATION=${elevation[$station_number]} \\
   -e WEATHERFLOW_COLLECTOR_HOST_HOSTNAME=$(hostname) \\
   -e WEATHERFLOW_COLLECTOR_HUB_SN=${hub_sn[$station_number]} \\
-  -e WEATHERFLOW_COLLECTOR_INFLUXDB_PASSWORD=${influxdb_password} \\
-  -e WEATHERFLOW_COLLECTOR_INFLUXDB_URL=${influxdb_url} \\
-  -e WEATHERFLOW_COLLECTOR_INFLUXDB_USERNAME=${influxdb_username} \\
+  -e WEATHERFLOW_COLLECTOR_INFLUXDB_PASSWORD=x8egQTrf4bGl8Cs3XGyF1yE0b06pfgJe \\
+  -e WEATHERFLOW_COLLECTOR_INFLUXDB_URL=http://$(hostname):8086/write?db=weatherflow \\
+  -e WEATHERFLOW_COLLECTOR_INFLUXDB_USERNAME=weatherflow \\
   -e WEATHERFLOW_COLLECTOR_LATITUDE=${latitude[$station_number]} \\
   -e WEATHERFLOW_COLLECTOR_LONGITUDE=${longitude[$station_number]} \\
   -e WEATHERFLOW_COLLECTOR_PUBLIC_NAME=\"${public_name[$station_number]}\" \\
