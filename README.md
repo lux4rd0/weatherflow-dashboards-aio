@@ -123,11 +123,7 @@ This docker-compose stack is designed to be as easy as possible to deploy and go
 
 ## Downloading WeatherFlow Grafana Dashboards Individually
 
-The dashboards included in this WeatherFlow Dashboards AIO stack can also be downloaded separately if so desired:
-
-- [WeatherFlow - Overview](https://grafana.com/grafana/dashboards/13938)
-- [WeatherFlow - Today So Far](https://grafana.com/grafana/dashboards/13939)
-- [WeatherFlow - Device Details](https://grafana.com/grafana/dashboards/13940)
+The dashboards included in this WeatherFlow Dashboards AIO stack can also be [downloaded separately](https://github.com/lux4rd0/weatherflow-collector) if so desired.
 
 ## Roadmap
 
