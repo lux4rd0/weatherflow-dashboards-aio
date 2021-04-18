@@ -33,9 +33,9 @@ Like all projects - this is always in a flux state based on trying out new thing
 
 To get started, download one of [the releases](https://github.com/lux4rd0/grafana-weatherflow/releases) from this repository and extract it into an empty directory. For example:
 
-    wget https://github.com/lux4rd0/weatherflow-dashboards-aio/archive/v2.4.2.zip
-    unzip v2.4.2.zip
-    mv weatherflow-dashboards-aio-2.4.2 weatherflow-dashboards-aio
+    wget https://github.com/lux4rd0/weatherflow-dashboards-aio/archive/v2.5.0.zip
+    unzip v2.5.0.zip
+    mv weatherflow-dashboards-aio-2.5.0 weatherflow-dashboards-aio
     cd weatherflow-dashboards-aio
 
 Correct environmental variables need to be set for the containers to function. The following script can be used:
@@ -46,11 +46,13 @@ To use it, you will need to provide your WeatherFlow token as environmental vari
 
     WEATHERFLOW_COLLECTOR_IMPORT_DAYS #optional
     WEATHERFLOW_COLLECTOR_TOKEN
+    WEATHERFLOW_COLLECTOR_LOKI_CLIENT_URL #optional
 
 An example would be:
 
     WEATHERFLOW_COLLECTOR_IMPORT_DAYS="365" \
     WEATHERFLOW_COLLECTOR_TOKEN="a22afsa7-0dcc-4918-9f9a-923dfd339f41c" \
+    WEATHERFLOW_COLLECTOR_LOKI_CLIENT_URL="http://loki:3100/loki/api/v1/push" \
     bash ./generate_docker-compose.sh
 
 The following files will be generated for you:
