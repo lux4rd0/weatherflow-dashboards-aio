@@ -10,6 +10,7 @@
 
 import_days=$WEATHERFLOW_COLLECTOR_IMPORT_DAYS
 token=$WEATHERFLOW_COLLECTOR_TOKEN
+loki_client_url=$WEATHERFLOW_COLLECTOR_LOKI_CLIENT_URL
 
 echo "
 
@@ -24,6 +25,11 @@ if [ -z "${import_days}" ]
 
 import_days="365"
 
+fi
+
+if [ -z "${loki_client_url}" ]
+  then
+    echo "WEATHERFLOW_COLLECTOR_LOKI_CLIENT_URL was not set. No default being set"
 fi
 
 if [ -z "$token" ]
@@ -44,13 +50,11 @@ url_observations="https://swd.weatherflow.com/swd/rest/observations/station/${st
 
 #echo "url_observations=${url_observations}"
 
-
 response_url_stations=$(curl -si -w "\n%{size_header},%{size_download}" "${url_stations}")
 
 response_url_forecasts=$(curl -si -w "\n%{size_header},%{size_download}" "${url_forecasts}")
 
 response_url_observations=$(curl -si -w "\n%{size_header},%{size_download}" "${url_observations}")
-
 
 # Extract the response header size
 header_size_stations=$(sed -n '$ s/^\([0-9]*\),.*$/\1/ p' <<< "${response_url_stations}")
@@ -63,7 +67,6 @@ headers_station="${response_url_stations:0:${header_size_stations}}"
 
 # Extract the response body
 body_station="${response_url_stations:${header_size_stations}:${body_size_stations}}"
-
 
 #echo "URL Results"
 
@@ -85,7 +88,6 @@ for station_number in $(seq 0 $number_of_stations_minus_one) ; do
 
 #echo "Station Number Loop: $station_number"
 
-
 timezone[$station_number]=$(echo "${body_station}" | jq -r .stations[$station_number].timezone)
 latitude[$station_number]=$(echo "${body_station}" | jq -r .stations[$station_number].latitude)
 longitude[$station_number]=$(echo "${body_station}" | jq -r .stations[$station_number].longitude)
@@ -98,14 +100,10 @@ station_id[$station_number]=$(echo "${body_station}" | jq -r .stations[$station_
 device_id[$station_number]=$(echo "${body_station}" | jq -r .stations[$station_number].devices[1].device_id)
 hub_sn[$station_number]=$(echo "${body_station}" |jq -r .stations[$station_number].devices[0].serial_number)
 
-
 done
-
 
 FILE="${PWD}/docker-compose.yml"
 if test -f "$FILE"; then
-
-
 
 existing_file_timestamp=$(date -r "$FILE" "+%Y%m%d-%H%M%S")
 
@@ -114,8 +112,6 @@ echo "Existing docker-compose.yml file found. Backup up file to $FILE.${existing
 mv "$FILE" "$FILE"."${existing_file_timestamp}"
 
 fi
-
-
 
 ##
 ## Print docker-compose.yml file
@@ -181,7 +177,6 @@ services:
 
 for station_number in $(seq 0 $number_of_stations_minus_one) ; do
 
-
 ##
 ## Check import scripts
 ##
@@ -226,6 +221,7 @@ echo "
       WEATHERFLOW_COLLECTOR_INFLUXDB_URL: http://wxfdashboardsaio_influxdb:8086/write?db=weatherflow
       WEATHERFLOW_COLLECTOR_INFLUXDB_USERNAME: weatherflow
       WEATHERFLOW_COLLECTOR_LATITUDE: ${latitude[$station_number]}
+      WEATHERFLOW_COLLECTOR_LOKI_CLIENT_URL: ${loki_client_url}
       WEATHERFLOW_COLLECTOR_LONGITUDE: ${longitude[$station_number]}
       WEATHERFLOW_COLLECTOR_PUBLIC_NAME: ${public_name[$station_number]}
       WEATHERFLOW_COLLECTOR_STATION_ID: ${station_id[$station_number]}
@@ -259,6 +255,7 @@ echo "
       WEATHERFLOW_COLLECTOR_INFLUXDB_URL: http://wxfdashboardsaio_influxdb:8086/write?db=weatherflow
       WEATHERFLOW_COLLECTOR_INFLUXDB_USERNAME: weatherflow
       WEATHERFLOW_COLLECTOR_LATITUDE: ${latitude[$station_number]}
+      WEATHERFLOW_COLLECTOR_LOKI_CLIENT_URL: ${loki_client_url}
       WEATHERFLOW_COLLECTOR_LONGITUDE: ${longitude[$station_number]}
       WEATHERFLOW_COLLECTOR_PUBLIC_NAME: ${public_name[$station_number]}
       WEATHERFLOW_COLLECTOR_REST_INTERVAL: 60
@@ -287,6 +284,7 @@ echo "
       WEATHERFLOW_COLLECTOR_INFLUXDB_URL: http://wxfdashboardsaio_influxdb:8086/write?db=weatherflow
       WEATHERFLOW_COLLECTOR_INFLUXDB_USERNAME: weatherflow
       WEATHERFLOW_COLLECTOR_LATITUDE: ${latitude[$station_number]}
+      WEATHERFLOW_COLLECTOR_LOKI_CLIENT_URL: ${loki_client_url}
       WEATHERFLOW_COLLECTOR_LONGITUDE: ${longitude[$station_number]}
       WEATHERFLOW_COLLECTOR_PUBLIC_NAME: ${public_name[$station_number]}
       WEATHERFLOW_COLLECTOR_STATION_ID: ${station_id[$station_number]}
@@ -314,6 +312,7 @@ echo "
       WEATHERFLOW_COLLECTOR_INFLUXDB_URL: http://wxfdashboardsaio_influxdb:8086/write?db=weatherflow
       WEATHERFLOW_COLLECTOR_INFLUXDB_USERNAME: weatherflow
       WEATHERFLOW_COLLECTOR_LATITUDE: ${latitude[$station_number]}
+      WEATHERFLOW_COLLECTOR_LOKI_CLIENT_URL: ${loki_client_url}
       WEATHERFLOW_COLLECTOR_LONGITUDE: ${longitude[$station_number]}
       WEATHERFLOW_COLLECTOR_PUBLIC_NAME: ${public_name[$station_number]}
       WEATHERFLOW_COLLECTOR_STATION_ID: ${station_id[$station_number]}
@@ -344,6 +343,7 @@ docker run --rm \
   -e WEATHERFLOW_COLLECTOR_INFLUXDB_URL=http://$(hostname):8086/write?db=weatherflow \\
   -e WEATHERFLOW_COLLECTOR_INFLUXDB_USERNAME=weatherflow \\
   -e WEATHERFLOW_COLLECTOR_LATITUDE=${latitude[$station_number]} \\
+  -e WEATHERFLOW_COLLECTOR_LOKI_CLIENT_URL=${loki_client_url} \\
   -e WEATHERFLOW_COLLECTOR_LONGITUDE=${longitude[$station_number]} \\
   -e WEATHERFLOW_COLLECTOR_PUBLIC_NAME=\"${public_name[$station_number]}\" \\
   -e WEATHERFLOW_COLLECTOR_STATION_ID=${station_id[$station_number]} \\
@@ -357,8 +357,6 @@ docker run --rm \
 " > "${FILE[$station_number]}"
 
 echo "${FILE[$station_number]} file created"
-
-
 
 done
 
