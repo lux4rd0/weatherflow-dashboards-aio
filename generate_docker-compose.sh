@@ -11,6 +11,7 @@
 import_days=$WEATHERFLOW_COLLECTOR_IMPORT_DAYS
 token=$WEATHERFLOW_COLLECTOR_TOKEN
 loki_client_url=$WEATHERFLOW_COLLECTOR_LOKI_CLIENT_URL
+logcli_host_url=$WEATHERFLOW_COLLECTOR_LOGCLI_URL
 
 echo "
 
@@ -215,6 +216,7 @@ echo "
       WEATHERFLOW_COLLECTOR_COLLECTOR_TYPE: local-udp
       WEATHERFLOW_COLLECTOR_DEBUG: \"false\"
       WEATHERFLOW_COLLECTOR_ELEVATION: ${elevation[$station_number]}
+      WEATHERFLOW_COLLECTOR_FUNCTION: collector
       WEATHERFLOW_COLLECTOR_HOST_HOSTNAME: $(hostname)
       WEATHERFLOW_COLLECTOR_HUB_SN: ${hub_sn[$station_number]}
       WEATHERFLOW_COLLECTOR_INFLUXDB_PASSWORD: x8egQTrf4bGl8Cs3XGyF1yE0b06pfgJe
@@ -248,6 +250,7 @@ echo "
       WEATHERFLOW_COLLECTOR_DEBUG: \"false\"
       WEATHERFLOW_COLLECTOR_DEVICE_ID: ${device_id[$station_number]}
       WEATHERFLOW_COLLECTOR_ELEVATION: ${elevation[$station_number]}
+      WEATHERFLOW_COLLECTOR_FUNCTION: collector
       WEATHERFLOW_COLLECTOR_FORECAST_INTERVAL: 60
       WEATHERFLOW_COLLECTOR_HOST_HOSTNAME: $(hostname)
       WEATHERFLOW_COLLECTOR_HUB_SN: ${hub_sn[$station_number]}
@@ -278,6 +281,7 @@ echo "
       WEATHERFLOW_COLLECTOR_DEBUG: \"false\"
       WEATHERFLOW_COLLECTOR_DEVICE_ID: ${device_id[$station_number]}
       WEATHERFLOW_COLLECTOR_ELEVATION: ${elevation[$station_number]}
+      WEATHERFLOW_COLLECTOR_FUNCTION: collector
       WEATHERFLOW_COLLECTOR_HOST_HOSTNAME: $(hostname)
       WEATHERFLOW_COLLECTOR_HUB_SN: ${hub_sn[$station_number]}
       WEATHERFLOW_COLLECTOR_INFLUXDB_PASSWORD: x8egQTrf4bGl8Cs3XGyF1yE0b06pfgJe
@@ -306,6 +310,7 @@ echo "
       WEATHERFLOW_COLLECTOR_DEBUG: \"false\"
       WEATHERFLOW_COLLECTOR_DEVICE_ID: ${device_id[$station_number]}
       WEATHERFLOW_COLLECTOR_ELEVATION: ${elevation[$station_number]}
+      WEATHERFLOW_COLLECTOR_FUNCTION: collector
       WEATHERFLOW_COLLECTOR_HOST_HOSTNAME: $(hostname)
       WEATHERFLOW_COLLECTOR_HUB_SN: ${hub_sn[$station_number]}
       WEATHERFLOW_COLLECTOR_INFLUXDB_PASSWORD: x8egQTrf4bGl8Cs3XGyF1yE0b06pfgJe
@@ -330,20 +335,20 @@ echo "
 
 echo "
 
-docker run --rm \
+docker run --rm \\
   --name=weatherflow-collector-${station_name_dc[$station_number]}-remote-import \\
   -e WEATHERFLOW_COLLECTOR_BACKEND_TYPE=influxdb \\
   -e WEATHERFLOW_COLLECTOR_COLLECTOR_TYPE=remote-import \\
   -e WEATHERFLOW_COLLECTOR_DEBUG=false \\
   -e WEATHERFLOW_COLLECTOR_DEVICE_ID=${device_id[$station_number]} \\
   -e WEATHERFLOW_COLLECTOR_ELEVATION=${elevation[$station_number]} \\
+  -e WEATHERFLOW_COLLECTOR_FUNCTION=import \\
   -e WEATHERFLOW_COLLECTOR_HOST_HOSTNAME=$(hostname) \\
   -e WEATHERFLOW_COLLECTOR_HUB_SN=${hub_sn[$station_number]} \\
   -e WEATHERFLOW_COLLECTOR_INFLUXDB_PASSWORD=x8egQTrf4bGl8Cs3XGyF1yE0b06pfgJe \\
   -e WEATHERFLOW_COLLECTOR_INFLUXDB_URL=http://$(hostname):8086/write?db=weatherflow \\
   -e WEATHERFLOW_COLLECTOR_INFLUXDB_USERNAME=weatherflow \\
   -e WEATHERFLOW_COLLECTOR_LATITUDE=${latitude[$station_number]} \\
-  -e WEATHERFLOW_COLLECTOR_LOKI_CLIENT_URL=${loki_client_url} \\
   -e WEATHERFLOW_COLLECTOR_LONGITUDE=${longitude[$station_number]} \\
   -e WEATHERFLOW_COLLECTOR_PUBLIC_NAME=\"${public_name[$station_number]}\" \\
   -e WEATHERFLOW_COLLECTOR_STATION_ID=${station_id[$station_number]} \\
