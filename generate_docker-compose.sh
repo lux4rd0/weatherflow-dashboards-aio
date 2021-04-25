@@ -1,21 +1,27 @@
 #!/bin/bash
 
 ##
-## WeatherFlow Collector AIO - docker-compose.yml generator
-##
-
-##
-## Use bash ./generate_docker-compose.sh <<token>> to create a docker-compose.yml file.
+## WeatherFlow Collector - docker-compose.yml generator
 ##
 
 import_days=$WEATHERFLOW_COLLECTOR_IMPORT_DAYS
-token=$WEATHERFLOW_COLLECTOR_TOKEN
-loki_client_url=$WEATHERFLOW_COLLECTOR_LOKI_CLIENT_URL
+influxdb_password=$WEATHERFLOW_COLLECTOR_INFLUXDB_PASSWORD
+influxdb_url=$WEATHERFLOW_COLLECTOR_INFLUXDB_URL
+influxdb_username=$WEATHERFLOW_COLLECTOR_INFLUXDB_USERNAME
 logcli_host_url=$WEATHERFLOW_COLLECTOR_LOGCLI_URL
+loki_client_url=$WEATHERFLOW_COLLECTOR_LOKI_CLIENT_URL
+threads=$WEATHERFLOW_COLLECTOR_THREADS
+token=$WEATHERFLOW_COLLECTOR_TOKEN
 
 echo "
 
 import_days=${import_days}
+influxdb_password=${influxdb_password}
+influxdb_url=${influxdb_url}
+influxdb_username=${influxdb_username}
+logcli_host_url=${logcli_host_url}
+loki_client_url=${loki_client_url}
+threads=${threads}
 token=${token}
 
 "
@@ -28,9 +34,28 @@ import_days="365"
 
 fi
 
-if [ -z "${loki_client_url}" ]
+if [ -z "${influxdb_url}" ]
   then
-    echo "WEATHERFLOW_COLLECTOR_LOKI_CLIENT_URL was not set. No default being set"
+    echo "WEATHERFLOW_COLLECTOR_INFLUXDB_URL was not set. Setting defaults: http://influxdb:8086/write?db=weatherflow"
+
+influxdb_url="http://influxdb:8086/write?db=weatherflow"
+
+fi
+
+if [ -z "${influxdb_username}" ]
+  then
+    echo "WEATHERFLOW_COLLECTOR_INFLUXDB_USERNAME was not set. Setting defaults: influxdb."
+
+influxdb_username="influxdb"
+
+fi
+
+if [ -z "${influxdb_password}" ]
+  then
+    echo "WEATHERFLOW_COLLECTOR_INFLUXDB_PASSWORD was not set. Setting defaults: password"
+
+influxdb_password="password"
+
 fi
 
 if [ -z "$token" ]
@@ -51,11 +76,14 @@ url_observations="https://swd.weatherflow.com/swd/rest/observations/station/${st
 
 #echo "url_observations=${url_observations}"
 
+
 response_url_stations=$(curl -si -w "\n%{size_header},%{size_download}" "${url_stations}")
 
 response_url_forecasts=$(curl -si -w "\n%{size_header},%{size_download}" "${url_forecasts}")
 
 response_url_observations=$(curl -si -w "\n%{size_header},%{size_download}" "${url_observations}")
+
+
 
 # Extract the response header size
 header_size_stations=$(sed -n '$ s/^\([0-9]*\),.*$/\1/ p' <<< "${response_url_stations}")
@@ -68,6 +96,7 @@ headers_station="${response_url_stations:0:${header_size_stations}}"
 
 # Extract the response body
 body_station="${response_url_stations:${header_size_stations}:${body_size_stations}}"
+
 
 #echo "URL Results"
 
@@ -101,16 +130,17 @@ station_id[$station_number]=$(echo "${body_station}" | jq -r .stations[$station_
 device_id[$station_number]=$(echo "${body_station}" | jq -r .stations[$station_number].devices[1].device_id)
 hub_sn[$station_number]=$(echo "${body_station}" |jq -r .stations[$station_number].devices[0].serial_number)
 
+
 done
 
-FILE="${PWD}/docker-compose.yml"
-if test -f "$FILE"; then
+FILE_DC="${PWD}/docker-compose.yml"
+if test -f "${FILE_DC}"; then
 
-existing_file_timestamp=$(date -r "$FILE" "+%Y%m%d-%H%M%S")
+existing_file_timestamp_dc=$(date -r "${FILE_DC}" "+%Y%m%d-%H%M%S")
 
-echo "Existing docker-compose.yml file found. Backup up file to $FILE.${existing_file_timestamp}"
+echo "Existing ${FILE_DC} with a timestamp of ${existing_file_timestamp_dc} file found. Backup up file to ${FILE_DC}.${existing_file_timestamp_dc}"
 
-mv "$FILE" "$FILE"."${existing_file_timestamp}"
+mv "${FILE_DC}" "${FILE_DC}"."${existing_file_timestamp_dc}"
 
 fi
 
@@ -123,55 +153,17 @@ fi
 ##
 
 
+
+## Environmental Variables
+
+
 echo "
 
-networks:
-  wxfdashboardsaio: {}
 services:
-  wxfdashboardsaio_grafana:
-    container_name: wxfdashboardsaio_grafana
-    environment:
-      GF_AUTH_ANONYMOUS_ENABLED: \"true\"
-      GF_AUTH_ANONYMOUS_ORG_ROLE: Viewer
-      GF_AUTH_BASIC_ENABLED: \"true\"
-      GF_AUTH_DISABLE_LOGIN_FORM: \"false\"
-      GF_DASHBOARDS_DEFAULT_HOME_DASHBOARD_PATH: /var/lib/grafana/dashboards/weatherflow_collector/weatherflow_collector-overview-influxdb.json
-    image: grafana/grafana:7.5.4
-    networks:
-      wxfdashboardsaio:
-    ports:
-    - protocol: tcp
-      published: 3000
-      target: 3000
-    restart: always
-    volumes:
-    - ./config/grafana/provisioning/datasources:/etc/grafana/provisioning/datasources:ro
-    - ./config/grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards:ro
-    - ./config/grafana/dashboards:/var/lib/grafana/dashboards:ro
-  wxfdashboardsaio_influxdb:
-    container_name: wxfdashboardsaio_influxdb
-    environment:
-      INFLUXDB_ADMIN_PASSWORD: Gk372Qm70E0xGVIcUpSyRiwqfAyhuwkS
-      INFLUXDB_ADMIN_USER: admin
-      INFLUXDB_DATA_ENGINE: tsm1
-      INFLUXDB_DB: weatherflow
-      INFLUXDB_MONITOR_STORE_DATABASE: _internal
-      INFLUXDB_MONITOR_STORE_ENABLED: \"true\"
-      INFLUXDB_REPORTING_DISABLED: \"true\"
-      INFLUXDB_USER: weatherflow
-      INFLUXDB_USER_PASSWORD: x8egQTrf4bGl8Cs3XGyF1yE0b06pfgJe
-    image: influxdb:1.8
-    networks:
-      wxfdashboardsaio:
-    ports:
-    - protocol: tcp
-      published: 8086
-      target: 8086
-    restart: always
-    volumes:
-    - ./data/influxdb:/var/lib/influxdb:rw
-
 " > docker-compose.yml
+
+
+
 
 
 ## Loop through each device
@@ -179,19 +171,71 @@ services:
 for station_number in $(seq 0 $number_of_stations_minus_one) ; do
 
 ##
-## Check import scripts
+## Remote import
 ##
 
-FILE[$station_number]="${PWD}/remote-import-${station_name_dc[$station_number]}.sh"
-if test -f "${FILE[$station_number]}"; then
+FILE_import_remote[$station_number]="${PWD}/import-${station_name_dc[$station_number]}-remote.sh"
+if test -f "${FILE_import_remote[$station_number]}"; then
 
-existing_file_timestamp[$station_number]=$(date -r "${FILE[$station_number]}" "+%Y%m%d-%H%M%S")
+existing_file_timestamp[$station_number]=$(date -r "${FILE_import_remote[$station_number]}" "+%Y%m%d-%H%M%S")
 
-echo "Existing ${FILE[$station_number]} file found. Backup up file to ${FILE[$station_number]}.${existing_file_timestamp[$station_number]}"
+echo "Existing ${FILE_import_remote[$station_number]} file found. Backup up file to ${FILE_import_remote[$station_number]}.${existing_file_timestamp[$station_number]}"
 
-mv "${FILE[$station_number]}" "${FILE[$station_number]}"."${existing_file_timestamp[$station_number]}"
+mv "${FILE_import_remote[$station_number]}" "${FILE_import_remote[$station_number]}"."${existing_file_timestamp[$station_number]}"
 
 fi
+
+
+##
+## Loki import - remote-rest
+##
+
+FILE_import_loki_remote_rest[$station_number]="${PWD}/import-${station_name_dc[$station_number]}-loki-remote-rest.sh"
+if test -f "${FILE_import_loki_remote_rest[$station_number]}"; then
+
+existing_file_timestamp[$station_number]=$(date -r "${FILE_import_loki_remote_rest[$station_number]}" "+%Y%m%d-%H%M%S")
+
+echo "Existing ${FILE_import_loki_remote_rest[$station_number]} file found. Backup up file to ${FILE_import_loki_remote_rest[$station_number]}.${existing_file_timestamp[$station_number]}"
+
+mv "${FILE_import_loki_remote_rest[$station_number]}" "${FILE_import_loki_remote_rest[$station_number]}"."${existing_file_timestamp[$station_number]}"
+
+fi
+
+##
+## Loki import - remote-socket
+##
+
+FILE_import_loki_remote_socket[$station_number]="${PWD}/import-${station_name_dc[$station_number]}-loki-remote-socket.sh"
+if test -f "${FILE_import_loki_remote_socket[$station_number]}"; then
+
+existing_file_timestamp[$station_number]=$(date -r "${FILE_import_loki_remote_socket[$station_number]}" "+%Y%m%d-%H%M%S")
+
+echo "Existing ${FILE_import_loki_remote_socket[$station_number]} file found. Backup up file to ${FILE_import_loki_remote_socket[$station_number]}.${existing_file_timestamp[$station_number]}"
+
+mv "${FILE_import_loki_remote_socket[$station_number]}" "${FILE_import_loki_remote_socket[$station_number]}"."${existing_file_timestamp[$station_number]}"
+
+fi
+
+##
+## Loki import - local-udp
+##
+
+FILE_import_loki_local_udp[$station_number]="${PWD}/import-${station_name_dc[$station_number]}-loki-local-udp.sh"
+if test -f "${FILE_import_loki_local_udp[$station_number]}"; then
+
+existing_file_timestamp[$station_number]=$(date -r "${FILE_import_loki_local_udp[$station_number]}" "+%Y%m%d-%H%M%S")
+
+echo "Existing ${FILE_import_loki_local_udp[$station_number]} file found. Backup up file to ${FILE_import_loki_local_udp[$station_number]}.${existing_file_timestamp[$station_number]}"
+
+mv "${FILE_import_loki_local_udp[$station_number]}" "${FILE_import_loki_local_udp[$station_number]}"."${existing_file_timestamp[$station_number]}"
+
+fi
+
+
+
+
+
+
 
 echo "
 
@@ -209,8 +253,8 @@ hub_sn: ${hub_sn[$station_number]}
 
 echo "
 
-  weatherflow-collector-${station_name_dc[$station_number]}-local-udp:
-    container_name: weatherflow-collector-${station_name_dc[$station_number]}-local-udp
+  weatherflow-collector-${station_name_dc[$station_number]}-local-udp-influxdb01:
+    container_name: weatherflow-collector-${station_name_dc[$station_number]}-local-udp-influxdb01
     environment:
       WEATHERFLOW_COLLECTOR_BACKEND_TYPE: influxdb
       WEATHERFLOW_COLLECTOR_COLLECTOR_TYPE: local-udp
@@ -219,15 +263,16 @@ echo "
       WEATHERFLOW_COLLECTOR_FUNCTION: collector
       WEATHERFLOW_COLLECTOR_HOST_HOSTNAME: $(hostname)
       WEATHERFLOW_COLLECTOR_HUB_SN: ${hub_sn[$station_number]}
-      WEATHERFLOW_COLLECTOR_INFLUXDB_PASSWORD: x8egQTrf4bGl8Cs3XGyF1yE0b06pfgJe
-      WEATHERFLOW_COLLECTOR_INFLUXDB_URL: http://wxfdashboardsaio_influxdb:8086/write?db=weatherflow
-      WEATHERFLOW_COLLECTOR_INFLUXDB_USERNAME: weatherflow
+      WEATHERFLOW_COLLECTOR_INFLUXDB_PASSWORD: ${influxdb_password}
+      WEATHERFLOW_COLLECTOR_INFLUXDB_URL: ${influxdb_url}
+      WEATHERFLOW_COLLECTOR_INFLUXDB_USERNAME: ${influxdb_username}
       WEATHERFLOW_COLLECTOR_LATITUDE: ${latitude[$station_number]}
       WEATHERFLOW_COLLECTOR_LOKI_CLIENT_URL: ${loki_client_url}
       WEATHERFLOW_COLLECTOR_LONGITUDE: ${longitude[$station_number]}
       WEATHERFLOW_COLLECTOR_PUBLIC_NAME: ${public_name[$station_number]}
       WEATHERFLOW_COLLECTOR_STATION_ID: ${station_id[$station_number]}
       WEATHERFLOW_COLLECTOR_STATION_NAME: ${station_name[$station_number]}
+      WEATHERFLOW_COLLECTOR_THREADS: ${threads}
       WEATHERFLOW_COLLECTOR_TIMEZONE: ${timezone[$station_number]}
       WEATHERFLOW_COLLECTOR_TOKEN: ${token}
     image: lux4rd0/weatherflow-collector:latest
@@ -236,14 +281,9 @@ echo "
       published: 50222
       target: 50222
     restart: always
-    networks:
-      wxfdashboardsaio:
-    restart: always
-    depends_on:
-      - \"wxfdashboardsaio_influxdb\"
 
-  weatherflow-collector-${station_name_dc[$station_number]}-remote-forecast:
-    container_name: weatherflow-collector-${station_name_dc[$station_number]}-remote-forecast
+  weatherflow-collector-${station_name_dc[$station_number]}-remote-forecast-influxdb-influxdb01:
+    container_name: weatherflow-collector-${station_name_dc[$station_number]}-remote-forecast-influxdb-influxdb01
     environment:
       WEATHERFLOW_COLLECTOR_BACKEND_TYPE: influxdb
       WEATHERFLOW_COLLECTOR_COLLECTOR_TYPE: remote-forecast
@@ -254,27 +294,23 @@ echo "
       WEATHERFLOW_COLLECTOR_FORECAST_INTERVAL: 60
       WEATHERFLOW_COLLECTOR_HOST_HOSTNAME: $(hostname)
       WEATHERFLOW_COLLECTOR_HUB_SN: ${hub_sn[$station_number]}
-      WEATHERFLOW_COLLECTOR_INFLUXDB_PASSWORD: x8egQTrf4bGl8Cs3XGyF1yE0b06pfgJe
-      WEATHERFLOW_COLLECTOR_INFLUXDB_URL: http://wxfdashboardsaio_influxdb:8086/write?db=weatherflow
-      WEATHERFLOW_COLLECTOR_INFLUXDB_USERNAME: weatherflow
+      WEATHERFLOW_COLLECTOR_INFLUXDB_PASSWORD: ${influxdb_password}
+      WEATHERFLOW_COLLECTOR_INFLUXDB_URL: ${influxdb_url}
+      WEATHERFLOW_COLLECTOR_INFLUXDB_USERNAME: ${influxdb_username}
       WEATHERFLOW_COLLECTOR_LATITUDE: ${latitude[$station_number]}
-      WEATHERFLOW_COLLECTOR_LOKI_CLIENT_URL: ${loki_client_url}
       WEATHERFLOW_COLLECTOR_LONGITUDE: ${longitude[$station_number]}
       WEATHERFLOW_COLLECTOR_PUBLIC_NAME: ${public_name[$station_number]}
       WEATHERFLOW_COLLECTOR_REST_INTERVAL: 60
       WEATHERFLOW_COLLECTOR_STATION_ID: ${station_id[$station_number]}
       WEATHERFLOW_COLLECTOR_STATION_NAME: ${station_name[$station_number]}
+      WEATHERFLOW_COLLECTOR_THREADS: ${threads}
       WEATHERFLOW_COLLECTOR_TIMEZONE: ${timezone[$station_number]}
       WEATHERFLOW_COLLECTOR_TOKEN: ${token}
     image: lux4rd0/weatherflow-collector:latest
-    networks:
-      wxfdashboardsaio:
     restart: always
-    depends_on:
-      - \"wxfdashboardsaio_influxdb\"
 
-  weatherflow-collector-${station_name_dc[$station_number]}-remote-rest:
-    container_name: weatherflow-collector-${station_name_dc[$station_number]}-remote-rest
+  weatherflow-collector-${station_name_dc[$station_number]}-remote-rest-influxdb-influxdb01:
+    container_name: weatherflow-collector-${station_name_dc[$station_number]}-remote-rest-influxdb-influxdb01
     environment:
       WEATHERFLOW_COLLECTOR_BACKEND_TYPE: influxdb
       WEATHERFLOW_COLLECTOR_COLLECTOR_TYPE: remote-rest
@@ -284,26 +320,22 @@ echo "
       WEATHERFLOW_COLLECTOR_FUNCTION: collector
       WEATHERFLOW_COLLECTOR_HOST_HOSTNAME: $(hostname)
       WEATHERFLOW_COLLECTOR_HUB_SN: ${hub_sn[$station_number]}
-      WEATHERFLOW_COLLECTOR_INFLUXDB_PASSWORD: x8egQTrf4bGl8Cs3XGyF1yE0b06pfgJe
-      WEATHERFLOW_COLLECTOR_INFLUXDB_URL: http://wxfdashboardsaio_influxdb:8086/write?db=weatherflow
-      WEATHERFLOW_COLLECTOR_INFLUXDB_USERNAME: weatherflow
+      WEATHERFLOW_COLLECTOR_INFLUXDB_PASSWORD: ${influxdb_password}
+      WEATHERFLOW_COLLECTOR_INFLUXDB_URL: ${influxdb_url}
+      WEATHERFLOW_COLLECTOR_INFLUXDB_USERNAME: ${influxdb_username}
       WEATHERFLOW_COLLECTOR_LATITUDE: ${latitude[$station_number]}
-      WEATHERFLOW_COLLECTOR_LOKI_CLIENT_URL: ${loki_client_url}
       WEATHERFLOW_COLLECTOR_LONGITUDE: ${longitude[$station_number]}
       WEATHERFLOW_COLLECTOR_PUBLIC_NAME: ${public_name[$station_number]}
       WEATHERFLOW_COLLECTOR_STATION_ID: ${station_id[$station_number]}
       WEATHERFLOW_COLLECTOR_STATION_NAME: ${station_name[$station_number]}
+      WEATHERFLOW_COLLECTOR_THREADS: ${threads}
       WEATHERFLOW_COLLECTOR_TIMEZONE: ${timezone[$station_number]}
       WEATHERFLOW_COLLECTOR_TOKEN: ${token}
     image: lux4rd0/weatherflow-collector:latest
-    networks:
-      wxfdashboardsaio:
     restart: always
-    depends_on:
-      - \"wxfdashboardsaio_influxdb\"
 
-  weatherflow-collector-${station_name_dc[$station_number]}-remote-socket:
-    container_name: weatherflow-collector-${station_name_dc[$station_number]}-remote-socket
+  weatherflow-collector-${station_name_dc[$station_number]}-remote-socket-influxdb-influxdb01:
+    container_name: weatherflow-collector-${station_name_dc[$station_number]}-remote-socket-influxdb-influxdb01
     environment:
       WEATHERFLOW_COLLECTOR_BACKEND_TYPE: influxdb
       WEATHERFLOW_COLLECTOR_COLLECTOR_TYPE: remote-socket
@@ -313,25 +345,25 @@ echo "
       WEATHERFLOW_COLLECTOR_FUNCTION: collector
       WEATHERFLOW_COLLECTOR_HOST_HOSTNAME: $(hostname)
       WEATHERFLOW_COLLECTOR_HUB_SN: ${hub_sn[$station_number]}
-      WEATHERFLOW_COLLECTOR_INFLUXDB_PASSWORD: x8egQTrf4bGl8Cs3XGyF1yE0b06pfgJe
-      WEATHERFLOW_COLLECTOR_INFLUXDB_URL: http://wxfdashboardsaio_influxdb:8086/write?db=weatherflow
-      WEATHERFLOW_COLLECTOR_INFLUXDB_USERNAME: weatherflow
+      WEATHERFLOW_COLLECTOR_INFLUXDB_PASSWORD: ${influxdb_password}
+      WEATHERFLOW_COLLECTOR_INFLUXDB_URL: ${influxdb_url}
+      WEATHERFLOW_COLLECTOR_INFLUXDB_USERNAME: ${influxdb_username}
       WEATHERFLOW_COLLECTOR_LATITUDE: ${latitude[$station_number]}
-      WEATHERFLOW_COLLECTOR_LOKI_CLIENT_URL: ${loki_client_url}
       WEATHERFLOW_COLLECTOR_LONGITUDE: ${longitude[$station_number]}
       WEATHERFLOW_COLLECTOR_PUBLIC_NAME: ${public_name[$station_number]}
       WEATHERFLOW_COLLECTOR_STATION_ID: ${station_id[$station_number]}
       WEATHERFLOW_COLLECTOR_STATION_NAME: ${station_name[$station_number]}
+      WEATHERFLOW_COLLECTOR_THREADS: ${threads}
       WEATHERFLOW_COLLECTOR_TIMEZONE: ${timezone[$station_number]}
       WEATHERFLOW_COLLECTOR_TOKEN: ${token}
     image: lux4rd0/weatherflow-collector:latest
-    networks:
-      wxfdashboardsaio:
     restart: always
-    depends_on:
-      - \"wxfdashboardsaio_influxdb\"
 
 " >> docker-compose.yml
+
+##
+## remote-import
+##
 
 echo "
 
@@ -345,29 +377,143 @@ docker run --rm \\
   -e WEATHERFLOW_COLLECTOR_FUNCTION=import \\
   -e WEATHERFLOW_COLLECTOR_HOST_HOSTNAME=$(hostname) \\
   -e WEATHERFLOW_COLLECTOR_HUB_SN=${hub_sn[$station_number]} \\
-  -e WEATHERFLOW_COLLECTOR_INFLUXDB_PASSWORD=x8egQTrf4bGl8Cs3XGyF1yE0b06pfgJe \\
-  -e WEATHERFLOW_COLLECTOR_INFLUXDB_URL=http://$(hostname):8086/write?db=weatherflow \\
-  -e WEATHERFLOW_COLLECTOR_INFLUXDB_USERNAME=weatherflow \\
+  -e WEATHERFLOW_COLLECTOR_IMPORT_DAYS=${import_days} \\
+  -e WEATHERFLOW_COLLECTOR_INFLUXDB_PASSWORD=${influxdb_password} \\
+  -e WEATHERFLOW_COLLECTOR_INFLUXDB_URL=${influxdb_url} \\
+  -e WEATHERFLOW_COLLECTOR_INFLUXDB_USERNAME=${influxdb_username} \\
   -e WEATHERFLOW_COLLECTOR_LATITUDE=${latitude[$station_number]} \\
+  -e WEATHERFLOW_COLLECTOR_LOGCLI_URL=${logcli_host_url} \\
   -e WEATHERFLOW_COLLECTOR_LONGITUDE=${longitude[$station_number]} \\
   -e WEATHERFLOW_COLLECTOR_PUBLIC_NAME=\"${public_name[$station_number]}\" \\
   -e WEATHERFLOW_COLLECTOR_STATION_ID=${station_id[$station_number]} \\
   -e WEATHERFLOW_COLLECTOR_STATION_NAME=\"${station_name[$station_number]}\" \\
+  -e WEATHERFLOW_COLLECTOR_THREADS=${threads} \\
   -e WEATHERFLOW_COLLECTOR_TIMEZONE=\"${timezone[$station_number]}\" \\
   -e WEATHERFLOW_COLLECTOR_TOKEN=${token} \\
-  -e WEATHERFLOW_COLLECTOR_IMPORT_DAYS=${import_days} \\
   -e TZ=\"${timezone[$station_number]}\" \\
   lux4rd0/weatherflow-collector:latest
 
-" > "${FILE[$station_number]}"
+" > "${FILE_import_remote[$station_number]}"
 
-echo "${FILE[$station_number]} file created"
+echo "${FILE_import_remote[$station_number]} file created"
+
+
+##
+## loki remote-rest
+##
+
+echo "
+
+docker run --rm \\
+  --name=weatherflow-collector-${station_name_dc[$station_number]}-import-loki-remote-rest \\
+  -e WEATHERFLOW_COLLECTOR_BACKEND_TYPE=influxdb \\
+  -e WEATHERFLOW_COLLECTOR_COLLECTOR_TYPE=remote-rest \\
+  -e WEATHERFLOW_COLLECTOR_DEBUG=false \\
+  -e WEATHERFLOW_COLLECTOR_DEVICE_ID=${device_id[$station_number]} \\
+  -e WEATHERFLOW_COLLECTOR_ELEVATION=${elevation[$station_number]} \\
+  -e WEATHERFLOW_COLLECTOR_FUNCTION=import \\
+  -e WEATHERFLOW_COLLECTOR_HOST_HOSTNAME=$(hostname) \\
+  -e WEATHERFLOW_COLLECTOR_HUB_SN=${hub_sn[$station_number]} \\
+  -e WEATHERFLOW_COLLECTOR_IMPORT_DAYS=${import_days} \\
+  -e WEATHERFLOW_COLLECTOR_INFLUXDB_PASSWORD=${influxdb_password} \\
+  -e WEATHERFLOW_COLLECTOR_INFLUXDB_URL=${influxdb_url} \\
+  -e WEATHERFLOW_COLLECTOR_INFLUXDB_USERNAME=${influxdb_username} \\
+  -e WEATHERFLOW_COLLECTOR_LATITUDE=${latitude[$station_number]} \\
+  -e WEATHERFLOW_COLLECTOR_LOGCLI_URL=${logcli_host_url} \\
+  -e WEATHERFLOW_COLLECTOR_LONGITUDE=${longitude[$station_number]} \\
+  -e WEATHERFLOW_COLLECTOR_PUBLIC_NAME=\"${public_name[$station_number]}\" \\
+  -e WEATHERFLOW_COLLECTOR_STATION_ID=${station_id[$station_number]} \\
+  -e WEATHERFLOW_COLLECTOR_STATION_NAME=\"${station_name[$station_number]}\" \\
+  -e WEATHERFLOW_COLLECTOR_THREADS=${threads} \\
+  -e WEATHERFLOW_COLLECTOR_TIMEZONE=\"${timezone[$station_number]}\" \\
+  -e WEATHERFLOW_COLLECTOR_TOKEN=${token} \\
+  -e TZ=\"${timezone[$station_number]}\" \\
+  lux4rd0/weatherflow-collector:latest
+
+" > "${FILE_import_loki_remote_rest[$station_number]}"
+
+echo "${FILE_import_loki_remote_rest[$station_number]} file created"
+
+##
+## loki remote-socket
+##
+
+echo "
+
+docker run --rm \\
+  --name=weatherflow-collector-${station_name_dc[$station_number]}-import-loki-remote-socket \\
+  -e WEATHERFLOW_COLLECTOR_BACKEND_TYPE=influxdb \\
+  -e WEATHERFLOW_COLLECTOR_COLLECTOR_TYPE=remote-socket \\
+  -e WEATHERFLOW_COLLECTOR_DEBUG=false \\
+  -e WEATHERFLOW_COLLECTOR_DEVICE_ID=${device_id[$station_number]} \\
+  -e WEATHERFLOW_COLLECTOR_ELEVATION=${elevation[$station_number]} \\
+  -e WEATHERFLOW_COLLECTOR_FUNCTION=import \\
+  -e WEATHERFLOW_COLLECTOR_HOST_HOSTNAME=$(hostname) \\
+  -e WEATHERFLOW_COLLECTOR_HUB_SN=${hub_sn[$station_number]} \\
+  -e WEATHERFLOW_COLLECTOR_IMPORT_DAYS=${import_days} \\
+  -e WEATHERFLOW_COLLECTOR_INFLUXDB_PASSWORD=${influxdb_password} \\
+  -e WEATHERFLOW_COLLECTOR_INFLUXDB_URL=${influxdb_url} \\
+  -e WEATHERFLOW_COLLECTOR_INFLUXDB_USERNAME=${influxdb_username} \\
+  -e WEATHERFLOW_COLLECTOR_LATITUDE=${latitude[$station_number]} \\
+  -e WEATHERFLOW_COLLECTOR_LOGCLI_URL=${logcli_host_url} \\
+  -e WEATHERFLOW_COLLECTOR_LONGITUDE=${longitude[$station_number]} \\
+  -e WEATHERFLOW_COLLECTOR_PUBLIC_NAME=\"${public_name[$station_number]}\" \\
+  -e WEATHERFLOW_COLLECTOR_STATION_ID=${station_id[$station_number]} \\
+  -e WEATHERFLOW_COLLECTOR_STATION_NAME=\"${station_name[$station_number]}\" \\
+  -e WEATHERFLOW_COLLECTOR_THREADS=${threads} \\
+  -e WEATHERFLOW_COLLECTOR_TIMEZONE=\"${timezone[$station_number]}\" \\
+  -e WEATHERFLOW_COLLECTOR_TOKEN=${token} \\
+  -e TZ=\"${timezone[$station_number]}\" \\
+  lux4rd0/weatherflow-collector:latest
+
+" > "${FILE_import_loki_remote_socket[$station_number]}"
+
+echo "${FILE_import_loki_remote_socket[$station_number]} file created"
+
+##
+## loki local-udp
+##
+
+echo "
+
+docker run --rm \\
+  --name=weatherflow-collector-${station_name_dc[$station_number]}-import-loki-local-udp \\
+  -e WEATHERFLOW_COLLECTOR_BACKEND_TYPE=influxdb \\
+  -e WEATHERFLOW_COLLECTOR_COLLECTOR_TYPE=local-udp \\
+  -e WEATHERFLOW_COLLECTOR_DEBUG=false \\
+  -e WEATHERFLOW_COLLECTOR_DEVICE_ID=${device_id[$station_number]} \\
+  -e WEATHERFLOW_COLLECTOR_ELEVATION=${elevation[$station_number]} \\
+  -e WEATHERFLOW_COLLECTOR_FUNCTION=import \\
+  -e WEATHERFLOW_COLLECTOR_HOST_HOSTNAME=$(hostname) \\
+  -e WEATHERFLOW_COLLECTOR_HUB_SN=${hub_sn[$station_number]} \\
+  -e WEATHERFLOW_COLLECTOR_IMPORT_DAYS=${import_days} \\
+  -e WEATHERFLOW_COLLECTOR_INFLUXDB_PASSWORD=${influxdb_password} \\
+  -e WEATHERFLOW_COLLECTOR_INFLUXDB_URL=${influxdb_url} \\
+  -e WEATHERFLOW_COLLECTOR_INFLUXDB_USERNAME=${influxdb_username} \\
+  -e WEATHERFLOW_COLLECTOR_LATITUDE=${latitude[$station_number]} \\
+  -e WEATHERFLOW_COLLECTOR_LOGCLI_URL=${logcli_host_url} \\
+  -e WEATHERFLOW_COLLECTOR_LONGITUDE=${longitude[$station_number]} \\
+  -e WEATHERFLOW_COLLECTOR_PUBLIC_NAME=\"${public_name[$station_number]}\" \\
+  -e WEATHERFLOW_COLLECTOR_STATION_ID=${station_id[$station_number]} \\
+  -e WEATHERFLOW_COLLECTOR_STATION_NAME=\"${station_name[$station_number]}\" \\
+  -e WEATHERFLOW_COLLECTOR_THREADS=${threads} \\
+  -e WEATHERFLOW_COLLECTOR_TIMEZONE=\"${timezone[$station_number]}\" \\
+  -e WEATHERFLOW_COLLECTOR_TOKEN=${token} \\
+  -e TZ=\"${timezone[$station_number]}\" \\
+  lux4rd0/weatherflow-collector:latest
+
+" > "${FILE_import_loki_local_udp[$station_number]}"
+
+echo "${FILE_import_loki_local_udp[$station_number]} file created"
+
+
+
 
 done
 
 echo "
 version: '3.3'" >> docker-compose.yml
 
-echo "${PWD}/docker-compose.yml file created"
+echo "${FILE_DC} file created"
 
 fi
