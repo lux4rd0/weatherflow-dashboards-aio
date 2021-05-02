@@ -22,9 +22,7 @@ token=${token}"
 if [ -z "${import_days}" ]
   then
     echo "WEATHERFLOW_COLLECTOR_IMPORT_DAYS variable not set. Defaulting to 365 days"
-
 import_days="365"
-
 fi
 
 if [ -z "${loki_client_url}" ]
@@ -35,8 +33,8 @@ fi
 if [ -z "${threads}" ]
   then
     echo "WEATHERFLOW_COLLECTOR_THREADS was not set. Setting defaults: 4"
-
 threads="1"
+fi
 
 if [ -z "$token" ]
 
