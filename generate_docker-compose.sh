@@ -9,16 +9,15 @@
 ##
 
 import_days=$WEATHERFLOW_COLLECTOR_IMPORT_DAYS
-token=$WEATHERFLOW_COLLECTOR_TOKEN
 loki_client_url=$WEATHERFLOW_COLLECTOR_LOKI_CLIENT_URL
-logcli_host_url=$WEATHERFLOW_COLLECTOR_LOGCLI_URL
+threads=$WEATHERFLOW_COLLECTOR_THREADS
+token=$WEATHERFLOW_COLLECTOR_TOKEN
 
 echo "
-
 import_days=${import_days}
-token=${token}
-
-"
+loki_client_url=${loki_client_url}
+threads=${threads}
+token=${token}"
 
 if [ -z "${import_days}" ]
   then
@@ -136,8 +135,7 @@ services:
       GF_AUTH_BASIC_ENABLED: \"true\"
       GF_AUTH_DISABLE_LOGIN_FORM: \"false\"
       GF_DASHBOARDS_DEFAULT_HOME_DASHBOARD_PATH: /var/lib/grafana/dashboards/weatherflow_collector/weatherflow_collector-overview-influxdb.json
-      GF_INSTALL_PLUGINS: grafana-worldmap-panel
-    image: grafana/grafana:7.5.5
+    image: grafana/grafana:7.5.4
     networks:
       wxfdashboardsaio:
     ports:
@@ -267,6 +265,7 @@ echo "
       WEATHERFLOW_COLLECTOR_REST_INTERVAL: 60
       WEATHERFLOW_COLLECTOR_STATION_ID: ${station_id[$station_number]}
       WEATHERFLOW_COLLECTOR_STATION_NAME: ${station_name[$station_number]}
+      WEATHERFLOW_COLLECTOR_THREADS: ${threads}
       WEATHERFLOW_COLLECTOR_TIMEZONE: ${timezone[$station_number]}
       WEATHERFLOW_COLLECTOR_TOKEN: ${token}
     image: lux4rd0/weatherflow-collector:latest
@@ -351,6 +350,7 @@ docker run --rm \\
   -e WEATHERFLOW_COLLECTOR_FUNCTION=import \\
   -e WEATHERFLOW_COLLECTOR_HOST_HOSTNAME=$(hostname) \\
   -e WEATHERFLOW_COLLECTOR_HUB_SN=${hub_sn[$station_number]} \\
+  -e WEATHERFLOW_COLLECTOR_IMPORT_DAYS=${import_days} \\
   -e WEATHERFLOW_COLLECTOR_INFLUXDB_PASSWORD=x8egQTrf4bGl8Cs3XGyF1yE0b06pfgJe \\
   -e WEATHERFLOW_COLLECTOR_INFLUXDB_URL=http://$(hostname):8086/write?db=weatherflow \\
   -e WEATHERFLOW_COLLECTOR_INFLUXDB_USERNAME=weatherflow \\
@@ -359,9 +359,9 @@ docker run --rm \\
   -e WEATHERFLOW_COLLECTOR_PUBLIC_NAME=\"${public_name[$station_number]}\" \\
   -e WEATHERFLOW_COLLECTOR_STATION_ID=${station_id[$station_number]} \\
   -e WEATHERFLOW_COLLECTOR_STATION_NAME=\"${station_name[$station_number]}\" \\
+  -e WEATHERFLOW_COLLECTOR_THREADS=${threads} \\
   -e WEATHERFLOW_COLLECTOR_TIMEZONE=\"${timezone[$station_number]}\" \\
   -e WEATHERFLOW_COLLECTOR_TOKEN=${token} \\
-  -e WEATHERFLOW_COLLECTOR_IMPORT_DAYS=${import_days} \\
   -e TZ=\"${timezone[$station_number]}\" \\
   lux4rd0/weatherflow-collector:latest
 
