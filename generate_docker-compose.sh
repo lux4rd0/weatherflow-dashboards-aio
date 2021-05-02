@@ -136,7 +136,7 @@ services:
       GF_AUTH_BASIC_ENABLED: \"true\"
       GF_AUTH_DISABLE_LOGIN_FORM: \"false\"
       GF_DASHBOARDS_DEFAULT_HOME_DASHBOARD_PATH: /var/lib/grafana/dashboards/weatherflow_collector/weatherflow_collector-overview-influxdb.json
-    image: grafana/grafana:7.5.4
+    image: grafana/grafana:7.5.5
     networks:
       wxfdashboardsaio:
     ports:
