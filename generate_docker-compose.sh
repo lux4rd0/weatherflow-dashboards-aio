@@ -32,6 +32,12 @@ if [ -z "${loki_client_url}" ]
     echo "WEATHERFLOW_COLLECTOR_LOKI_CLIENT_URL was not set. No default being set"
 fi
 
+if [ -z "${threads}" ]
+  then
+    echo "WEATHERFLOW_COLLECTOR_THREADS was not set. Setting defaults: 4"
+
+threads="1"
+
 if [ -z "$token" ]
 
 then
