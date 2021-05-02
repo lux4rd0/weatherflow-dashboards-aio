@@ -6,7 +6,7 @@
 
 **WeatherFlow Dashboards AIO** is an example project put together to help you get up and running quickly with a local-udp, remote-socket, and remote-rest collector to visualize your [WeatherFlow Tempest](https://weatherflow.com/tempest-weather-system/) log streams with Grafana dashboards. 
 
-<center><img src="https://github.com/lux4rd0/weatherflow-collector/blob/main/images/weatherflow-forecast-influxdb.jpg"></center>
+<center><img src="./images/weatherflow_collector-forecast.jpg"></center>
 
 This project uses my custom [weatherflow-collector](https://github.com/lux4rd0/weatherflow-collector) and a slightly updated [UDP Python collector](https://github.com/p-doyle/Simple-WeatherFlow-Python-Listener) from [P Doyle](https://github.com/p-doyle/) to collect and transform JSON logs to metrics and publish them to an InfluxDB TSDB.  Several pre-configured [Grafana dashboards](https://grafana.com/oss/grafana/) provide visualizations of WeatherFlow data over time. I also include additional visualizations using WeatherFlow's Cloud APIs to populate forecasts and derived weather metrics.
 
@@ -118,18 +118,11 @@ This dashboard provides a comprehensive overview of your station location, combi
 
 <center><img src="./images/weatherflow_collector-device_details.jpg"></center>
 
-Provides the current status for both the Tempest and WeatherFlow hub such as Uptime, Radio Status, RSSI, Reboot Count, I2C Bus Count Error, Radio Version, Network ID, Firmware Version, and Voltage.
+This dashboard provides the current status for both the Tempest and your WeatherFlow hub, such as Uptime, Radio Status, RSSI, Reboot Count, I2C Bus Count Error, Radio Version, Network ID, Firmware Version, and Voltage.
 
-<center><img src="./images/weatherflow-weatherflow-device_details-device_status.jpg"></center>
+RSSI and Battery Voltage over time defaulted to the last seven days are shown at the top of the dashboard, while current device details are shown below.
 
-Another panel provides an overview of Sensor Status measurements - either "Sensors OK" or if there were any failures.
-
-<center><img src="./images/weatherflow-weatherflow-device_details-sensor_status.jpg"></center>
-
-There's also RSSI and Battery Voltage over time defaulted to the last seven days.
-
-<center><img src="./images/weatherflow-weatherflow-device_details-battery.jpg"></center>
-<center><img src="./images/weatherflow-weatherflow-device_details-rssi.jpg"></center>
+Sensor Status measurements are shown with a number related to each per minute collection from the device. Either "Sensors OK" is down or any failures, which sensor had the error. Note that if you have the Lightning Disturber enabled, you may see a high number of failures as electromagnetic interference is being suppressed.
 
 ### Forecast
 
@@ -141,7 +134,7 @@ Provides both a daily and hourly forecast in table format with charts below them
 
 <center><img src="./images/weatherflow_collector-forecast_vs_observed.jpg"></center>
 
-Once enough forecast data is collected, you can use this dashboard to compare what was forecasted (and by how many days out) versus the observed metric from your WeatherFlow device. This covers Temperature, Humidity, Wind, and UV measurements. All available forecast days are available by default, but you can choose a different "Days Out" from the top drop-down menu to compare individual forecasts.
+As forecast data is collected, this dashboard may be used to compare what was forecasted (by how many days out) versus the observed metric from your WeatherFlow device. Temperature, Humidity, Wind, and UV measurements are covered here. By default, "All" available forecast days are overlayed over the observed metric. You can choose different "Days Out" from the top drop-down menu to compare individual forecasts.
 
 ### Historical (local-udp)
 
