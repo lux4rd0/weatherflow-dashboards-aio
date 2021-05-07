@@ -35,9 +35,9 @@ This personal project tends to stay in a state of flux based on trying out new t
 
 To get started, download one of [the releases](https://github.com/lux4rd0/grafana-weatherflow/releases) from this repository and extract it into an empty directory. For example:
 
-    wget https://github.com/lux4rd0/weatherflow-dashboards-aio/archive/v2.8.1.zip
-    unzip v2.8.1.zip
-    mv weatherflow-dashboards-aio-2.8.1 weatherflow-dashboards-aio
+    wget https://github.com/lux4rd0/weatherflow-dashboards-aio/archive/v2.8.5.zip
+    unzip v2.8.5.zip
+    mv weatherflow-dashboards-aio-2.8.5 weatherflow-dashboards-aio
     cd weatherflow-dashboards-aio
 
 Correct environmental variables need to be set for the containers to function. The following script should be used:
