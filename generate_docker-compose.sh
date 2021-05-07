@@ -33,7 +33,7 @@ fi
 if [ -z "${threads}" ]
   then
     echo "WEATHERFLOW_COLLECTOR_THREADS was not set. Setting defaults: 4"
-threads="1"
+threads="4"
 fi
 
 if [ -z "$token" ]
