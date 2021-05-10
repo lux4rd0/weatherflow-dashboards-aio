@@ -54,7 +54,6 @@ To use it, you will need to provide your WeatherFlow token as environmental vari
 An example would be:
 
     WEATHERFLOW_COLLECTOR_IMPORT_DAYS="365" \
-    WEATHERFLOW_COLLECTOR_LOKI_CLIENT_URL="http://loki:3100/loki/api/v1/push" \
     WEATHERFLOW_COLLECTOR_THREADS="4" \
     WEATHERFLOW_COLLECTOR_TOKEN="a22afsa7-0dcc-4918-9f9a-923dfd339f41c" \
     bash ./generate_docker-compose.sh
