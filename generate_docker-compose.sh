@@ -10,12 +10,14 @@
 
 import_days=$WEATHERFLOW_COLLECTOR_IMPORT_DAYS
 loki_client_url=$WEATHERFLOW_COLLECTOR_LOKI_CLIENT_URL
+perf_interval=$WEATHERFLOW_COLLECTOR_PERF_INTERVAL
 threads=$WEATHERFLOW_COLLECTOR_THREADS
 token=$WEATHERFLOW_COLLECTOR_TOKEN
 
 echo "
 import_days=${import_days}
 loki_client_url=${loki_client_url}
+perf_interval=${perf_interval}}
 threads=${threads}
 token=${token}"
 
@@ -35,6 +37,12 @@ if [ -z "${threads}" ]
     echo "WEATHERFLOW_COLLECTOR_THREADS was not set. Setting defaults: 4"
 threads="4"
 fi
+
+if [ -z "${perf_interval}" ]
+  then
+    echo "WEATHERFLOW_COLLECTOR_PERF_INTERVAL environmental variable not set. Defaulting to 60 seconds"
+
+perf_interval="60"
 
 if [ -z "$token" ]
 
@@ -174,6 +182,34 @@ services:
     restart: always
     volumes:
     - ./data/influxdb:/var/lib/influxdb:rw
+  weatherflow-collector-${station_name_dc[$station_number]}-$(hostname | awk -F. '{ print $1 }')-host-performance:
+    container_name: weatherflow-collector-${station_name_dc[$station_number]}-$(hostname | awk -F. '{ print $1 }')-host-performance
+    environment:
+      WEATHERFLOW_COLLECTOR_BACKEND_TYPE: influxdb
+      WEATHERFLOW_COLLECTOR_COLLECTOR_TYPE: host-performance
+      WEATHERFLOW_COLLECTOR_DEBUG: \"false\"
+      WEATHERFLOW_COLLECTOR_DEVICE_ID: ${device_id[$station_number]}
+      WEATHERFLOW_COLLECTOR_DOCKER_HEALTHCHECK_ENABLED: \"true\"
+      WEATHERFLOW_COLLECTOR_ELEVATION: ${elevation[$station_number]}
+      WEATHERFLOW_COLLECTOR_FUNCTION: collector
+      WEATHERFLOW_COLLECTOR_HOST_HOSTNAME: $(hostname)
+      WEATHERFLOW_COLLECTOR_HUB_SN: ${hub_sn[$station_number]}
+      WEATHERFLOW_COLLECTOR_INFLUXDB_PASSWORD: x8egQTrf4bGl8Cs3XGyF1yE0b06pfgJe
+      WEATHERFLOW_COLLECTOR_INFLUXDB_URL: http://wxfdashboardsaio_influxdb:8086/write?db=weatherflow
+      WEATHERFLOW_COLLECTOR_INFLUXDB_USERNAME: weatherflow
+      WEATHERFLOW_COLLECTOR_LATITUDE: ${latitude[$station_number]}
+      WEATHERFLOW_COLLECTOR_LONGITUDE: ${longitude[$station_number]}
+      WEATHERFLOW_COLLECTOR_PERF_INTERVAL: ${perf_interval}
+      WEATHERFLOW_COLLECTOR_PUBLIC_NAME: ${public_name[$station_number]}
+      WEATHERFLOW_COLLECTOR_STATION_ID: ${station_id[$station_number]}
+      WEATHERFLOW_COLLECTOR_STATION_NAME: ${station_name[$station_number]}
+      WEATHERFLOW_COLLECTOR_TIMEZONE: ${timezone[$station_number]}
+    image: lux4rd0/weatherflow-collector:latest
+    networks:
+      wxfdashboardsaio:
+    restart: always
+    depends_on:
+      - \"wxfdashboardsaio_influxdb\"
 
 " > docker-compose.yml
 
@@ -240,7 +276,6 @@ echo "
     - protocol: udp
       published: 50222
       target: 50222
-    restart: always
     networks:
       wxfdashboardsaio:
     restart: always
