@@ -4985,8 +4985,8 @@
         "allValue": null,
         "current": {
           "selected": false,
-          "text": "remote-socket",
-          "value": "remote-socket"
+          "text": "remote-rest",
+          "value": "remote-rest"
         },
         "description": null,
         "error": null,
