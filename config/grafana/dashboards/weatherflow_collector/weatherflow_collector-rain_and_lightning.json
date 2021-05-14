@@ -17,7 +17,7 @@
   "gnetId": 13857,
   "graphTooltip": 0,
   "id": 338,
-  "iteration": 1620955909325,
+  "iteration": 1620962655101,
   "links": [
     {
       "asDropdown": true,
@@ -582,7 +582,12 @@
       "options": {
         "frameIndex": 2,
         "showHeader": true,
-        "sortBy": []
+        "sortBy": [
+          {
+            "desc": true,
+            "displayName": "Date"
+          }
+        ]
       },
       "pluginVersion": "7.5.6",
       "scopedVars": {
@@ -1209,7 +1214,7 @@
       },
       "id": 82,
       "panels": [],
-      "repeatIteration": 1620955909325,
+      "repeatIteration": 1620962655101,
       "repeatPanelId": 51,
       "scopedVars": {
         "station_name": {
@@ -1383,7 +1388,7 @@
         }
       },
       "pluginVersion": "7.5.4",
-      "repeatIteration": 1620955909325,
+      "repeatIteration": 1620962655101,
       "repeatPanelId": 81,
       "repeatedByRow": true,
       "scopedVars": {
@@ -1757,7 +1762,7 @@
         "sortBy": []
       },
       "pluginVersion": "7.5.6",
-      "repeatIteration": 1620955909325,
+      "repeatIteration": 1620962655101,
       "repeatPanelId": 68,
       "repeatedByRow": true,
       "scopedVars": {
@@ -2013,7 +2018,7 @@
         "textMode": "auto"
       },
       "pluginVersion": "7.5.6",
-      "repeatIteration": 1620955909325,
+      "repeatIteration": 1620962655101,
       "repeatPanelId": 69,
       "repeatedByRow": true,
       "scopedVars": {
@@ -2123,7 +2128,7 @@
         "show": true
       },
       "pluginVersion": "7.5.4",
-      "repeatIteration": 1620955909325,
+      "repeatIteration": 1620962655101,
       "repeatPanelId": 74,
       "repeatedByRow": true,
       "reverseYBuckets": false,
@@ -2595,5 +2600,5 @@
   "timezone": "browser",
   "title": "Rain and Lightning",
   "uid": "lux4rd0labs_weatherflow_20",
-  "version": 76
+  "version": 78
 }
