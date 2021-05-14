@@ -14,6 +14,8 @@ WeatherFlow Tempest -> WeatherFlow Hub -> UDP Collector (port 50222) InfluxDB <-
 
 remote-socket/remote-rest <- weatherflow-collector -> InfluxDB
 
+A live set of dashboards using this collector [are available](https://labs.lux4rd0.com/weatherflow-collector/) for you to try out.
+
 ## Getting Started
 
 The project is built around a pre-configured Docker stack containing the following containers:
