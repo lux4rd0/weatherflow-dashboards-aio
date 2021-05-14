@@ -16,7 +16,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": 306,
-  "iteration": 1620955917379,
+  "iteration": 1620961463894,
   "links": [
     {
       "asDropdown": true,
@@ -796,7 +796,7 @@
         "textMode": "auto"
       },
       "pluginVersion": "7.5.6",
-      "repeatIteration": 1620955917379,
+      "repeatIteration": 1620961463894,
       "repeatPanelId": 9,
       "scopedVars": {
         "station_name": {
@@ -863,7 +863,7 @@
       "type": "stat"
     },
     {
-      "collapsed": false,
+      "collapsed": true,
       "datasource": null,
       "gridPos": {
         "h": 1,
@@ -872,315 +872,312 @@
         "y": 11
       },
       "id": 64,
-      "panels": [],
+      "panels": [
+        {
+          "datasource": "InfluxDB - weatherflow",
+          "description": "",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "custom": {
+                "align": "center",
+                "filterable": false
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "dateTimeAsUS"
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byType",
+                  "options": "number"
+                },
+                "properties": [
+                  {
+                    "id": "unit",
+                    "value": "dateTimeFromNow"
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 5,
+            "w": 24,
+            "x": 0,
+            "y": 12
+          },
+          "id": 8,
+          "options": {
+            "frameIndex": 3,
+            "showHeader": true,
+            "sortBy": [
+              {
+                "desc": true,
+                "displayName": "Time"
+              }
+            ]
+          },
+          "pluginVersion": "7.5.6",
+          "repeat": "station_name",
+          "repeatDirection": "v",
+          "scopedVars": {
+            "station_name": {
+              "selected": false,
+              "text": "Buzzard Bend",
+              "value": "Buzzard Bend"
+            }
+          },
+          "targets": [
+            {
+              "alias": "$tag_collector_type - $tag_host_hostname",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "collector_type"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "host_hostname"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "station_name"
+                  ],
+                  "type": "tag"
+                }
+              ],
+              "measurement": "weatherflow_system_stats",
+              "orderByTime": "ASC",
+              "policy": "default",
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "docker_start"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "distinct"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "station_name",
+                  "operator": "=~",
+                  "value": "/^$station_name$/"
+                },
+                {
+                  "condition": "AND",
+                  "key": "source",
+                  "operator": "=",
+                  "value": "collector"
+                },
+                {
+                  "condition": "AND",
+                  "key": "host_hostname",
+                  "operator": "=~",
+                  "value": "/^$host_hostname$/"
+                }
+              ]
+            }
+          ],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Container Start Time - $station_name",
+          "transformations": [
+            {
+              "id": "seriesToColumns",
+              "options": {}
+            }
+          ],
+          "type": "table"
+        },
+        {
+          "datasource": "InfluxDB - weatherflow",
+          "description": "",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "custom": {
+                "align": "center",
+                "filterable": false
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "dateTimeAsUS"
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byType",
+                  "options": "number"
+                },
+                "properties": [
+                  {
+                    "id": "unit",
+                    "value": "dateTimeFromNow"
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 5,
+            "w": 24,
+            "x": 0,
+            "y": 17
+          },
+          "id": 66,
+          "options": {
+            "frameIndex": 3,
+            "showHeader": true,
+            "sortBy": [
+              {
+                "desc": true,
+                "displayName": "Time"
+              }
+            ]
+          },
+          "pluginVersion": "7.5.6",
+          "repeatDirection": "v",
+          "repeatIteration": 1620961463894,
+          "repeatPanelId": 8,
+          "scopedVars": {
+            "station_name": {
+              "selected": false,
+              "text": "Savannah Crossing",
+              "value": "Savannah Crossing"
+            }
+          },
+          "targets": [
+            {
+              "alias": "$tag_collector_type - $tag_host_hostname",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "collector_type"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "host_hostname"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "station_name"
+                  ],
+                  "type": "tag"
+                }
+              ],
+              "measurement": "weatherflow_system_stats",
+              "orderByTime": "ASC",
+              "policy": "default",
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "docker_start"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "distinct"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "station_name",
+                  "operator": "=~",
+                  "value": "/^$station_name$/"
+                },
+                {
+                  "condition": "AND",
+                  "key": "source",
+                  "operator": "=",
+                  "value": "collector"
+                },
+                {
+                  "condition": "AND",
+                  "key": "host_hostname",
+                  "operator": "=~",
+                  "value": "/^$host_hostname$/"
+                }
+              ]
+            }
+          ],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Container Start Time - $station_name",
+          "transformations": [
+            {
+              "id": "seriesToColumns",
+              "options": {}
+            }
+          ],
+          "type": "table"
+        }
+      ],
       "repeat": null,
-      "title": "Container Startup Time",
+      "title": "Container Start Time",
       "type": "row"
-    },
-    {
-      "datasource": "InfluxDB - weatherflow",
-      "description": "",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "custom": {
-            "align": "center",
-            "filterable": false
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "dateTimeAsUS"
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byType",
-              "options": "number"
-            },
-            "properties": [
-              {
-                "id": "unit",
-                "value": "dateTimeFromNow"
-              }
-            ]
-          }
-        ]
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 12,
-        "x": 0,
-        "y": 12
-      },
-      "id": 8,
-      "options": {
-        "showHeader": true,
-        "sortBy": [
-          {
-            "desc": true,
-            "displayName": "Time"
-          }
-        ]
-      },
-      "pluginVersion": "7.5.6",
-      "repeat": "station_name",
-      "scopedVars": {
-        "station_name": {
-          "selected": false,
-          "text": "Buzzard Bend",
-          "value": "Buzzard Bend"
-        }
-      },
-      "targets": [
-        {
-          "alias": "$tag_collector_type",
-          "groupBy": [
-            {
-              "params": [
-                "1s"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "collector_type"
-              ],
-              "type": "tag"
-            },
-            {
-              "params": [
-                "host_hostname"
-              ],
-              "type": "tag"
-            }
-          ],
-          "measurement": "weatherflow_system_stats",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "docker_start"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "distinct"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "station_name",
-              "operator": "=~",
-              "value": "/^$station_name$/"
-            },
-            {
-              "condition": "AND",
-              "key": "source",
-              "operator": "=",
-              "value": "collector"
-            },
-            {
-              "condition": "AND",
-              "key": "host_hostname",
-              "operator": "=~",
-              "value": "/^$host_hostname$/"
-            }
-          ]
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Container Startup Time - $station_name",
-      "transformations": [
-        {
-          "id": "seriesToColumns",
-          "options": {}
-        },
-        {
-          "id": "organize",
-          "options": {
-            "excludeByName": {
-              "Time": false
-            },
-            "indexByName": {},
-            "renameByName": {}
-          }
-        }
-      ],
-      "type": "table"
-    },
-    {
-      "datasource": "InfluxDB - weatherflow",
-      "description": "",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "custom": {
-            "align": "center",
-            "filterable": false
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "dateTimeAsUS"
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byType",
-              "options": "number"
-            },
-            "properties": [
-              {
-                "id": "unit",
-                "value": "dateTimeFromNow"
-              }
-            ]
-          }
-        ]
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 12,
-        "x": 12,
-        "y": 12
-      },
-      "id": 66,
-      "options": {
-        "showHeader": true,
-        "sortBy": [
-          {
-            "desc": true,
-            "displayName": "Time"
-          }
-        ]
-      },
-      "pluginVersion": "7.5.6",
-      "repeatIteration": 1620955917379,
-      "repeatPanelId": 8,
-      "scopedVars": {
-        "station_name": {
-          "selected": false,
-          "text": "Savannah Crossing",
-          "value": "Savannah Crossing"
-        }
-      },
-      "targets": [
-        {
-          "alias": "$tag_collector_type",
-          "groupBy": [
-            {
-              "params": [
-                "1s"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "collector_type"
-              ],
-              "type": "tag"
-            },
-            {
-              "params": [
-                "host_hostname"
-              ],
-              "type": "tag"
-            }
-          ],
-          "measurement": "weatherflow_system_stats",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "docker_start"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "distinct"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "station_name",
-              "operator": "=~",
-              "value": "/^$station_name$/"
-            },
-            {
-              "condition": "AND",
-              "key": "source",
-              "operator": "=",
-              "value": "collector"
-            },
-            {
-              "condition": "AND",
-              "key": "host_hostname",
-              "operator": "=~",
-              "value": "/^$host_hostname$/"
-            }
-          ]
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Container Startup Time - $station_name",
-      "transformations": [
-        {
-          "id": "seriesToColumns",
-          "options": {}
-        },
-        {
-          "id": "organize",
-          "options": {
-            "excludeByName": {
-              "Time": false
-            },
-            "indexByName": {},
-            "renameByName": {}
-          }
-        }
-      ],
-      "type": "table"
     },
     {
       "collapsed": false,
@@ -1189,7 +1186,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 16
+        "y": 12
       },
       "id": 30,
       "panels": [],
@@ -1242,7 +1239,7 @@
         "h": 8,
         "w": 6,
         "x": 0,
-        "y": 17
+        "y": 13
       },
       "id": 2,
       "interval": "$interval",
@@ -1363,7 +1360,7 @@
         "h": 8,
         "w": 6,
         "x": 6,
-        "y": 17
+        "y": 13
       },
       "id": 5,
       "interval": "$interval",
@@ -1479,7 +1476,7 @@
         "h": 8,
         "w": 6,
         "x": 12,
-        "y": 17
+        "y": 13
       },
       "id": 4,
       "interval": "$interval",
@@ -1605,7 +1602,7 @@
         "h": 8,
         "w": 6,
         "x": 18,
-        "y": 17
+        "y": 13
       },
       "id": 60,
       "interval": "$interval",
@@ -1694,7 +1691,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 25
+        "y": 21
       },
       "id": 39,
       "panels": [
@@ -1884,7 +1881,7 @@
       {
         "allValue": null,
         "current": {
-          "selected": false,
+          "selected": true,
           "text": "America/Chicago",
           "value": "America/Chicago"
         },
@@ -2106,5 +2103,5 @@
   "timezone": "",
   "title": "System Stats",
   "uid": "lux4rd0labs_weatherflow_10",
-  "version": 133
+  "version": 142
 }
