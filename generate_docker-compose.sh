@@ -17,7 +17,7 @@ token=$WEATHERFLOW_COLLECTOR_TOKEN
 echo "
 import_days=${import_days}
 loki_client_url=${loki_client_url}
-perf_interval=${perf_interval}}
+perf_interval=${perf_interval}
 threads=${threads}
 token=${token}"
 
