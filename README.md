@@ -58,7 +58,7 @@ An example would be:
     WEATHERFLOW_COLLECTOR_IMPORT_DAYS="365" \
     WEATHERFLOW_COLLECTOR_THREADS="4" \
     WEATHERFLOW_COLLECTOR_TOKEN="a22afsa7-0dcc-4918-9f9a-923dfd339f41c" \
-    bash ./generate_docker-compose.sh
+    bash ./generate_docker-compose_aio.sh
 
 The following files will be generated for you:
 
