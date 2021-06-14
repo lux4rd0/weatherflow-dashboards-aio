@@ -128,7 +128,7 @@ services:
       GF_AUTH_DISABLE_LOGIN_FORM: \"false\"
       GF_DASHBOARDS_DEFAULT_HOME_DASHBOARD_PATH: /var/lib/grafana/dashboards/weatherflow_collector/weatherflow_collector-overview-influxdb.json
       GF_INSTALL_PLUGINS: grafana-worldmap-panel
-    image: grafana/grafana:8.0.1
+    image: grafana/grafana:8.0.2
     networks:
       wxfdashboardsaio:
     ports:
