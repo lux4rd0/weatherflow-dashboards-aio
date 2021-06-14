@@ -37,14 +37,14 @@ This personal project tends to stay in a state of flux based on trying out new t
 
 To get started, download one of [the releases](https://github.com/lux4rd0/grafana-weatherflow/releases) from this repository and extract it into an empty directory. For example:
 
-    wget https://github.com/lux4rd0/weatherflow-dashboards-aio/archive/v2.9.0.zip
-    unzip v2.9.0.zip
-    mv weatherflow-dashboards-aio-2.9.0 weatherflow-dashboards-aio
+    wget https://github.com/lux4rd0/weatherflow-dashboards-aio/archive/v3.2.0.zip
+    unzip v3.2.0.zip
+    mv weatherflow-dashboards-aio-3.2.0 weatherflow-dashboards-aio
     cd weatherflow-dashboards-aio
 
 Correct environmental variables need to be set for the containers to function. The following script should be used:
 
-    generate_docker-compose.sh
+    generate_docker-compose_aio.sh
 
 To use it, you will need to provide your WeatherFlow token as environmental variables.
 
