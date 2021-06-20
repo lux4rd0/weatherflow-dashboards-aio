@@ -97,6 +97,7 @@ for station_number in $(seq 0 $number_of_stations_minus_one) ; do
 station_name[$station_number]=$(echo "${body_station}" | jq -r .stations[$station_number].name)
 station_name_dc[$station_number]=$(echo "${body_station}" | jq -r .stations[$station_number].name | sed 's/ /\_/g' | sed 's/.*/\L&/' | sed 's|[<>,]||g')
 station_id[$station_number]=$(echo "${body_station}" | jq -r .stations[$station_number].station_id)
+timezone[$station_number]=$(echo "${body_station}" | jq -r .stations[$station_number].timezone)
 
 done
 
@@ -166,7 +167,7 @@ services:
     volumes:
     - ./data/influxdb:/var/lib/influxdb:rw
   wxfdashboardsaio-collector:
-    container_name: wxfdashboardsaio-collector
+    container_name: wxfdashboardsaio-collector-${collector_key}
     environment:
       WEATHERFLOW_COLLECTOR_DEBUG: \"false\"
       WEATHERFLOW_COLLECTOR_DEBUG_CURL: \"false\"
@@ -221,6 +222,7 @@ fi
 
 echo "docker run --rm \\
   --name=weatherflow-collector-${station_name_dc[$station_number]}-remote-import \\
+  -e TZ=${timezone[$station_number]} \\
   -e WEATHERFLOW_COLLECTOR_COLLECTOR_TYPE=remote-import \\
   -e WEATHERFLOW_COLLECTOR_DEBUG=false \\
   -e WEATHERFLOW_COLLECTOR_DEBUG_CURL=false \\
