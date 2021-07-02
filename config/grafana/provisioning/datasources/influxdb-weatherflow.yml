@@ -1,9 +1,0 @@
-apiVersion: 1
-datasources: 
-  - 
-    access: proxy
-    basicAuth: false
-    name: InfluxDB - weatherflow
-    type: influxdb
-    url: "http://wxfdashboardsaio_influxdb:8086/"
-    database: weatherflow
