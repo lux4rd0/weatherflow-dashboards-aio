@@ -37,8 +37,8 @@ This personal project tends to stay in a state of flux based on trying out new t
 
 To get started, download one of [the releases](https://github.com/lux4rd0/grafana-weatherflow/releases) from this repository and extract it into an empty directory. For example:
 
-    wget https://github.com/lux4rd0/weatherflow-dashboards-aio/archive/v3.2.2.zip
-    unzip v3.2.2.zip
+    wget https://github.com/lux4rd0/weatherflow-dashboards-aio/archive/v3.5.0.zip
+    unzip v3.5.0.zip
     mv weatherflow-dashboards-aio-3.2.2 weatherflow-dashboards-aio
     cd weatherflow-dashboards-aio
 
@@ -77,7 +77,7 @@ You can obtain your authentication token by signing in to the Tempest Web App at
 
 ## Data Retention and Storage Locations
 
-Data is stored in InfluxDB in a mounted directory under /data/influxdb. By default, there is no retention policy set.
+Data is stored in InfluxDB in a Docker volume created as part of the docker-compose process. By default, there is no retention policy set.
 
 ### Startup
 

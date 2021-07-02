@@ -17,7 +17,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": 335,
-  "iteration": 1623692084148,
+  "iteration": 1625251076541,
   "links": [
     {
       "asDropdown": true,
@@ -1017,7 +1017,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.0.1",
+      "pluginVersion": "8.0.4",
       "targets": [
         {
           "alias": "Wind Direction",
