@@ -28,8 +28,8 @@ echo -en "\033[01;38;5;202m░█░ █ ░█ ▒▓█  ▄░██▄▄▄
 echo -en "\033[01;38;5;208m░░██▒██▓ ░▒████▒▓█   ▓██▒ ▒██▒ ░ ░▓█▒░██▓░▒████▒░██▓ ▒██▒░▒█░   ░██████▒░ ████▓▒░░░██▒██▓ \n"
 echo -en "\033[01;38;5;214m░ ▓░▒ ▒  ░░ ▒░ ░▒▒   ▓▒█░ ▒ ░░    ▒ ░░▒░▒░░ ▒░ ░░ ▒▓ ░▒▓░ ▒ ░   ░ ▒░▓  ░░ ▒░▒░▒░ ░ ▓░▒ ▒  \n"
 echo -en "\033[01;38;5;220m  ▒ ░ ░   ░ ░  ░ ▒   ▒▒ ░   ░     ▒ ░▒░ ░ ░ ░  ░  ░▒ ░ ▒░ ░     ░ ░ ▒  ░  ░ ▒ ▒░   ▒ ░ ░  \n"
-echo -en "\033[01;38;5;226m  ░   ░     ░    ░   ▒    ░       ░  ░░ ░   ░     ░░   ░  ░ ░     ░ ░   ░ ░ ░ ▒    ░   ░  \n"
-echo -en "\033[01;38;5;228m    ░       ░  ░     ░  ░         ░  ░  ░   ░  ░   ░                ░  ░    ░ ░      ░    \n"
+echo -en "\033[01;38;5;228m  ░   ░     ░    ░   ▒    ░       ░  ░░ ░   ░     ░░   ░  ░ ░     ░ ░   ░ ░ ░ ▒    ░   ░  \n"
+echo -en "\033[01;38;5;231m    ░       ░  ░     ░  ░         ░  ░  ░   ░  ░   ░                ░  ░    ░ ░      ░    \n"
 
 echo ""
                                                                                  
@@ -40,9 +40,9 @@ echo -en "\033[01;38;5;202m      ▒▓▓▄ ▄██▒▒██   ██░�
 echo -en "\033[01;38;5;208m      ▒ ▓███▀ ░░ ████▓▒░░██████▒░██████▒░▒████▒▒ ▓███▀ ░  ▒██▒ ░ ░ ████▓▒░░██▓ ▒██▒       \n"
 echo -en "\033[01;38;5;214m      ░ ░▒ ▒  ░░ ▒░▒░▒░ ░ ▒░▓  ░░ ▒░▓  ░░░ ▒░ ░░ ░▒ ▒  ░  ▒ ░░   ░ ▒░▒░▒░ ░ ▒▓ ░▒▓░       \n"
 echo -en "\033[01;38;5;220m        ░  ▒     ░ ▒ ▒░ ░ ░ ▒  ░░ ░ ▒  ░ ░ ░  ░  ░  ▒       ░      ░ ▒ ▒░   ░▒ ░ ▒░       \n"
-echo -en "\033[01;38;5;226m      ░        ░ ░ ░ ▒    ░ ░     ░ ░      ░   ░          ░      ░ ░ ░ ▒    ░░   ░        \n"
-echo -en "\033[01;38;5;228m      ░ ░          ░ ░      ░  ░    ░  ░   ░  ░░ ░                   ░ ░     ░            \n"
-echo -en "\033[01;38;5;228m      ░                                        ░                                          \n"
+echo -en "\033[01;38;5;228m      ░        ░ ░ ░ ▒    ░ ░     ░ ░      ░   ░          ░      ░ ░ ░ ▒    ░░   ░        \n"
+echo -en "\033[01;38;5;231m      ░ ░          ░ ░      ░  ░    ░  ░   ░  ░░ ░                   ░ ░     ░            \n"
+echo -en "\033[01;38;5;231m      ░                                        ░                                          \n"
 
 echo "${echo_normal}"
 
@@ -117,33 +117,23 @@ fi
 
 echo "
 
-networks:
-  wxfdashboardsaio: {}
 services:
   wxfdashboardsaio_grafana:
     container_name: wxfdashboardsaio_grafana
     environment:
-      GF_AUTH_ANONYMOUS_ENABLED: \"true\"
-      GF_AUTH_ANONYMOUS_ORG_ROLE: Viewer
-      GF_AUTH_BASIC_ENABLED: \"true\"
-      GF_AUTH_DISABLE_LOGIN_FORM: \"false\"
-      GF_DASHBOARDS_DEFAULT_HOME_DASHBOARD_PATH: /var/lib/grafana/dashboards/weatherflow_collector/weatherflow_collector-overview-influxdb.json
-      GF_INSTALL_PLUGINS: grafana-worldmap-panel
-    image: grafana/grafana:8.0.2
-    networks:
-      wxfdashboardsaio:
+      TZ: ${timezone[$station_number]}
+    image: lux4rd0/weatherflow-dashboards-grafana:latest
     ports:
     - protocol: tcp
       published: 3000
       target: 3000
     restart: always
     volumes:
-    - ./config/grafana/provisioning/datasources:/etc/grafana/provisioning/datasources:ro
-    - ./config/grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards:ro
-    - ./config/grafana/dashboards:/var/lib/grafana/dashboards:ro
+    - wxfdashboardsaio-grafana-data:/var/lib/grafana
   wxfdashboardsaio_influxdb:
     container_name: wxfdashboardsaio_influxdb
-    environment: 
+    environment:
+      TZ: ${timezone[$station_number]}
       INFLUXDB_ADMIN_PASSWORD: Gk372Qm70E0xGVIcUpSyRiwqfAyhuwkS
       INFLUXDB_ADMIN_USER: admin
       INFLUXDB_DATA_ENGINE: tsm1
@@ -157,18 +147,17 @@ services:
       INFLUXDB_USER: weatherflow
       INFLUXDB_USER_PASSWORD: x8egQTrf4bGl8Cs3XGyF1yE0b06pfgJe
     image: influxdb:1.8
-    networks:
-      wxfdashboardsaio:
     ports:
     - protocol: tcp
       published: 8086
       target: 8086
     restart: always
     volumes:
-    - ./data/influxdb:/var/lib/influxdb:rw
+    - wxfdashboardsaio-influxdb-data:/var/lib/influxdb:rw
   wxfdashboardsaio-collector:
     container_name: wxfdashboardsaio-collector-${collector_key}
     environment:
+      TZ: ${timezone[$station_number]}
       WEATHERFLOW_COLLECTOR_DEBUG: \"false\"
       WEATHERFLOW_COLLECTOR_DEBUG_CURL: \"false\"
       WEATHERFLOW_COLLECTOR_DISABLE_HEALTH_CHECK: \"false\"
@@ -183,8 +172,6 @@ services:
       WEATHERFLOW_COLLECTOR_INFLUXDB_URL: http://wxfdashboardsaio_influxdb:8086/write?db=weatherflow
       WEATHERFLOW_COLLECTOR_INFLUXDB_USERNAME: weatherflow
       WEATHERFLOW_COLLECTOR_TOKEN: ${token}
-    networks:
-      wxfdashboardsaio:
     restart: always
     depends_on:
       - \"wxfdashboardsaio_influxdb\"
@@ -194,6 +181,9 @@ services:
       published: 50222
       target: 50222
     restart: always
+volumes:
+  wxfdashboardsaio-grafana-data:   
+  wxfdashboardsaio-influxdb-data: 
 version: '3.3'" >> docker-compose.yml
 
 
