@@ -39,7 +39,7 @@ To get started, download one of [the releases](https://github.com/lux4rd0/grafan
 
     wget https://github.com/lux4rd0/weatherflow-dashboards-aio/archive/v3.5.0.zip
     unzip v3.5.0.zip
-    mv weatherflow-dashboards-aio-3.2.2 weatherflow-dashboards-aio
+    mv weatherflow-dashboards-aio-3.5.0 weatherflow-dashboards-aio
     cd weatherflow-dashboards-aio
 
 Correct environmental variables need to be set for the containers to function. The following script should be used:
