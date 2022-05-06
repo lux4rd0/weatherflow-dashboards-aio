@@ -35,7 +35,7 @@ This personal project tends to stay in a state of flux based on trying out new t
 
 ## Using
 
-To get started, download one of [the releases](https://github.com/lux4rd0/grafana-weatherflow/releases) from this repository and extract it into an empty directory. For example:
+To get started, download one of [the releases](https://github.com/lux4rd0/weatherflow-dashboards-aio/releases) from this repository and extract it into an empty directory. For example:
 
     wget https://github.com/lux4rd0/weatherflow-dashboards-aio/archive/v3.5.0.zip
     unzip v3.5.0.zip
