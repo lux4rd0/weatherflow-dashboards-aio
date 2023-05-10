@@ -172,7 +172,6 @@ services:
       WEATHERFLOW_COLLECTOR_INFLUXDB_URL: http://wxfdashboardsaio_influxdb:8086/write?db=weatherflow
       WEATHERFLOW_COLLECTOR_INFLUXDB_USERNAME: weatherflow
       WEATHERFLOW_COLLECTOR_TOKEN: ${token}
-    restart: always
     depends_on:
       - \"wxfdashboardsaio_influxdb\"
     image: lux4rd0/weatherflow-collector:latest
